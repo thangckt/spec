@@ -7,7 +7,7 @@ on:  # Trigger manually or on a schedule (e.g., weekly)
     - cron: '0 0 * * 0' # Weekly on Sunday at midnight
 
 jobs:
-  update-main:
+  update-repo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Central Repository
@@ -30,28 +30,35 @@ jobs:
     ### Update multiple branches: each branch for each .spec file
       - name: Push updates to multiple branches
         if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
           while IFS= read -r spec; do
+            [ -z "$spec" ] && continue
             pkg=$(basename "$spec" .spec)
             branch="copr_spec/${pkg}"
 
             echo "==> Updating branch $branch for $spec"
 
-            ## Ensure local changes are committed before switching
-            git stash push -u -m "temp" || true
+            ## Ensure we're on a branch (not detached HEAD)
+            git fetch origin dev --quiet
+            git checkout dev
 
-            ## Fetch and switch to the target branch (create if missing)
-            if git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+            ## Create or update the branch
+            if git ls-remote --exit-code origin "refs/heads/$branch" >/dev/null 2>&1; then
               git checkout "$branch"
-              git pull origin "$branch" --ff-only
+              git pull origin "$branch" --ff-only || true
             else
-              git checkout -b "$branch" origin/dev || git checkout -b "$branch"
+              git checkout -b "$branch" dev
             fi
 
-            ## Restore the updated spec file
+            ## Copy updated .spec file from dev
             git checkout dev -- "$spec"
 
-            ## Commit and push if changed
+            # Commit and push if changed
             if ! git diff --quiet -- "$spec"; then
               git add "$spec"
               git commit -m "Auto update ${pkg}.spec from dev"
@@ -60,6 +67,6 @@ jobs:
               echo "No changes for $spec in $branch"
             fi
 
+            ## Return to dev for next iteration
             git checkout dev
-            git stash pop || true
           done < changed_specs.txt
