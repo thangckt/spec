@@ -44,7 +44,7 @@ jobs:
           while IFS= read -r spec; do
             [ -z "$spec" ] && continue
             pkg=$(basename "$spec" .spec)
-            branch="copr_spec/${pkg}"
+            branch="copr/${pkg}"
 
             echo "==> Processing branch $branch for $spec"
 
