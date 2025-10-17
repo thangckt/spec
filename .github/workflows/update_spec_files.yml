@@ -36,7 +36,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          ## Ensure dev is up to date with remote
+          ## Ensure branch `dev` is up to date
           git fetch origin dev
           git checkout dev
           git pull origin dev --ff-only
@@ -53,20 +53,23 @@ jobs:
               git checkout "$branch"
               git pull origin "$branch" --ff-only || true
             else
-              git checkout -b "$branch" dev
+              ## Create empty branch
+              git checkout --orphan "$branch"
+              git rm -rf . >/dev/null 2>&1 || true
             fi
 
             ## Bring the latest .spec file *from dev branch* into this branch
             git checkout dev -- "$spec"
 
-            ## Commit and push if changed
-            if ! git diff --quiet -- "$spec"; then
-              git add "$spec"
-              git commit -m "Auto update ${pkg}.spec from dev"
-              git push origin "$branch"
+            ## Commit and push
+            git add "$spec"
+            if git diff --cached --quiet; then
+              echo "No change for $spec"
             else
-              echo "No changes for $spec in $branch"
+              git commit -m "Auto update ${pkg}.spec from dev"
+              git push origin "$branch" --force
             fi
 
+            ## Return to dev branch
             git checkout dev
           done < changed_specs.txt
