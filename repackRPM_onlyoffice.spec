@@ -26,10 +26,10 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-### Remove invalid RPATHs from ELF binaries
+### Fix RPATHs to be relative (inside same dir)
 find %{buildroot}/opt/onlyoffice -type f -exec file {} \; | \
   grep ELF | cut -d: -f1 | while read f; do
-    patchelf --set-rpath '$ORIGIN/../lib:$ORIGIN' "$f" 2>/dev/null || true
+    patchelf --set-rpath '$ORIGIN' "$f" 2>/dev/null || true
 done
 
 %files
