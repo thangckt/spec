@@ -1,5 +1,5 @@
 ### NOTE: schedule-strigger can only run on `default` branch.
-name: Update versions of .spec files
+name: Update versions of multiple .spec files
 
 on:  # Trigger manually or on a schedule (e.g., weekly)
   workflow_dispatch: # Manual trigger
@@ -13,22 +13,22 @@ jobs:
       - name: Checkout Central Repository
         uses: actions/checkout@v4
         with:
-          ref: dev    # Specify the branch, default is `main`
+          ref: dev    # Selected branch, default is `main`
 
     ### Update the .spec files (this creates file `changed_specs.txt`)
       - name: Update .spec files
         run: |
           bash 0update_spec_version.sh
 
-    ### Update the repository (commit change on default branch)
-      - name: Commit and Push Changes      # Commit all changed files back to the repository
+    ### Update the repository (commit change on selected branch)
+      - name: Commit and Push Changes on selected branch      # Commit all changed files back to the repository
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto update versions of .spec files"
+          commit_message: "Auto update versions of multiple .spec files"
 
 
     ### Update multiple branches: each branch for each .spec file
-      - name: Push updates to each package branch
+      - name: Push updates to multiple branches
         if: success()
         run: |
           while IFS= read -r spec; do
