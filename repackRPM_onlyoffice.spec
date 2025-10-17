@@ -1,5 +1,5 @@
 Name:           onlyoffice
-Version:        9.1.0
+Version:        8.1.0
 Release:        1%{?dist}
 Summary:        OnlyOffice Desktop Editors
 
@@ -29,8 +29,25 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 ### Fix RPATHs to be relative (inside same dir)
 find %{buildroot}/opt/onlyoffice -type f -exec file {} \; | \
   grep ELF | cut -d: -f1 | while read f; do
-    patchelf --set-rpath '$ORIGIN' "$f" 2>/dev/null || true
+    patchelf --set-rpath '$ORIGIN:$ORIGIN/..:$ORIGIN/../lib' "$f" 2>/dev/null || true
 done
+
+### Create wrapper script for OnlyOffice
+mkdir -p %{buildroot}%{_bindir}
+
+cat > %{buildroot}%{_bindir}/onlyoffice-desktopeditors << 'EOF'
+#!/bin/bash
+APPDIR="/opt/onlyoffice/desktopeditors"
+export LD_LIBRARY_PATH="$APPDIR:$APPDIR/lib:$LD_LIBRARY_PATH"
+exec "$APPDIR/DesktopEditors" "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/onlyoffice-desktopeditors
+
+cat > %{buildroot}%{_bindir}/desktopeditors << 'EOF'
+#!/bin/bash
+exec /usr/bin/onlyoffice-desktopeditors "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/desktopeditors
 
 %files
 /opt/onlyoffice/**
