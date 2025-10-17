@@ -1,5 +1,5 @@
 Name:           onlyoffice
-Version:        9.1.0
+Version:        8.1.0
 Release:        1%{?dist}
 Summary:        OnlyOffice Desktop Editors
 
@@ -8,7 +8,7 @@ URL:            https://github.com/ONLYOFFICE/DesktopEditors
 Source0:        %{url}/releases/download/v%{version}/onlyoffice-desktopeditors.x86_64.rpm
 
 ExclusiveArch:  x86_64
-BuildRequires:  patchelf
+BuildRequires:  chrpath
 
 ## No generate dependencies (should avoid using this)
 # AutoReqProv: no
@@ -26,11 +26,14 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-### Remove invalid RPATHs from ELF binaries
-find %{buildroot}/opt/onlyoffice -type f -exec file {} \; | \
-  grep ELF | cut -d: -f1 | while read f; do
-    patchelf --remove-rpath "$f" 2>/dev/null || true
-done
+### Strip invalid RPATHs from all ELF binaries (shared objects and executables)
+find %{buildroot} -type f \( -name '*.so' -o -perm -111 \) -exec sh -c '
+    for bin; do
+        if file "$bin" | grep -q ELF && chrpath -l "$bin" 2>/dev/null | grep -q "/workspace/"; then
+            chrpath -d "$bin"
+        fi
+    done
+' sh {} +
 
 %files
 /opt/onlyoffice/**
