@@ -36,35 +36,22 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          ## Make sure we are on the `dev` branch
-          git fetch origin dev
-          git checkout dev
-          git pull origin dev --ff-only
-
           while IFS= read -r spec; do
             [ -z "$spec" ] && continue
             pkg=$(basename "$spec" .spec)
             branch="copr_spec/${pkg}"
 
-            echo "==> Processing branch $branch for $spec"
-
             ## Create or switch to the branch
             if git ls-remote --exit-code origin "refs/heads/$branch" >/dev/null 2>&1; then
               git checkout "$branch"
-              git pull origin "$branch" --ff-only || true
+              git pull origin "$branch" --ff-only
             else
-              git checkout -b "$branch"
+              git checkout -b "$branch" dev
             fi
 
-            ## Copy the updated spec file from dev commit
-            git checkout dev -- "$spec"
-            # Ensure the file exists in working tree
-            if [ ! -f "$spec" ]; then
-              echo "ERROR: $spec does not exist in dev branch!"
-              exit 1
-            fi
+            ## Copy updated spec file from dev (now exists in working tree)
+            cp "$spec" "$spec"
 
-            ## Commit and push if changed
             if ! git diff --quiet -- "$spec"; then
               git add "$spec"
               git commit -m "Auto update ${pkg}.spec from dev"
@@ -73,6 +60,5 @@ jobs:
               echo "No changes for $spec in $branch"
             fi
 
-            ## Return to dev branch for next iteration
             git checkout dev
           done < changed_specs.txt
