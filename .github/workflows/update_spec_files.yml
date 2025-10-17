@@ -7,7 +7,7 @@ on:  # Trigger manually or on a schedule (e.g., weekly)
     - cron: '0 0 * * 0' # Weekly on Sunday at midnight
 
 jobs:
-  update-repo:
+  update-main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Central Repository
@@ -15,13 +15,51 @@ jobs:
         with:
           ref: main    # Specify the branch, default is `main`
 
-    ### Update the .spec files
+    ### Update the .spec files (this creates file `changed_specs.txt`)
       - name: Update .spec files
         run: |
           bash 0update_spec_version.sh
 
-    ### Update the repository
+    ### Update the repository (commit change on default branch)
       - name: Commit and Push Changes      # Commit all changed files back to the repository
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto update versions of .spec files"
+
+
+    ### Update each branch that has a changed .spec file
+      - name: Push updates to each package branch
+        if: success()
+        run: |
+          while IFS= read -r spec; do
+            pkg=$(basename "$spec" .spec)
+            branch="copr_spec/${pkg}"
+
+            echo "==> Updating branch $branch for $spec"
+
+            ## Ensure local changes are committed before switching
+            git stash push -u -m "temp" || true
+
+            ## Fetch and switch to the target branch (create if missing)
+            if git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+              git checkout "$branch"
+              git pull origin "$branch" --ff-only
+            else
+              git checkout -b "$branch" origin/main || git checkout -b "$branch"
+            fi
+
+            ## Restore the updated spec file
+            git checkout main -- "$spec"
+
+            ## Commit and push if changed
+            if ! git diff --quiet -- "$spec"; then
+              git add "$spec"
+              git commit -m "Auto update ${pkg}.spec from main"
+              git push origin "$branch"
+            else
+              echo "No changes for $spec in $branch"
+            fi
+
+            git checkout main
+            git stash pop || true
+          done < changed_specs.txt

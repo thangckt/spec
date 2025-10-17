@@ -72,11 +72,13 @@ fetch_zotero_version() {
 function update_spec_version() {
     local spec_file="$1"
     local new_version="$2"
+    local store_file="$3"
 
     current_version=$(grep -E '^Version:' "$spec_file" | awk '{print $2}')
     # Compare versions using sort -V (version sort)
     if [[ "$new_version" != "$current_version" ]] && [[ "$(printf "%s\n%s" "$current_version" "$new_version" | sort -V | tail -n1)" == "$new_version" ]]; then
         sed -i "s/^Version:[[:space:]]\+$current_version/Version:        $new_version/" "$spec_file"
+        tee >$store_file <<<"$spec_file"
     else
         new_version=""
     fi
@@ -87,74 +89,78 @@ function update_spec_version() {
 printf "%-15s %-15s %s\n" "Old_ver" "New_ver" "File"
 printf "%-15s %-15s %s\n" "---------" "---------" "---------"
 
+### initialize store file
+store_file="changed_specs.txt"
+[ -f "$store_file" ] && rm -f "$store_file"
+
 #####ANCHOR rustdesk
 repo_url="https://github.com/rustdesk/rustdesk"
 spec_files="repackRPM_rustdesk.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR electerm
 repo_url="https://github.com/electerm/electerm"
 spec_files="repackRPM_electerm.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR github-desktop
 repo_url="https://github.com/pol-rivero/github-desktop-plus"
 spec_files="repackRPM_github-desktop-plus.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR OnlyOffice
 repo_url="https://github.com/ONLYOFFICE/DesktopEditors"
 spec_files="repackRPM_onlyoffice.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR goldendict
 repo_url="https://github.com/goldendict/goldendict"
 spec_files="goldendict.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR rssguard
 repo_url="https://github.com/martinrotter/rssguard"
 spec_files="rssguard.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR zed
 repo_url="https://github.com/zed-industries/zed"
 spec_files="zed.spec"
 new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
 spec_files="ovito.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR Evolution
 repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
 spec_files="evolution1-data-server.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 repo_url="https://gitlab.gnome.org/GNOME/evolution"
 spec_files="evolution2.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
 spec_files="evolution3-ews.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR Zotero
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
-update_spec_version "$spec_files" "$new_version"
+update_spec_version "$spec_files" "$new_version" "$store_file"
 #####!SECTION
 
 
@@ -163,17 +169,17 @@ update_spec_version "$spec_files" "$new_version"
 # repo_url="https://gitlab.com/opensource-tracking/FreeFileSync"
 # spec_files="tarball_freefilesync.spec"
 # new_version=$(fetch_gitlab_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version"
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR pdf4qt
 # repo_url="https://github.com/JakubMelka/PDF4QT"
 # spec_files="pdf4qt.spec"
 # new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version"
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 
 #####ANCHOR vscodium
 # repo_url="https://github.com/VSCodium/vscodium"
 # spec_files="codium.spec"
 # new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version"
+# update_spec_version "$spec_files" "$new_version" "$store_file"
