@@ -78,7 +78,7 @@ function update_spec_version() {
     # Compare versions using sort -V (version sort)
     if [[ "$new_version" != "$current_version" ]] && [[ "$(printf "%s\n%s" "$current_version" "$new_version" | sort -V | tail -n1)" == "$new_version" ]]; then
         sed -i "s/^Version:[[:space:]]\+$current_version/Version:        $new_version/" "$spec_file"
-        tee >$store_file <<<"$spec_file"
+        tee -a "$store_file" <<<"$spec_file" >/dev/null
     else
         new_version=""
     fi
