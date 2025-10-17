@@ -91,7 +91,7 @@ printf "%-15s %-15s %s\n" "---------" "---------" "---------"
 
 ### initialize store file
 store_file="changed_specs.txt"
-[ -f "$store_file" ] && rm -f "$store_file"
+tee $store_file <<<"" >/dev/null
 
 #####ANCHOR rustdesk
 repo_url="https://github.com/rustdesk/rustdesk"
