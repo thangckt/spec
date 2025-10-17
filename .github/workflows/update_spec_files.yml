@@ -5,6 +5,9 @@ on:  # Trigger manually or on a schedule (e.g., weekly)
   workflow_dispatch: # Manual trigger
   schedule:
     - cron: '0 0 * * 0' # Weekly on Sunday at midnight
+  push:
+    branches:
+      - dev  # Trigger on push to `dev` branch
 
 jobs:
   update-repo:
