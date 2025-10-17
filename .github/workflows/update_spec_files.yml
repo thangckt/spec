@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Central Repository
         uses: actions/checkout@v4
         with:
-          ref: main    # Specify the branch, default is `main`
+          ref: dev    # Specify the branch, default is `main`
 
     ### Update the .spec files (this creates file `changed_specs.txt`)
       - name: Update .spec files
@@ -45,21 +45,21 @@ jobs:
               git checkout "$branch"
               git pull origin "$branch" --ff-only
             else
-              git checkout -b "$branch" origin/main || git checkout -b "$branch"
+              git checkout -b "$branch" origin/dev || git checkout -b "$branch"
             fi
 
             ## Restore the updated spec file
-            git checkout main -- "$spec"
+            git checkout dev -- "$spec"
 
             ## Commit and push if changed
             if ! git diff --quiet -- "$spec"; then
               git add "$spec"
-              git commit -m "Auto update ${pkg}.spec from main"
+              git commit -m "Auto update ${pkg}.spec from dev"
               git push origin "$branch"
             else
               echo "No changes for $spec in $branch"
             fi
 
-            git checkout main
+            git checkout dev
             git stash pop || true
           done < changed_specs.txt
