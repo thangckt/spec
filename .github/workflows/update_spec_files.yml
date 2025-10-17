@@ -1,4 +1,4 @@
-### NOTE: schedule-strigger only run on default branch
+### NOTE: schedule-strigger can only run on `default` branch.
 name: Update versions of .spec files
 
 on:  # Trigger manually or on a schedule (e.g., weekly)
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Central Repository
         uses: actions/checkout@v4
         with:
-          ref: copr_spec    # Specify the branch, default is `main`
+          ref: main    # Specify the branch, default is `main`
 
     ### Update the .spec files
       - name: Update .spec files
