@@ -27,7 +27,7 @@ jobs:
           commit_message: "Auto update versions of .spec files"
 
 
-    ### Update each branch that has a changed .spec file
+    ### Update multiple branches: each branch for each .spec file
       - name: Push updates to each package branch
         if: success()
         run: |
