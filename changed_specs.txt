@@ -1,2 +1,2 @@
 
-repackRPM_rustdesk.spec
+repackRPM_onlyoffice.spec
