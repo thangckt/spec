@@ -1,5 +1,5 @@
 Name:           onlyoffice
-Version:        9.1.0
+Version:        8.1.0
 Release:        1%{?dist}
 Summary:        OnlyOffice Desktop Editors
 
@@ -23,34 +23,11 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-### Strip invalid RPATHs from all ELF binaries (shared objects and executables)
-find %{buildroot} -type f \( -name '*.so' -o -perm -111 \) -exec sh -c '
-    for bin; do
-        if file "$bin" | grep -q ELF && chrpath -l "$bin" 2>/dev/null | grep -q "/workspace/"; then
-            chrpath -d "$bin"
-        fi
+### Fix invalid RPATHs
+find %{buildroot}/opt/onlyoffice/desktopeditors -type f -exec file {} \; | \
+    grep "ELF" | cut -d: -f1 | while read f; do
+        chrpath --delete "$f" || true
     done
-' sh {} +
-
-# ### Create wrapper script for OnlyOffice
-# mkdir -p %{buildroot}%{_bindir}
-
-# cat > %{buildroot}%{_bindir}/onlyoffice-desktopeditors << 'EOF'
-# #!/bin/bash
-# APPDIR="/opt/onlyoffice/desktopeditors"
-# export LD_LIBRARY_PATH="$APPDIR:$LD_LIBRARY_PATH"
-# export QT_QPA_PLATFORM_PLUGIN_PATH="$APPDIR/platforms"
-# export QT_PLUGIN_PATH="$APPDIR/plugins:$APPDIR"
-# export QT_QPA_PLATFORM="xcb"
-# exec "$APPDIR/DesktopEditors" "$@"
-# EOF
-# chmod +x %{buildroot}%{_bindir}/onlyoffice-desktopeditors
-
-# cat > %{buildroot}%{_bindir}/desktopeditors << 'EOF'
-# #!/bin/bash
-# exec /usr/bin/onlyoffice-desktopeditors "$@"
-# EOF
-# chmod +x %{buildroot}%{_bindir}/desktopeditors
 
 %files
 /opt/onlyoffice/**
