@@ -16,7 +16,7 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 # Nothing to do
 
 %build
-### Disable the RPATH QA check
+### Disable the RPATH QA check (avoid using: chrpath, patchelf)
 export QA_RPATHS=$((0x0001|0x0002))
 
 # Nothing to build
