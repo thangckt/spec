@@ -1,5 +1,5 @@
 Name:           onlyoffice
-Version:        9.1.0
+Version:        8.1.0
 Release:        1%{?dist}
 Summary:        OnlyOffice Desktop Editors
 
@@ -8,7 +8,7 @@ URL:            https://github.com/ONLYOFFICE/DesktopEditors
 Source0:        %{url}/releases/download/v%{version}/onlyoffice-desktopeditors.x86_64.rpm
 
 ExclusiveArch:  x86_64
-BuildRequires:  chrpath
+BuildRequires:  chrpath patchelf
 
 %description
 This is rpm package for ONLYOFFICE Desktop Editors.
