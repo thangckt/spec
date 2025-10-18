@@ -1,5 +1,5 @@
 Name:           onlyoffice
-Version:        9.1.0
+Version:        8.1.0
 Release:        1%{?dist}
 Summary:        OnlyOffice Desktop Editors
 
@@ -23,10 +23,15 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-### Fix invalid RPATHs
+### Fix invalid RPATHs safely: replace /opt/qt/... with $ORIGIN
 find %{buildroot}/opt/onlyoffice/desktopeditors -type f -exec file {} \; | \
-    grep "ELF" | cut -d: -f1 | while read f; do
-        chrpath --delete "$f" || true
+    grep ELF | cut -d: -f1 | while read f; do
+        # Read current RPATH
+        RPATH=$(chrpath -l "$f" 2>/dev/null | awk '{print $2}')
+        if echo "$RPATH" | grep -q '/opt/qt/5.9.9/gcc_64/lib'; then
+            echo "Fixing RPATH in $f"
+            chrpath -r '$ORIGIN' "$f" || true
+        fi
     done
 
 %files
