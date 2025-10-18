@@ -8,7 +8,6 @@ URL:            https://github.com/ONLYOFFICE/DesktopEditors
 Source0:        %{url}/releases/download/v%{version}/onlyoffice-desktopeditors.x86_64.rpm
 
 ExclusiveArch:  x86_64
-BuildRequires:  chrpath patchelf
 
 %description
 This is rpm package for ONLYOFFICE Desktop Editors.
@@ -20,6 +19,7 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 # Nothing to build
 
 %install
+### Disable the RPATH QA check
 export QA_RPATHS=$((0x0001|0x0002|0x0010))
 
 mkdir -p %{buildroot}
