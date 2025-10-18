@@ -20,6 +20,8 @@ This is rpm package for ONLYOFFICE Desktop Editors.
 # Nothing to build
 
 %install
+export QA_RPATHS=$((0x0001|0x0002|0x0010))
+
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
