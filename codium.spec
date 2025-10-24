@@ -3,7 +3,7 @@
 # This spec replaces `rustup` with `rust+cargo`
 
 Name:           codium
-Version:        1.104.16282
+Version:        1.105.17075
 Release:        1%{?dist}
 Summary:        Free/Libre Open Source Software Binaries of VSCode
 
