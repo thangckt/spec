@@ -16,7 +16,7 @@ BuildRequires:  libdrm-devel libglvnd-devel qt6-qtbase-devel qt6-qtmultimedia-de
 
 BuildRequires:  simdutf-devel fast_float-devel libtommath-devel openssl-devel libsqlite3x-devel libicu-devel fontconfig-devel
 
-BuildRequires:  copr:fedorainfracloud-org:fed500:skia
+BuildRequires:  skia
 
 %description
 Ladybird is an independent web browser implementing a new engine (LibWeb/LibJS).
@@ -35,6 +35,9 @@ git submodule update --init --recursive
 cd ..
 cp -a ladybird/. ./
 rm -rf ladybird
+
+# Enable fed500/skia COPR repo for Skia packages
+dnf -y copr enable fed500/skia || true
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_QT=ON
