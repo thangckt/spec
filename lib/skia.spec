@@ -1,5 +1,5 @@
 ### https://copr-dist-git.fedorainfracloud.org/packages/fed500/skia/skia.git/tree/skia.spec
-
+### skia=129 is required to build `ladybird` browser
 
 %global debug_package %{nil}
 
