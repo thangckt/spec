@@ -12,6 +12,7 @@ Source0:        https://github.com/LadybirdBrowser/ladybird.git
 BuildRequires:  cmake >= 3.25
 BuildRequires:  ninja-build gcc-c++ pkg-config
 BuildRequires:  autoconf-archive automake ccache git libdrm-devel liberation-sans-fonts libglvnd-devel libtool nasm patchelf perl-FindBin perl-IPC-Cmd perl-lib perl-Time-Piece qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qttools-devel qt6-qtwayland-devel zlib-ng-compat-static
+BuildRequires:  simdutf-devel
 
 %description
 Ladybird is an independent web browser implementing a new engine (LibWeb/LibJS).
