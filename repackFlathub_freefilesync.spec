@@ -23,11 +23,11 @@ rm -rf extractdir
 mkdir -p extractdir
 tar -xzf %{SOURCE0} -C extractdir
 
-# At this point, we have a single file FreeFileSync-14.5-Install.run
-chmod +x FreeFileSync-%{version}-Install.run
+# At this point, we have a single file FreeFileSync_14.5_Install.run
+chmod +x FreeFileSync_%{version}_Install.run
 
 # Extract its contents without running installation
-./FreeFileSync-%{version}-Install.run --target ./extracted --noexec
+./FreeFileSync_%{version}_Install.run --target ./extracted --noexec
 
 %build
 # No compilation needed; the binaries are prebuilt.
