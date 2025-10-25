@@ -15,7 +15,7 @@ BuildRequires:  autoconf-archive automake ccache liberation-sans-fonts libtool n
 BuildRequires:  libdrm-devel libglvnd-devel qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qttools-devel qt6-qtwayland-devel
 
 BuildRequires:  simdutf-devel fast_float-devel libtommath-devel openssl-devel libsqlite3x-devel libicu-devel fontconfig-devel
-BuildRequires:  skia
+BuildRequires:  skia-devel
 
 %description
 Ladybird is an independent web browser implementing a new engine (LibWeb/LibJS).
