@@ -37,7 +37,7 @@ cp -a ladybird/. ./
 rm -rf ladybird
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_QT=ON -DSKIA_ENABLED=OFF
+%cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_QT=ON
 %cmake_build
 
 %install
