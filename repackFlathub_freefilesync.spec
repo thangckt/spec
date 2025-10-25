@@ -25,9 +25,12 @@ tar -xzf %{SOURCE0}
 chmod +x FreeFileSync_%{version}_Install.run
 
 # Extract its contents without running installer GUI
-# The "DISPLAY=" prevents it from trying to open a window
-# and we redirect input/output to avoid interactive prompts
-DISPLAY= TERM=dumb ./FreeFileSync_%{version}_Install.run --noexec --target extracted < /dev/null > /dev/null 2>&1
+# Identify offset and unpack manually (works for makeself)
+# This avoids executing the installer and bypasses GUI/terminal checks
+mkdir extracted
+sh FreeFileSync_%{version}_Install.run --noexec --target extracted || \
+    tail -n +$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' FreeFileSync_%{version}_Install.run) \
+    FreeFileSync_%{version}_Install.run | tar -xz -C extracted
 
 %build
 # No compilation needed; the binaries are prebuilt.

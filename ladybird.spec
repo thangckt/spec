@@ -1,4 +1,5 @@
 ### https://github.com/LadybirdBrowser/ladybird/blob/master/Documentation/BuildInstructionsLadybird.md
+### https://github.com/planetis-m/ladybird-rpm/blob/master/ladybird.spec
 
 Name:           ladybird
 Version:        0.0.1
