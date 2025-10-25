@@ -7,7 +7,6 @@ Summary:        A new independent web browser
 
 License:        2-clause BSD license
 URL:            https://github.com/LadybirdBrowser/ladybird
-#Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
 Source0:        https://github.com/LadybirdBrowser/ladybird.git
 
 BuildRequires:  cmake ninja-build gcc-c++ pkg-config
@@ -45,7 +44,7 @@ mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
 Name=LadyBird
-GenericName=Scientific Visualization Tool
+GenericName=LadyBird Web Browser
 Exec=ladybird
 Icon=ladybird
 Type=Application
