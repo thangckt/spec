@@ -7,7 +7,8 @@ Summary:        A new independent web browser
 
 License:        2-clause BSD license
 URL:            https://github.com/LadybirdBrowser/ladybird
-Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
+#Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
+Source0:        https://github.com/LadybirdBrowser/ladybird.git
 
 BuildRequires:  cmake ninja-build gcc-c++ pkg-config
 BuildRequires:  autoconf-archive automake ccache curl git libdrm-devel liberation-sans-fonts libglvnd-devel libtool nasm patchelf perl-FindBin perl-IPC-Cmd perl-lib perl-Time-Piece qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qttools-devel qt6-qtwayland-devel tar unzip zip zlib-ng-compat-static
