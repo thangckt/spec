@@ -13,7 +13,8 @@ BuildRequires:  cmake >= 3.25
 BuildRequires:  ninja-build gcc-c++ pkg-config git
 BuildRequires:  autoconf-archive automake ccache liberation-sans-fonts libtool nasm patchelf perl-FindBin perl-IPC-Cmd perl-lib perl-Time-Piece zlib-ng-compat-static
 BuildRequires:  libdrm-devel libglvnd-devel qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qttools-devel qt6-qtwayland-devel
-BuildRequires:  simdutf-devel fast_float-devel libtommath-devel openssl-devel
+
+BuildRequires:  simdutf-devel fast_float-devel libtommath-devel openssl-devel libsqlite3x-devel
 
 %description
 Ladybird is an independent web browser implementing a new engine (LibWeb/LibJS).
