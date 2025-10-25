@@ -1,3 +1,2 @@
 
-codium.spec
-ovito.spec
+zed.spec
