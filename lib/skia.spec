@@ -5,7 +5,7 @@
 
 Name:           skia
 # https://chromiumdash.appspot.com/schedule
-Version:        132
+Version:        129
 Release:        1%{?dist}
 Summary:        Rendering library
 
