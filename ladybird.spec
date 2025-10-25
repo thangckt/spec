@@ -10,7 +10,7 @@ URL:            https://github.com/LadybirdBrowser/ladybird
 Source0:        https://github.com/LadybirdBrowser/ladybird.git
 
 BuildRequires:  cmake >= 3.25
-BuildRequires:  ninja-build gcc-c++ pkg-config git
+BuildRequires:  ninja-build gcc-c++ git
 BuildRequires:  autoconf-archive automake ccache liberation-sans-fonts libtool nasm patchelf perl-FindBin perl-IPC-Cmd perl-lib perl-Time-Piece zlib-ng-compat-static
 BuildRequires:  libdrm-devel libglvnd-devel qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qttools-devel qt6-qtwayland-devel
 
