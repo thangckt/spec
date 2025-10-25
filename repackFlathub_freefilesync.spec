@@ -18,7 +18,10 @@ BuildRequires:  shared-mime-info
 FreeFileSync is a folder comparison and synchronization software that creates and manages backup copies of your important files.
 
 %prep
-%setup -q -n freefilesync-%{version}
+# Extract the source tarball
+rm -rf extractdir
+mkdir -p extractdir
+tar -xzf %{SOURCE0} -C extractdir
 
 # At this point, we have a single file FreeFileSync-14.5-Install.run
 chmod +x FreeFileSync-%{version}-Install.run
