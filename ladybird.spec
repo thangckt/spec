@@ -3,19 +3,20 @@
 Name:           ladybird
 Version:        0.1.0
 Release:        1%{?dist}
-Summary:        A new independent web browser
+Summary:        Ladybird — an independent web browser (pre-alpha)
 
-License:        2-clause BSD license
+License:        BSD-2-Clause
 URL:            https://github.com/LadybirdBrowser/ladybird
 Source0:        https://github.com/LadybirdBrowser/ladybird.git
 
-BuildRequires:  cmake ninja-build gcc-c++ pkg-config
+# Key requirements: modern CMake (>=3.25), ninja, nasm, Qt6 (including multimedia), modern c++ compiler.
+BuildRequires:  cmake>=3.25 ninja-build gcc-c++ pkg-config
 BuildRequires:  autoconf-archive automake ccache curl git libdrm-devel liberation-sans-fonts libglvnd-devel libtool nasm patchelf perl-FindBin perl-IPC-Cmd perl-lib perl-Time-Piece qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qttools-devel qt6-qtwayland-devel tar unzip zip zlib-ng-compat-static
 
-Requires:
+# Requires:
 
 %description
-LadyBird is a new independent web browser.
+Ladybird is an independent web browser implementing a new engine (LibWeb/LibJS).
 
 %prep
 #autosetup
