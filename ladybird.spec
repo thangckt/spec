@@ -22,7 +22,8 @@ Ladybird is an independent web browser implementing a new engine (LibWeb/LibJS).
 ### Clone the repository with submodules
 git clone --recurse-submodules https://github.com/LadybirdBrowser/ladybird.git ladybird
 cd ladybird
-git checkout %{version}
+# git checkout %{version}
+git checkout master
 git submodule update --init --recursive
 
 ## Move source to expected build directory root
