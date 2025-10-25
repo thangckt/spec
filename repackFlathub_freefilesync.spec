@@ -19,9 +19,7 @@ FreeFileSync is a folder comparison and synchronization software that creates an
 
 %prep
 # Extract the source tarball
-rm -rf extractdir
-mkdir -p extractdir
-tar -xzf %{SOURCE0} -C extractdir
+tar -xzf %{SOURCE0}
 
 # At this point, we have a single file FreeFileSync_14.5_Install.run
 chmod +x FreeFileSync_%{version}_Install.run
