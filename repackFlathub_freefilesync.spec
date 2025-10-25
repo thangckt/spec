@@ -28,30 +28,37 @@ tar -xzf %{SOURCE0} -C %{name}-%{version}
 # No compilation needed; the application is precompiled.
 
 %install
-# Install the FreeFileSync binaries
-mkdir -p %{buildroot}/%{_bindir}
-cp -a Bin/* %{buildroot}/%{_bindir}/
+# Create install directories
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+mkdir -p %{buildroot}%{_datadir}/metainfo
 
-# Install desktop entries
-mkdir -p %{buildroot}/%{_datadir}/applications
-cp -a *.desktop %{buildroot}/%{_datadir}/applications/
+# Copy binaries
+install -m 0755 FreeFileSync %{buildroot}%{_bindir}/FreeFileSync
+install -m 0755 RealTimeSync %{buildroot}%{_bindir}/RealTimeSync
 
-# Install icons
-mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/128x128/apps
-cp -a *.png %{buildroot}/%{_datadir}/icons/hicolor/128x128/apps/
+# Copy desktop files
+install -m 0644 FreeFileSync.desktop %{buildroot}%{_datadir}/applications/
+install -m 0644 RealTimeSync.desktop %{buildroot}%{_datadir}/applications/
 
-# Install appdata XML
-mkdir -p %{buildroot}/%{_datadir}/appdata
-cp -a *.appdata.xml %{buildroot}/%{_datadir}/appdata/
+# Copy icons
+install -m 0644 Resources/FreeFileSync.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
+install -m 0644 Resources/RealTimeSync.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
+
+# Copy AppData (metainfo)
+install -m 0644 org.freefilesync.FreeFileSync.appdata.xml %{buildroot}%{_datadir}/metainfo/
 
 %files
+%license License.txt
+%doc Readme.txt
 %{_bindir}/FreeFileSync
 %{_bindir}/RealTimeSync
-%{_datadir}/applications/org.freefilesync.FreeFileSync.desktop
-%{_datadir}/applications/org.freefilesync.FreeFileSync.RealTimeSync.desktop
-%{_datadir}/icons/hicolor/*/apps/org.freefilesync.FreeFileSync.png
-%{_datadir}/icons/hicolor/*/apps/org.freefilesync.FreeFileSync.RealTimeSync.png
-%{_datadir}/appdata/org.freefilesync.FreeFileSync.appdata.xml
+%{_datadir}/applications/FreeFileSync.desktop
+%{_datadir}/applications/RealTimeSync.desktop
+%{_datadir}/icons/hicolor/128x128/apps/FreeFileSync.png
+%{_datadir}/icons/hicolor/128x128/apps/RealTimeSync.png
+%{_datadir}/metainfo/org.freefilesync.FreeFileSync.appdata.xml
 
 %changelog
 %autochangelog
