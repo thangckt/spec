@@ -20,7 +20,9 @@ FreeFileSync is a folder comparison and synchronization software that creates an
 
 %prep
 # Extract the source tarball
-%setup -q -n FreeFileSync_%{version}_Linux_x86_64
+rm -rf %{name}-%{version}
+mkdir -p %{name}-%{version}
+tar -xzf %{SOURCE0} -C %{name}-%{version}
 
 %build
 # No compilation needed; the application is precompiled.
@@ -47,8 +49,8 @@ cp -a *.appdata.xml %{buildroot}/%{_datadir}/appdata/
 %{_bindir}/RealTimeSync
 %{_datadir}/applications/org.freefilesync.FreeFileSync.desktop
 %{_datadir}/applications/org.freefilesync.FreeFileSync.RealTimeSync.desktop
-%{_datadir}/icons/hicolor/128x128/apps/org.freefilesync.FreeFileSync.png
-%{_datadir}/icons/hicolor/128x128/apps/org.freefilesync.FreeFileSync.RealTimeSync.png
+%{_datadir}/icons/hicolor/*/apps/org.freefilesync.FreeFileSync.png
+%{_datadir}/icons/hicolor/*/apps/org.freefilesync.FreeFileSync.RealTimeSync.png
 %{_datadir}/appdata/org.freefilesync.FreeFileSync.appdata.xml
 
 %changelog
