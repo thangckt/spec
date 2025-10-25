@@ -5,7 +5,7 @@ Summary:        Open-source file synchronization and backup software
 
 License:        GPL-3.0-or-later
 URL:            https://github.com/flathub/org.freefilesync.FreeFileSync
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
+Source0:        %{url}/releases/download/reupload-%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
 
 BuildRequires:  gtk2-devel
 BuildRequires:  wxGTK3
