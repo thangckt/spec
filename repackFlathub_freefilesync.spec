@@ -5,8 +5,7 @@ Summary:        Open-source file synchronization and backup software
 
 License:        GPL-3.0-or-later
 URL:            https://github.com/flathub/org.freefilesync.FreeFileSync
-Source0:        %{url}/releases/download/reupload-%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
-
+Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  gtk2-devel
 BuildRequires:  wxGTK3
@@ -19,20 +18,25 @@ BuildRequires:  shared-mime-info
 FreeFileSync is a folder comparison and synchronization software that creates and manages backup copies of your important files.
 
 %prep
-# Extract the source tarball
-rm -rf %{name}-%{version}
-mkdir -p %{name}-%{version}
-tar -xzf %{SOURCE0} -C %{name}-%{version}
+%setup -q -n freefilesync-%{version}
+
+# At this point, we have a single file FreeFileSync-14.5-Install.run
+chmod +x FreeFileSync-%{version}-Install.run
+
+# Extract its contents without running installation
+./FreeFileSync-%{version}-Install.run --target ./extracted --noexec
 
 %build
-# No compilation needed; the application is precompiled.
+# No compilation needed; the binaries are prebuilt.
 
 %install
+cd extracted
+
 # Create install directories
-mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/applications
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
-mkdir -p %{buildroot}%{_datadir}/metainfo
+install -d %{buildroot}%{_bindir}
+install -d %{buildroot}%{_datadir}/applications
+install -d %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+install -d %{buildroot}%{_datadir}/metainfo
 
 # Copy binaries
 install -m 0755 FreeFileSync %{buildroot}%{_bindir}/FreeFileSync
@@ -46,12 +50,19 @@ install -m 0644 RealTimeSync.desktop %{buildroot}%{_datadir}/applications/
 install -m 0644 Resources/FreeFileSync.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 install -m 0644 Resources/RealTimeSync.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 
-# Copy AppData (metainfo)
-install -m 0644 org.freefilesync.FreeFileSync.appdata.xml %{buildroot}%{_datadir}/metainfo/
+# Copy AppData (if exists)
+if [ -f org.freefilesync.FreeFileSync.appdata.xml ]; then
+    install -m 0644 org.freefilesync.FreeFileSync.appdata.xml %{buildroot}%{_datadir}/metainfo/
+fi
+
+# Copy documentation
+install -d %{buildroot}%{_docdir}/%{name}
+cp -p Readme.txt %{buildroot}%{_docdir}/%{name}/
+cp -p License.txt %{buildroot}%{_docdir}/%{name}/
 
 %files
-%license License.txt
-%doc Readme.txt
+%license %{_docdir}/%{name}/License.txt
+%doc %{_docdir}/%{name}/Readme.txt
 %{_bindir}/FreeFileSync
 %{_bindir}/RealTimeSync
 %{_datadir}/applications/FreeFileSync.desktop
