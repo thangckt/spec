@@ -135,12 +135,6 @@ spec_files="zed.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR vscodium
-repo_url="https://github.com/VSCodium/vscodium"
-spec_files="codium.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
 spec_files="ovito.spec"
@@ -181,6 +175,12 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 #####ANCHOR pdf4qt
 # repo_url="https://github.com/JakubMelka/PDF4QT"
 # spec_files="pdf4qt.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR vscodium
+# repo_url="https://github.com/VSCodium/vscodium"
+# spec_files="codium.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
