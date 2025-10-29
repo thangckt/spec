@@ -2,7 +2,7 @@
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
 
 Name:           rssguard
-Version:        4.8.5
+Version:        4.8.6
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 

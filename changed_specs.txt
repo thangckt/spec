@@ -1,2 +1,12 @@
 
+repackRPM_rustdesk.spec
+repackRPM_github-desktop-plus.spec
+repackRPM_onlyoffice.spec
+goldendict.spec
+rssguard.spec
 zed.spec
+ovito.spec
+evolution1-data-server.spec
+evolution2.spec
+evolution3-ews.spec
+tarball_zotero.spec
