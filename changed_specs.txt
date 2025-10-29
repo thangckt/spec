@@ -1,2 +1,3 @@
 
-repackRPM_onlyoffice.spec
+modules.spec
+ovito.spec
