@@ -2,7 +2,7 @@
 # - evolution-ews: https://src.fedoraproject.org/rpms/evolution-ews/blob/rawhide/f/evolution-ews.spec
 
 Name:           evolution-ews
-Version:        3.58.1
+Version:        3.58.0
 Release:        1%{?dist}
 Summary:        GNOME Evolution EWS plugin
 License:        GPL-2.0-or-later

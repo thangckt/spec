@@ -2,7 +2,7 @@
 ### The bundled git is not pure git, it has customize with extra features.
 
 Name:           github-desktop-plus
-Version:        3.5.3.10
+Version:        3.5.3.8
 Release:        1%{?dist}
 Summary:        GitHub Desktop Plus
 
