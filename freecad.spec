@@ -29,6 +29,9 @@ License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
 Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
+Source1:        https://github.com/Ondsel-Development/OndselSolver/archive/refs/heads/main.tar.gz#/OndselSolver-main.tar.gz
+Source2:        https://github.com/microsoft/GSL/archive/refs/tags/v4.1.0.tar.gz#/GSL-4.1.0.tar.gz
+Source3:        https://github.com/FreeCAD/AddonManager/archive/refs/heads/main.tar.gz#/AddonManager-main.tar.gz
 
 
 # Maintainers:  keep this list of plugins up to date
@@ -138,7 +141,16 @@ Development file for OndselSolver
 %endif
 
 %prep
-%autosetup -n FreeCAD-%{version}
+    %autosetup -n FreeCAD-%{version}
+
+    # Extract and place git submodules
+    tar -xzf %{SOURCE1}
+    tar -xzf %{SOURCE2}
+    tar -xzf %{SOURCE3}
+    rmdir src/3rdParty/OndselSolver src/3rdParty/GSL src/Mod/AddonManager 2>/dev/null || true
+    mv OndselSolver-main src/3rdParty/OndselSolver
+    mv GSL-4.1.0 src/3rdParty/GSL
+    mv AddonManager-main src/Mod/AddonManager
 
 %build
      # Deal with cmake projects that tend to link excessively.
@@ -328,4 +340,4 @@ Development file for OndselSolver
     %{_includedir}/OndselSolver/*
 
 %changelog
-%autochangelog
+    %autochangelog
