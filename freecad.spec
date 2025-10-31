@@ -17,7 +17,6 @@
 # rpmbuild --without=debug_info don't generate package with debug info
 %bcond_without debug_info
 
-https://github.com/FreeCAD/FreeCAD/archive/refs/tags/weekly-2025.10.31.tar.gz
 
 Name:           freecad
 Epoch:          1
