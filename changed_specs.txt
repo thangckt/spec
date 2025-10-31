@@ -1,3 +1,2 @@
 
-modules.spec
-ovito.spec
+zed.spec
