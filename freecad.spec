@@ -17,10 +17,12 @@
 # rpmbuild --without=debug_info don't generate package with debug info
 %bcond_without debug_info
 
+https://github.com/FreeCAD/FreeCAD/archive/refs/tags/weekly-2025.10.31.tar.gz
 
 Name:           freecad
 Epoch:          1
-Version:        1.0.2
+#ersion:        1.0.2
+Version:        2025.10.31
 Release:        1%{?dist}
 
 Summary:        A general purpose 3D CAD modeler
@@ -28,7 +30,8 @@ Group:          Applications/Engineering
 License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
-Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
+#ource0:        %{url}/archive/refs/tags/%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/weekly-%{version}.tar.gz
 Source1:        https://github.com/Ondsel-Development/OndselSolver/archive/refs/heads/main.tar.gz#/OndselSolver-main.tar.gz
 Source2:        https://github.com/microsoft/GSL/archive/refs/tags/v4.1.0.tar.gz#/GSL-4.1.0.tar.gz
 Source3:        https://github.com/FreeCAD/AddonManager/archive/refs/heads/main.tar.gz#/AddonManager-main.tar.gz
@@ -141,7 +144,8 @@ Development file for OndselSolver
 %endif
 
 %prep
-    %autosetup -n FreeCAD-%{version}
+    # FreeCAD-%{version}
+    %autosetup -n FreeCAD-weekly-%{version}
 
     # Extract and place git submodules
     tar -xzf %{SOURCE1}
