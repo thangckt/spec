@@ -26,9 +26,9 @@ Release:        1%{?dist}
 Summary:        A general purpose 3D CAD modeler
 Group:          Applications/Engineering
 License:        LGPL-2.0-or-later
-URL:            https://www.freecad.org/
+URL:            https://github.com/FreeCAD/FreeCAD
 
-Source0:        freecad-sources.tar.gz
+Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
 
 
 # Maintainers:  keep this list of plugins up to date
@@ -138,7 +138,7 @@ Development file for OndselSolver
 %endif
 
 %prep
-    %setup -T -a 0 -q -c -n FreeCAD-1.0.2
+%autosetup -n FreeCAD-%{version}
 
 %build
      # Deal with cmake projects that tend to link excessively.
