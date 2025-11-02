@@ -55,7 +55,8 @@ fi
 ### Create desktop entry
 cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
 [Desktop Entry]
-Name=Helium Browser
+Name=Helium
+GenericName=Web Browser
 Exec=helium %U
 StartupWMClass=helium
 Terminal=false
