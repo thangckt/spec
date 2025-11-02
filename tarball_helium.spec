@@ -30,10 +30,7 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 Best privacy by default, unbiased ad-blocking, no bloat and no noise.
 
 %prep
-# Manually extract the source tarball (to avoid tag 404 errors)
-mkdir -p %{_builddir}/helium-%{version}-x86_64_linux
-tar -xf %{SOURCE0} -C %{_builddir}/helium-%{version}-x86_64_linux --strip-components=1
-cd %{_builddir}/helium-%{version}-x86_64_linux
+%setup -q -n helium-%{version}-x86_64_linux
 
 %build
 # Nothing to build
