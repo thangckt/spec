@@ -8,8 +8,7 @@ Summary:        Helium Browser
 
 License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
-Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
-
+Source0:        %{url}/releases/download/0.5.8.1/helium-0.5.8.1-x86_64_linux.tar.xz
 
 BuildArch:      x86_64
 

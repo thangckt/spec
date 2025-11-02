@@ -129,15 +129,15 @@ spec_files="rssguard.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR zed
-repo_url="https://github.com/zed-industries/zed"
-spec_files="zed.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR modules
 repo_url="https://github.com/envmodules/modules"
 spec_files="modules.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR helium
+repo_url="https://github.com/imputnet/helium-linux"
+spec_files="tarball_helium.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -187,5 +187,11 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 #####ANCHOR vscodium
 # repo_url="https://github.com/VSCodium/vscodium"
 # spec_files="codium.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR zed
+# repo_url="https://github.com/zed-industries/zed"
+# spec_files="zed.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
