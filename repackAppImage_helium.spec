@@ -1,7 +1,7 @@
 ### Repack Helium AppImage into an RPM
 
 Name:           helium
-Version:        0.6.3.1
+Version:        0.5.8.1
 Release:        1%{?dist}
 Summary:        Helium Browser
 
