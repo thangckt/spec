@@ -1,6 +1,8 @@
 ### https://copr-dist-git.fedorainfracloud.org/packages/v8v88v8v88/helium/helium.git/tree/helium.spec?h=f43
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
+### Note: Copr can access github url `archives/refs/tags`, but cannot access `releases/download` url if use `autosetup`, and raise 404 errors.
+
 Name:           helium
 Version:        0.6.3.1
 Release:        1%{?dist}
