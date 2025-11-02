@@ -11,7 +11,8 @@ Summary:        Helium Browser - Privacy-focused Chromium fork
 
 License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
-Source0:        https://github.com/imputnet/helium-linux/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
+#ource0:        https://github.com/imputnet/helium-linux/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
+Source0:        helium-%{version}-x86_64_linux.tar.xz
 
 BuildArch:      x86_64
 
