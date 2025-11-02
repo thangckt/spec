@@ -9,7 +9,6 @@ License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}.x86_64.AppImage
 
-
 ExclusiveArch:  x86_64
 BuildRequires:  desktop-file-utils
 
