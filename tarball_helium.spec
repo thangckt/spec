@@ -1,4 +1,4 @@
-### https://copr-dist-git.fedorainfracloud.org/packages/v8v88v8v88/helium/helium.git/tree/helium.spec?h=f43
+### https://copr-dist-git.fedorainfracloud.org/packages/v8v88v8v88/helium/helium.git/tree/
 ### https://github.com/itexpert120/helium-browser-copr/blob/main/helium.spec
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
@@ -13,6 +13,7 @@ License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
 #ource0:        https://github.com/imputnet/helium-linux/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 Source0:        https://github.com/imputnet/helium-linux/archive/refs/tags/0.6.3.1.tar.gz
+
 
 BuildArch:      x86_64
 
