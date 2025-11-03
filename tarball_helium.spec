@@ -15,7 +15,7 @@ Source0:        https://github.com/imputnet/helium-linux/releases/download/%{ver
 #ource0:        https://github.com/imputnet/helium-linux/archive/refs/tags/0.6.3.1.tar.gz
 
 
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 
 Requires:       desktop-file-utils
 Requires:       gtk3
@@ -32,10 +32,7 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 Best privacy by default, unbiased ad-blocking, no bloat and no noise.
 
 %prep
-#autosetup -n helium-%{version}-x86_64_linux
-
-%autosetup -c -T
-tar xJf %{SOURCE0}
+%autosetup -n helium-%{version}-x86_64_linux
 
 %build
 # Nothing to build
