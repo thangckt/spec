@@ -5,16 +5,15 @@
 ### Note: Copr can access github url `archives/refs/tags`, but cannot access `releases/download` url if use `autosetup`, and raise 404 errors.
 
 Name:           helium
-Version:        0.5.8.1
+Version:        0.6.3.1
 Release:        1%{?dist}
 Summary:        Helium Browser - Privacy-focused Chromium fork
 
 License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
-Source0:        https://github.com/imputnet/helium-linux/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
-#ource0:        https://github.com/imputnet/helium-linux/archive/refs/tags/0.6.3.1.tar.gz
+#ource0:        %{URL}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
-ExclusiveArch:  x86_64
+BuildArch:  x86_64
 
 Requires:       desktop-file-utils
 Requires:       gtk3
@@ -31,7 +30,9 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 Best privacy by default, unbiased ad-blocking, no bloat and no noise.
 
 %prep
-%autosetup -n helium-%{version}-x86_64_linux
+curl -L -o helium-%{version}-x86_64_linux.tar.xz \
+    %{URL}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
+tar -xf helium-%{version}-x86_64_linux.tar.xz
 
 %build
 # Nothing to build
