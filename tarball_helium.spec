@@ -2,8 +2,6 @@
 ### https://github.com/itexpert120/helium-browser-copr/blob/main/helium.spec
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
-### Note: Copr can access github url `archives/refs/tags`, but cannot access `releases/download` url if use `autosetup`, and raise 404 errors.
-
 Name:           helium
 Version:        0.6.3.1
 Release:        1%{?dist}
@@ -11,15 +9,12 @@ Summary:        Helium Browser - Privacy-focused Chromium fork
 
 License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
-Source0:        %{URL}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
+Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
 BuildArch:      x86_64
 
 Requires:       desktop-file-utils
-Requires:       gtk3
-Requires:       libX11
-Requires:       libdrm
-Requires:       mesa-libGL
+Requires:       gtk3 libX11 libdrm mesa-libGL
 
 # Disable debug package
 %define debug_package %{nil}

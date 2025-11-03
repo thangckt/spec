@@ -3,24 +3,28 @@
     # Manually install files into %{buildroot} using 'install/cp'.
 
 Name:       freefilesync
-Version:    14.4
+Version:    14.5
 Release:    1%{?dist}
 Summary:    A file synchronization utility
-License:    GPLv3
-URL:        http://www.freefilesync.org/
 
-Source0:    https://freefilesync.org/download/FreeFileSync_%{version}_Linux.tar.gz
+License:    GPLv3
+#RL:        http://www.freefilesync.org/
+URL:        https://github.com/flathub/org.freefilesync.FreeFileSync
+Source0:    %{url}/releases/download/reupload-%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
+
+# Disable debug package
+%define debug_package %{nil}
+%define __strip /bin/true
 
 %description
 FreeFileSync is an open-source software that helps synchronize files and folders on Windows, Linux, and macOS.
 This spec does not build from source, but only repacks the official precompiled Linux binaries.
 
 %prep
-# Extract tarball manually (contains only one .run file)
-tar -xzf %{SOURCE0}
+%autosetup -n FreeFileSync_%{version}_Linux_x86_64
 
 %build
-# Nothing to build - this is precompiled package
+# Nothing to build
 
 %install
 ./FreeFileSync_%{version}_Install.run --noexec --keep
