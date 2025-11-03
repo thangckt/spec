@@ -5,7 +5,7 @@
 ### Note: Copr can access github url `archives/refs/tags`, but cannot access `releases/download` url if use `autosetup`, and raise 404 errors.
 
 Name:           helium
-Version:        0.6.3.1
+Version:        0.5.8.1
 Release:        1%{?dist}
 Summary:        Helium Browser - Privacy-focused Chromium fork
 
@@ -13,7 +13,6 @@ License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
 Source0:        https://github.com/imputnet/helium-linux/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 #ource0:        https://github.com/imputnet/helium-linux/archive/refs/tags/0.6.3.1.tar.gz
-
 
 ExclusiveArch:  x86_64
 

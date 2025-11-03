@@ -19,6 +19,10 @@ How to get the spec file for a package:
 - https://github.com/PhantomX/chinforpms
 
 
+# Some notes for Copr spec files
+
+
+
 # Sections in spec files
 
 ## Auto replacement
