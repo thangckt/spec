@@ -32,7 +32,10 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 Best privacy by default, unbiased ad-blocking, no bloat and no noise.
 
 %prep
-%autosetup -n helium-%{version}-x86_64_linux
+#autosetup -n helium-%{version}-x86_64_linux
+
+%autosetup -c -T
+tar xJf %{SOURCE0}
 
 %build
 # Nothing to build
