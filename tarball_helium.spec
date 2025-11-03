@@ -1,4 +1,4 @@
-### https://copr-dist-git.fedorainfracloud.org/packages/v8v88v8v88/helium/helium.git/tree/
+### https://copr-dist-git.fedorainfracloud.org/packages/v8v88v8v88/helium/helium.git/tree/helium.spec?h=f43
 ### https://github.com/itexpert120/helium-browser-copr/blob/main/helium.spec
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
@@ -32,7 +32,9 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 Best privacy by default, unbiased ad-blocking, no bloat and no noise.
 
 %prep
-%setup -q -n helium-%{version}-x86_64_linux
+#setup -q -n helium--x86_64_linux
+
+%setup -q -n helium-linux-%{version}
 
 %build
 # Nothing to build
