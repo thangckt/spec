@@ -6,7 +6,7 @@ on:  # Trigger manually or on a schedule (e.g., weekly)
   schedule:
     - cron: '0 0 * * 0' # Weekly on Sunday at midnight
   push:
-    branches: [ dev]  # Trigger on push to `dev` branch
+    branches: [ 0dev]  # Trigger on push to `0dev` branch
 
 jobs:
   update-repo:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Central Repository
         uses: actions/checkout@v4
         with:
-          ref: dev    # Selected branch, default is `main`
+          ref: 0dev    # Selected branch, default is `main`
 
     ### Update the .spec files (this creates file `changed_specs.txt`)
       - name: Update .spec files
@@ -38,10 +38,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          ## Ensure branch `dev` is up to date
-          git fetch origin dev
-          git checkout dev
-          git pull origin dev --ff-only
+          ## Ensure branch `0dev` is up to date
+          git fetch origin 0dev
+          git checkout 0dev
+          git pull origin 0dev --ff-only
 
           while IFS= read -r spec; do
             [ -z "$spec" ] && continue
@@ -60,18 +60,18 @@ jobs:
               git rm -rf . >/dev/null 2>&1 || true
             fi
 
-            ## Bring the latest .spec file *from dev branch* into this branch
-            git checkout dev -- "$spec"
+            ## Bring the latest .spec file *from 0dev branch* into this branch
+            git checkout 0dev -- "$spec"
 
             ## Commit and push
             git add "$spec"
             if git diff --cached --quiet; then
               echo "No change for $spec"
             else
-              git commit -m "Auto update ${pkg}.spec from dev"
+              git commit -m "Auto update ${pkg}.spec from 0dev"
               git push origin "$branch" --force
             fi
 
-            ## Return to dev branch
-            git checkout dev
+            ## Return to 0dev branch
+            git checkout 0dev
           done < changed_specs.txt
