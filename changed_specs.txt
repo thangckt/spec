@@ -1,3 +1,2 @@
 
-repackRPM_electerm.spec
-repackRPM_github-desktop-plus.spec
+tarball_helium.spec
