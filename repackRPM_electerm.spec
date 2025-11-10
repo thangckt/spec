@@ -10,7 +10,7 @@ Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x
 ExclusiveArch:  x86_64
 
 ## No generate dependencies (should avoid using this)
-AutoReqProv: no
+# AutoReqProv: no
 
 %description
 RuskDesk (prebuilt binary). This package simply repackages the RPM for distribution via Copr.
