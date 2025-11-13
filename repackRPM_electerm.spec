@@ -1,5 +1,5 @@
 Name:           electerm
-Version:        2.3.6
+Version:        2.3.100
 Release:        1%{?dist}
 Summary:        terminal/ssh/telnet/serialport/RDP/VNC/sftp/ftp client
 
