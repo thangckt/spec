@@ -1,5 +1,5 @@
 Name:           electerm
-Version:        2.3.100
+Version:        2.3.6
 Release:        1%{?dist}
 Summary:        terminal/ssh/telnet/serialport/RDP/VNC/sftp/ftp client
 
@@ -10,7 +10,7 @@ Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x
 ExclusiveArch:  x86_64
 
 ## No generate dependencies (should avoid using this)
-# AutoReqProv: no
+AutoReqProv: no
 
 %description
 RuskDesk (prebuilt binary). This package simply repackages the RPM for distribution via Copr.
