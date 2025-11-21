@@ -1,2 +1,3 @@
 
-repackRPM_rustdesk.spec
+repackRPM_electerm.spec
+tarball_zotero.spec
