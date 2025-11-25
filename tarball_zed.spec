@@ -10,7 +10,6 @@ License:        AGPL-3.0-only AND Apache-2.0 AND GPL-3.0-or-later
 URL:            https://github.com/zed-industries/zed
 Source0:        %{url}/releases/download/v%{version}/zed-linux-x86_64.tar.gz
 
-
 BuildArch:      x86_64
 
 Requires:       desktop-file-utils
@@ -27,68 +26,30 @@ Code at the speed of thought — Zed is a high-performance, multiplayer code edi
 %autosetup -n zed-%{version}-x86_64_linux
 
 %build
-# Nothing to build
+# Nothing to build (precompiled)
 
 %install
-### Create directories
-mkdir -p %{buildroot}/usr/share/zed
-mkdir -p %{buildroot}/usr/bin
-mkdir -p %{buildroot}/usr/share/applications
-mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps
+# Install the whole bundle under /usr/libexec/zed
+mkdir -p %{buildroot}%{_libexecdir}/zed
+cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 
-### Copy all extracted files to /usr/share/zed
-cp -r * %{buildroot}/usr/share/zed/
+# Symlink main executable
+mkdir -p %{buildroot}%{_bindir}
+ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 
-# Find and link the main executable
-# The executable might be named 'zed' or 'chrome' in the extracted files
-if [ -f chrome ]; then
-    cp chrome %{buildroot}/usr/share/zed/
-    ln -sf /usr/share/zed/chrome %{buildroot}/usr/bin/zed
-elif [ -f zed ]; then
-    cp zed %{buildroot}/usr/share/zed/
-    ln -sf /usr/share/zed/zed %{buildroot}/usr/bin/zed
-fi
+# Install desktop file
+install -D -m 644 share/applications/zed.desktop \
+    %{buildroot}%{_datadir}/applications/zed.desktop
 
-### Create desktop entry
-cat > %{buildroot}%{_datadir}/applications/zed.desktop <<'EOF'
-[Desktop Entry]
-[Desktop Entry]
-Name=Zed Editor
-GenericName=Text Editor
-Exec=zed %U
-Icon=zed
-Type=Application
-StartupNotify=true
-Categories=Utility;TextEditor;Development;IDE;
-MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;
-Actions=NewWorkspace;
-Keywords=zed;
-StartupWMClass=dev.zed.Zed
-
-[Desktop Action NewWorkspace]
-Name=Open a new workspace
-Exec=zed --new %U
-EOF
-
-### Use the product logo as icon
-if [ -f product_logo_256.png ]; then
-    cp product_logo_256.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/zed.png
-else
-    # Create a simple placeholder icon if logo not found
-    touch %{buildroot}/usr/share/icons/hicolor/256x256/apps/zed.png
-fi
+# Install icons (already in correct structure)
+cp -r share/icons %{buildroot}%{_datadir}/
 
 %files
-/usr/share/zed/
-/usr/bin/zed
-/usr/share/applications/zed.desktop
-/usr/share/icons/hicolor/256x256/apps/zed.png
-
-%post
-/usr/bin/update-desktop-database &> /dev/null || :
-
-%postun
-/usr/bin/update-desktop-database &> /dev/null || :
+%license %{_libexecdir}/zed/licenses.md
+%{_bindir}/zed
+%{_libexecdir}/zed/
+%{_datadir}/applications/zed.desktop
+%{_datadir}/icons/hicolor/*/apps/zed.png
 
 %changelog
 %autochangelog
