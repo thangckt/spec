@@ -20,7 +20,7 @@ BuildArch:      x86_64
 Code at the speed of thought — Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
 
 %prep
-%autosetup -n "zed.app"
+%autosetup -n zed.app
 
 %build
 # Nothing to build (precompiled)
