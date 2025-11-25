@@ -34,9 +34,26 @@ cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 
-### Install desktop file
-install -D -m 644 share/applications/zed.desktop \
-    %{buildroot}%{_datadir}/applications/zed.desktop
+## Desktop file
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/zed.desktop <<'EOF'
+[Desktop Entry]
+Name=Zed
+GenericName=Text Editor
+Exec=zed %U
+Icon=zed
+Type=Application
+StartupNotify=true
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;
+Actions=NewWorkspace;
+Keywords=zed;
+StartupWMClass=dev.zed.Zed
+
+[Desktop Action NewWorkspace]
+Name=Open a new workspace
+Exec=zed --new %U
+EOF
 
 ### Install icons (already in correct structure)
 cp -r share/icons %{buildroot}%{_datadir}/
