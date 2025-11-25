@@ -23,7 +23,9 @@ BuildRequires:  zlibrary-devel  zlibrary
 Code at the speed of thought — Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
 
 %prep
-%autosetup -n zed-preview.app
+%setup -q -c -T
+tar -xzf %{SOURCE0}
+cd zed-preview.app
 
 %build
 # Nothing to build (precompiled)
