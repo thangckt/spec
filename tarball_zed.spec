@@ -12,9 +12,6 @@ Source0:        %{url}/releases/download/v%{version}/zed-linux-x86_64.tar.gz
 
 BuildArch:      x86_64
 
-Requires:       desktop-file-utils
-Requires:       gtk3 libX11 libdrm mesa-libGL
-
 # Disable debug package
 %define debug_package %{nil}
 %define __strip /bin/true
