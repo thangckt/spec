@@ -1,5 +1,6 @@
 ### ref: https://github.com/terrapkg/packages/blob/frawhide/anda/devs/zed/stable/zed.spec
 ### Use tarball to avoid building time.
+# not work, due to missing zlibrary dependency in the buildroot
 
 Name:           zed
 Version:        0.214.5
