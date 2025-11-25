@@ -149,7 +149,7 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR zed
 repo_url="https://github.com/zed-industries/zed"
-spec_files="zed.spec"
+spec_files="tarball_zed.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 

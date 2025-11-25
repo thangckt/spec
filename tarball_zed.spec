@@ -20,25 +20,25 @@ BuildArch:      x86_64
 Code at the speed of thought — Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
 
 %prep
-%autosetup -n zed-%{version}-x86_64_linux
+%autosetup -n zed.app
 
 %build
 # Nothing to build (precompiled)
 
 %install
-# Install the whole bundle under /usr/libexec/zed
+### Install the whole bundle under /usr/libexec/zed
 mkdir -p %{buildroot}%{_libexecdir}/zed
 cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 
-# Symlink main executable
+### Symlink main executable
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 
-# Install desktop file
+### Install desktop file
 install -D -m 644 share/applications/zed.desktop \
     %{buildroot}%{_datadir}/applications/zed.desktop
 
-# Install icons (already in correct structure)
+### Install icons (already in correct structure)
 cp -r share/icons %{buildroot}%{_datadir}/
 
 %files
