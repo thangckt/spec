@@ -12,8 +12,7 @@ Source0:        %{url}/releases/download/v%{version}/zed-linux-x86_64.tar.gz
 
 BuildArch:      x86_64
 
-BuildRequires: zlib-devel
-Requires: zlib
+BuildRequires: zlib-ng-compat
 
 # Disable debug package
 %define debug_package %{nil}
