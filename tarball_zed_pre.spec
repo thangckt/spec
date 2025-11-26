@@ -13,6 +13,8 @@ Source0:        %{url}/releases/download/v%{version}-pre/zed-linux-x86_64.tar.gz
 
 BuildArch:      x86_64
 
+BuildRequires:  zlib zlib-devel
+
 # Disable debug package
 %define debug_package %{nil}
 %define __strip /bin/true
@@ -21,10 +23,7 @@ BuildArch:      x86_64
 Code at the speed of thought — Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
 
 %prep
-%setup -q -c -T
-tar -xzf %{SOURCE0}
-cp -a zed-preview.app/. ./
-rm -rf zed-preview.app
+%autosetup -n zed-preview.app
 
 %build
 # Nothing to build (precompiled)
