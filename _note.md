@@ -1,8 +1,8 @@
-# Use Copr to build a package for Fedora
+# Use `Copr` to build a package for Fedora
 
 This file contains the `.spec` files for building multiple packages using Copr.
 
-See https://copr.fedorainfracloud.org/coprs/thangckt/multi_packages
+See https://copr.fedorainfracloud.org/coprs/thangckt/thang_foss
 
 
 # Official Fedora build system
@@ -207,3 +207,15 @@ ln -s /usr/bin/biber %{buildroot}%{install_dir}/bin/x86_64-linux/biber
 
 # rustdesk
 - version 1.4.1 is very slow on the client side, so use version 1.4.0 instead.
+
+# Issues
+## change `zlib` to `zlib-ng-compat`
+On `Nov 26 2025`, `Copr` for Fedora 43 switched from `zlib` to `zlib-ng-compat` as the default `zlib` implementation. This change may cause compatibility issues with some packages that depend on `zlib`, which lead to build error like:
+```
+/usr/bin/rpmbuild: error while loading shared libraries: libz.so.1:
+```
+
+To fix this, explicitly add `zlib-ng-compat` into COPR project’s **Buildroot Packages** list:
+- At main page of COPR project, click on `Settings` -> `Build options`
+- Click on `Edit` button, next to the `Chroots` (e.g., `fedora-43-x86_64`)
+- In the `Packages` field, add `zlib-ng-compat`
