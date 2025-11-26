@@ -3,7 +3,7 @@
 # not work, due to missing zlibrary dependency in the buildroot
 
 Name:           zed
-Version:        0.214.5
+Version:        0.214.3
 Release:        1%{?dist}
 Summary:        High-performance, multiplayer code editor
 
