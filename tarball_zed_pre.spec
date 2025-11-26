@@ -49,7 +49,7 @@ Categories=Utility;TextEditor;Development;IDE;
 MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;inode/directory;
 Actions=NewWorkspace;
 Keywords=zed;
-StartupWMClass=dev.zed.Zed
+StartupWMClass=dev.zed.Zed-Preview
 
 [Desktop Action NewWorkspace]
 Name=Open a new workspace
