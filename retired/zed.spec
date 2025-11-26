@@ -1,4 +1,5 @@
 ### ref: https://github.com/terrapkg/packages/blob/frawhide/anda/devs/zed/stable/zed.spec
+### https://github.com/koditoriet/zed-nomotion/blob/main/zed-nomotion.spec
 ### Note:
 #  - simplify desktop file from the original: https://github.com/zed-industries/zed/blob/main/crates/zed/resources/zed.desktop.in
 

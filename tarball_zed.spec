@@ -22,13 +22,10 @@ BuildRequires: zlib-ng-compat
 Code at the speed of thought — Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
 
 %prep
-# Do NOT extract tarball here
-echo "SRPM prep - skipping extraction"
+%autosetup -n zed.app
 
 %build
 # Nothing to build (precompiled)
-tar -xf %{SOURCE0}
-cd zed.app
 
 %install
 ### Install the whole bundle under /usr/libexec/zed
