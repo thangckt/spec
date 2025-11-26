@@ -23,7 +23,8 @@ Code at the speed of thought — Zed is a high-performance, multiplayer code edi
 %prep
 %setup -q -c -T
 tar -xzf %{SOURCE0}
-cd zed-preview.app
+cp -a zed-preview.app/. ./
+rm -rf zed-preview.app
 
 %build
 # Nothing to build (precompiled)
