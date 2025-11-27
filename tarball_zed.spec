@@ -56,6 +56,7 @@ Exec=zed --new %U
 EOF
 
 ### Create "Open with" menu
+mkdir -p %{buildroot}%{_datadir}/kio/servicemenus
 cat > %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop <<'EOF'
 [Desktop Entry]
 Type=Service
