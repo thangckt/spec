@@ -34,7 +34,7 @@ cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 
-## Desktop file
+### Desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/zed.desktop <<'EOF'
 [Desktop Entry]
@@ -45,7 +45,7 @@ Icon=zed
 Type=Application
 StartupNotify=true
 Categories=Utility;TextEditor;Development;IDE;
-MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;inode/directory;
+MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;
 Actions=NewWorkspace;
 Keywords=zed;
 StartupWMClass=dev.zed.Zed-Preview
@@ -53,6 +53,22 @@ StartupWMClass=dev.zed.Zed-Preview
 [Desktop Action NewWorkspace]
 Name=Open a new workspace
 Exec=zed --new %U
+EOF
+
+### Create "Open with" menu
+cat > %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop <<'EOF'
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=inode/directory;
+X-KDE-Priority=TopLevel
+Actions=openInZed
+X-KDE-StartupNotify=false
+
+[Desktop Action openInZed]
+Name=Open in Zed
+Icon=zed
+Exec=zed %u
 EOF
 
 ### Install icons (already in correct structure)
@@ -63,6 +79,7 @@ cp -r share/icons %{buildroot}%{_datadir}/
 %{_bindir}/zed
 %{_libexecdir}/zed/
 %{_datadir}/applications/zed.desktop
+%{_datadir}/kio/servicemenus/open_in_zed.desktop
 %{_datadir}/icons/hicolor/*/apps/zed.png
 
 %changelog
