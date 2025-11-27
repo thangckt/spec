@@ -2,7 +2,7 @@
 ### Use tarball to avoid building time.
 
 Name:           zed
-Version:        0.215.2
+Version:        0.215.1
 Release:        1%{?dist}
 Summary:        High-performance, multiplayer code editor
 
@@ -38,7 +38,7 @@ ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/zed.desktop <<'EOF'
 [Desktop Entry]
-Name=Zed
+Name=Zed Preview
 GenericName=Text Editor
 Exec=zed %U
 Icon=zed
