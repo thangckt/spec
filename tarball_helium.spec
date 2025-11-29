@@ -5,7 +5,7 @@
 Name:           helium
 Version:        0.6.9.1
 Release:        1%{?dist}
-Summary:        Helium Browser - Privacy-focused Chromium fork
+Summary:        Helium Browser 
 
 License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
