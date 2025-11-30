@@ -1,1 +1,3 @@
 
+repackRPM_electerm.spec
+tarball_zed.spec
