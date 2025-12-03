@@ -34,6 +34,7 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 %{_datadir}/licenses/**
 /usr/bin/desktopeditors
 /usr/bin/onlyoffice-desktopeditors
+/usr/lib/.build-id/*
 
 %changelog
 %autochangelog
