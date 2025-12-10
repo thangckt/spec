@@ -15,7 +15,7 @@ Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
 # We install the packaged Electron app produced by electron-builder into /opt
 %global install_dir /opt/%{name}
 
-ExclusiveArch:  x86_64
+
 
 BuildRequires:  git
 BuildRequires:  nodejs >= 22

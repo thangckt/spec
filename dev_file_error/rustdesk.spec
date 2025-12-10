@@ -10,7 +10,7 @@ License:        GPLv3
 URL:            https://github.com/rustdesk/rustdesk
 # Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
 
-ExclusiveArch:  x86_64
+
 
 BuildRequires:  cargo rust gcc-c++ clang cmake pkgconfig
 BuildRequires:  nasm yasm git wget pam-devel

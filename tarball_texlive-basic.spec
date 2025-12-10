@@ -10,7 +10,7 @@ URL:            https://tug.org/texlive/
 #Source0:        http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 Source0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
 
-ExclusiveArch:  x86_64
+
 
 BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny

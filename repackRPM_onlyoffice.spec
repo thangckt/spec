@@ -7,7 +7,7 @@ License:        GNU Affero Public License v3
 URL:            https://github.com/ONLYOFFICE/DesktopEditors
 Source0:        %{url}/releases/download/v%{version}/onlyoffice-desktopeditors.x86_64.rpm
 
-ExclusiveArch:  x86_64
+
 
 %description
 This is rpm package for ONLYOFFICE Desktop Editors.

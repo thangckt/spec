@@ -11,7 +11,7 @@ License:        MIT
 URL:            https://github.com/VSCodium/vscodium
 Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
 
-ExclusiveArch:  x86_64
+
 %global vscode_arch x64
 %global debug_package %{nil}
 

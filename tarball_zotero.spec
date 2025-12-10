@@ -10,7 +10,7 @@ License:        AGPL-3.0-only
 URL:            https://www.zotero.org/
 Source0:        https://download.zotero.org/client/release/%{version}/Zotero-%{version}_linux-x86_64.tar.bz2
 
-ExclusiveArch:  x86_64
+
 AutoReqProv:    no
 
 # Disable debug package generation for binary packages
