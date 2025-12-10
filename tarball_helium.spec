@@ -5,13 +5,11 @@
 Name:           helium
 Version:        0.7.3.1
 Release:        1%{?dist}
-Summary:        Helium Browser 
+Summary:        Helium Browser
 
 License:        BSD 3-Clause license
 URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
-
-BuildArch:      x86_64
 
 Requires:       desktop-file-utils
 Requires:       gtk3 libX11 libdrm mesa-libGL

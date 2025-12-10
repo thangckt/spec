@@ -7,9 +7,6 @@ License:        MIT License
 URL:            https://github.com/patrikx3/onenote
 Source0:        %{url}/releases/download/v%{version}/p3x-onenote-%{version}.x86_64.rpm
 
-
-
-
 ## No generate dependencies (should avoid using this)
 # AutoReqProv: no
 

@@ -7,7 +7,6 @@ License:        GPLv3
 URL:            https://github.com/rustdesk/rustdesk
 Source0:        %{url}/releases/download/%{version}/%{name}-%{version}-0.x86_64.rpm
 
-
 BuildRequires: chrpath
 
 %description

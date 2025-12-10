@@ -7,8 +7,6 @@ License:        MIT License
 URL:            https://github.com/electerm/electerm
 Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x86_64.rpm
 
-
-
 ## No generate dependencies (should avoid using this)
 AutoReqProv: no
 

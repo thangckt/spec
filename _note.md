@@ -219,3 +219,11 @@ To fix this, explicitly add `zlib-ng-compat` into COPR project’s **Buildroot P
 - At main page of COPR project, click on `Settings` -> `Build options`
 - Click on `Edit` button, next to the `Chroots` (e.g., `fedora-43-x86_64`)
 - In the `Packages` field, add `zlib-ng-compat`
+
+## Remove `arch` field in spec file
+New Copr build trigger by Github Actions may error if spec file contains `arch` field, so remove any of these lines:
+```sh
+
+ExclusiveArch:  x86_64
+ExclusiveArch:  %{_arch}
+```
