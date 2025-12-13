@@ -2,15 +2,13 @@
 ### Use tarball to avoid building time.
 
 Name:           zed
-Version:        0.216.0
+Version:        0.216.1
 Release:        1%{?dist}
 Summary:        High-performance, multiplayer code editor
 
 License:        AGPL-3.0-only AND Apache-2.0 AND GPL-3.0-or-later
 URL:            https://github.com/zed-industries/zed
 Source0:        %{url}/releases/download/v%{version}/zed-linux-x86_64.tar.gz
-
-#BuildArch:      x86_64
 
 # Disable debug package
 %define debug_package %{nil}
