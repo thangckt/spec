@@ -3,7 +3,7 @@
     # Manually install files into %{buildroot} using 'install/cp'.
 
 Name:       freefilesync
-Version:    14.5
+Version:    14.6
 Release:    1%{?dist}
 Summary:    A file synchronization utility
 
@@ -21,7 +21,7 @@ FreeFileSync is an open-source software that helps synchronize files and folders
 This spec does not build from source, but only repacks the official precompiled Linux binaries.
 
 %prep
-%autosetup -n FreeFileSync_%{version}_Linux_x86_64
+tar -zxvf %{SOURCE0}
 
 %build
 # Nothing to build
