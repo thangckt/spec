@@ -9,8 +9,11 @@ Summary:    A file synchronization utility
 
 License:    GPLv3
 #RL:        http://www.freefilesync.org/
-URL:        https://github.com/flathub/org.freefilesync.FreeFileSync
-Source0:    %{url}/releases/download/reupload-%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
+#RL:        https://github.com/flathub/org.freefilesync.FreeFileSync
+URL:        https://github.com/hkneptune/FreeFileSync
+Source0:    %{url}/releases/download/v%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
+
+AutoReqProv: no
 
 # Disable debug package
 %define debug_package %{nil}
