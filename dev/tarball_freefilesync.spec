@@ -27,19 +27,31 @@ tar -zxvf %{SOURCE0}
 # Nothing to build
 
 %install
-./FreeFileSync_%{version}_Install.run --noexec --keep
+rm -rf %{buildroot}
 
-# Binaries
-install -Dpm755 FreeFileSync_extracted/FreeFileSync/FreeFileSync   %{buildroot}%{_bindir}/FreeFileSync
-install -Dpm755 FreeFileSync_extracted/FreeFileSync/RealTimeSync   %{buildroot}%{_bindir}/RealTimeSync
+### Extract installer WITHOUT executing it
+sh FreeFileSync_%{version}_Install.run --noexec --target ffs-extracted
 
-# Desktop entries
-install -Dpm644 FreeFileSync_extracted/FreeFileSync/FreeFileSync.desktop  %{buildroot}%{_datadir}/applications/FreeFileSync.desktop
-install -Dpm644 FreeFileSync_extracted/FreeFileSync/RealTimeSync.desktop  %{buildroot}%{_datadir}/applications/RealTimeSync.desktop
+### Binaries
+install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
+    %{buildroot}%{_bindir}/FreeFileSync
+install -Dpm755 ffs-extracted/FreeFileSync/RealTimeSync \
+    %{buildroot}%{_bindir}/RealTimeSync
 
-# Icons and resources
-cp -a FreeFileSync_extracted/FreeFileSync/Resources %{buildroot}%{_datadir}/freefilesync/
-cp -a FreeFileSync_extracted/FreeFileSync/Icons/*   %{buildroot}%{_datadir}/icons/hicolor/
+### Desktop entries
+install -Dpm644 ffs-extracted/FreeFileSync/FreeFileSync.desktop \
+    %{buildroot}%{_datadir}/applications/FreeFileSync.desktop
+install -Dpm644 ffs-extracted/FreeFileSync/RealTimeSync.desktop \
+    %{buildroot}%{_datadir}/applications/RealTimeSync.desktop
+
+### Resources
+mkdir -p %{buildroot}%{_datadir}/freefilesync
+cp -a ffs-extracted/FreeFileSync/Resources \
+    %{buildroot}%{_datadir}/freefilesync/
+
+### Icons
+cp -a ffs-extracted/FreeFileSync/Icons/* \
+    %{buildroot}%{_datadir}/icons/hicolor/
 
 
 %files
