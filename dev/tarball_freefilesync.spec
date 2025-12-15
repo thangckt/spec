@@ -33,7 +33,7 @@ tar -zxvf %{SOURCE0}
 rm -rf %{buildroot}
 
 ### Extract installer WITHOUT executing it
-sh FreeFileSync_%{version}_Install.run --noexec --target ffs-extracted
+./FreeFileSync_%{version}_Install.run --noexec --target ffs-extracted
 
 ### Binaries
 install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
