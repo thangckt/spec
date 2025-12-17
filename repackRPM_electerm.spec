@@ -10,6 +10,8 @@ Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x
 # AutoReqProv: no
 %global debug_package %{nil}
 %global _build_id_links none
+%global __brp_strip %{nil}
+%global __brp_strip_static_archive %{nil}
 
 %description
 Electerm (prebuilt binary). This package simply repackages the upstream RPM for distribution via Copr.
@@ -30,6 +32,7 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 /opt/electerm/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%exclude /usr/lib/.build-id
 
 %changelog
 %autochangelog
