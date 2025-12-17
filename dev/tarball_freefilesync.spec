@@ -13,9 +13,6 @@ License:    GPLv3
 URL:        https://github.com/hkneptune/FreeFileSync
 Source0:    %{url}/releases/download/v%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
 
-AutoReqProv: no
-
-# Disable debug package
 %define debug_package %{nil}
 %define __strip /bin/true
 
