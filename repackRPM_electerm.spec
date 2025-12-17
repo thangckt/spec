@@ -1,17 +1,18 @@
 Name:           electerm
 Version:        2.3.136
 Release:        1%{?dist}
-Summary:        terminal/ssh/telnet/serialport/RDP/VNC/sftp/ftp client
+Summary:        Terminal and remote connection client
 
-License:        MIT License
+License:        MIT
 URL:            https://github.com/electerm/electerm
 Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x86_64.rpm
 
-## No generate dependencies (should avoid using this)
-AutoReqProv: no
+# AutoReqProv: no
+%global debug_package %{nil}
+%global _build_id_links none
 
 %description
-RuskDesk (prebuilt binary). This package simply repackages the RPM for distribution via Copr.
+Electerm (prebuilt binary). This package simply repackages the upstream RPM for distribution via Copr.
 
 %prep
 # Nothing to do
@@ -20,14 +21,15 @@ RuskDesk (prebuilt binary). This package simply repackages the RPM for distribut
 # Nothing to build
 
 %install
+rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
 %files
-/opt/electerm/**
+%dir /opt/electerm
+/opt/electerm/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-/usr/lib/.build-id/*
 
 %changelog
 %autochangelog

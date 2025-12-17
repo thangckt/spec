@@ -7,7 +7,7 @@ Version:        0.7.6.1
 Release:        1%{?dist}
 Summary:        Helium Browser
 
-License:        BSD 3-Clause license
+License:        BSD 3-Clause
 URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 

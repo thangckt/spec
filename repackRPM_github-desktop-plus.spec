@@ -27,6 +27,7 @@ This spec simply repackages the RPM for distribution via Copr.
 # Nothing to build
 
 %install
+rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 

@@ -27,7 +27,10 @@ Zotero is a free, easy-to-use tool to help you collect, organize, cite, and shar
 # Nothing to build - this is a binary package
 
 %install
-mkdir -p %{buildroot}/opt/zotero %{buildroot}%{_bindir} %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+mkdir -p %{buildroot}/opt/zotero
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 
 # Install the application
 cp -a * %{buildroot}/opt/zotero/
