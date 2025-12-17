@@ -10,8 +10,6 @@ Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x
 # AutoReqProv: no
 %global debug_package %{nil}
 %global _build_id_links none
-%global __brp_strip %{nil}
-%global __brp_strip_static_archive %{nil}
 
 %description
 Electerm (prebuilt binary). This package simply repackages the upstream RPM for distribution via Copr.

@@ -9,8 +9,6 @@ Source0:        %{url}/releases/download/v%{version}/onlyoffice-desktopeditors.x
 
 %global debug_package %{nil}
 %global _build_id_links none
-%global __brp_strip %{nil}
-%global __brp_strip_static_archive %{nil}
 
 %description
 This is rpm package for ONLYOFFICE Desktop Editors.
