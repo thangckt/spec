@@ -1,3 +1,2 @@
 
-repackRPM_electerm.spec
-tarball_zed.spec
+tarball_helium.spec
