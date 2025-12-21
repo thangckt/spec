@@ -10,7 +10,7 @@ License:        GPL-3.0-or-later AND BSD-3-Clause
 URL:            https://github.com/martinrotter/rssguard
 # Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
 
-Source0:        %{url}.git
+Source0:        %{url}/releases/download/devbuild5/rssguard-devbuild5-f0187a1da-src.tar.gz
 
 
 BuildRequires:  cmake gcc-c++
@@ -24,10 +24,7 @@ RSS Guard is simple, light and easy-to-use RSS/ATOM feed aggregator developed us
 
 %prep
 ### rssguard-%{version}  rssguard-devbuild5
-###%autosetup -n rssguard-devbuild5
-
-git clone --recursive %{SOURCE0} .
-git checkout devbuild5
+%autosetup -n rssguard-devbuild5
 
 %build
 %cmake -DBUILD_WITH_QT6=ON \
