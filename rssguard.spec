@@ -17,6 +17,7 @@ BuildRequires:  cmake gcc-c++
 BuildRequires:  qt6-qtbase-devel qt6-qttools-devel qt6-qtwebengine-devel qt6-qtwebchannel-devel
 BuildRequires:  qt6-qt5compat-devel qt6-linguist qt6-qtmultimedia-devel qt6-qtbase-private-devel
 BuildRequires:  libappstream-glib desktop-file-utils mpv-devel sqlite-devel
+BuildRequires:  golang
 
 %description
 RSS Guard is simple, light and easy-to-use RSS/ATOM feed aggregator developed using the Qt framework which supports online feed synchronization.
