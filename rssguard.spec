@@ -2,13 +2,16 @@
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
 
 Name:           rssguard
-Version:        4.8.6
+Version:        5.0.0
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
 License:        GPL-3.0-or-later AND BSD-3-Clause
 URL:            https://github.com/martinrotter/rssguard
-Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
+# Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
+
+Source0:        %{url}/archive/refs/tags/devbuild5.tar.gz
+
 
 BuildRequires:  cmake gcc-c++
 BuildRequires:  qt6-qtbase-devel qt6-qttools-devel qt6-qtwebengine-devel qt6-qtwebchannel-devel
@@ -21,7 +24,8 @@ BuildRequires:  libappstream-glib desktop-file-utils mpv-devel sqlite-devel
 RSS Guard is simple, light and easy-to-use RSS/ATOM feed aggregator developed using the Qt framework which supports online feed synchronization.
 
 %prep
-%autosetup -n rssguard-%{version}
+### rssguard-%{version}  rssguard-devbuild5
+%autosetup -n rssguard-devbuild5
 
 %build
 %cmake -DBUILD_WITH_QT6=ON \
