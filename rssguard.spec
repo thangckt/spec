@@ -12,6 +12,7 @@ URL:            https://github.com/martinrotter/rssguard
 
 Source0:        %{url}/releases/download/devbuild5/rssguard-devbuild5-f0187a1da-src.tar.gz
 
+%global debug_package %{nil}
 
 BuildRequires:  cmake gcc-c++
 BuildRequires:  qt6-qtbase-devel qt6-qttools-devel qt6-qtwebengine-devel qt6-qtwebchannel-devel
@@ -19,10 +20,15 @@ BuildRequires:  qt6-qt5compat-devel qt6-linguist qt6-qtmultimedia-devel qt6-qtba
 BuildRequires:  libappstream-glib desktop-file-utils mpv-devel sqlite-devel
 BuildRequires:  golang
 
-%global debug_package %{nil}
-
 %description
 RSS Guard is simple, light and easy-to-use RSS/ATOM feed aggregator developed using the Qt framework which supports online feed synchronization.
+
+%package extractor
+Summary: Article extractor for RSS Guard
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description extractor
+Standalone article extraction helper for RSS Guard.
 
 %prep
 ### rssguard-%{version}  rssguard-devbuild5
@@ -51,22 +57,16 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.xml
 %files
 %doc README.md
 %license LICENSE.md
-
-# Main app binary
 %{_bindir}/rssguard
-%{_bindir}/rssguard-article-extractor
-
-# Application desktop integration
 %{_datadir}/applications/io.github.martinrotter.rssguard.desktop
 %{_datadir}/icons/hicolor/*/apps/io.github.martinrotter.rssguard.png
 %{_datadir}/metainfo/io.github.martinrotter.rssguard.metainfo.xml
-
-# Shared library
 %{_libdir}/librssguard.so
 %{_libdir}/rssguard/*.so
-
-# Development headers
 %{_includedir}/librssguard/
+
+%files extractor
+%{_bindir}/rssguard-article-extractor
 
 %changelog
 %autochangelog
