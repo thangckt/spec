@@ -10,11 +10,15 @@ License:        MIT
 URL:            https://github.com/pol-rivero/github-desktop-plus
 Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{version}-linux-x86_64.rpm
 
-Requires:       git-core
+BuildRequires:  chrpath, patchelf
+
+## Filter out the problematic dependency: `libcurl-gnutls`
+%global __requires_exclude ^libcurl-gnutls\\.so\\.[0-9]+.*$
+%global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
 
 %description
 GitHub Desktop Plus is a graphical Git client for managing GitHub repositories easily.
-This spec repackages the upstream RPM for Copr and uses system Git.
+This spec simply repackages the RPM for distribution via Copr.
 
 %prep
 # Nothing to build
@@ -27,8 +31,13 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-### Remove bundled Git (built against libcurl-gnutls, incompatible with Fedora 43)
-rm -rf %{buildroot}/usr/lib/%{name}/resources/app/git
+## Strip invalid RPATHs and fix to link against system libcurl
+for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*; do
+    if file "$bin" | grep -q ELF; then
+        chrpath -d "$bin" || true
+        patchelf --replace-needed libcurl-gnutls.so.4 libcurl.so.4 "$bin" || true
+    fi
+done
 
 %files
 %{_bindir}/%{name}
