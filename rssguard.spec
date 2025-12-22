@@ -1,5 +1,6 @@
 ### ref: https://github.com/fedora-riscv/rssguard/blob/main/rssguard.spec
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
+### rssguard-5 remove builtin web browser, so do not use `NO_LITE` option
 
 Name:           rssguard
 Version:        5.0.0
@@ -41,7 +42,6 @@ Standalone article extraction helper for RSS Guard.
     -DENABLE_MEDIAPLAYER_LIBMPV=ON \
     -DENABLE_MEDIAPLAYER_QTMULTIMEDIA=OFF \
     -DFORCE_BUNDLE_ICONS=ON \
-    -DNO_LITE=ON  \
     -DNO_UPDATE_CHECK=ON
 %cmake_build
 
