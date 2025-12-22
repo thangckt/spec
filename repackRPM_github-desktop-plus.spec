@@ -1,5 +1,6 @@
 ### DO NOT replace bundled git with system git. It will break the app.
 ### The bundled git is not pure git, it has customize with extra features.
+## Gitlab push work well in version 3.5.4, but fail in version 3.5.5
 
 Name:           github-desktop-plus
 Version:        3.5.4
