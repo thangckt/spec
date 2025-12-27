@@ -1,2 +1,2 @@
 
-repackRPM_onlyoffice.spec
+repackRPM_electerm.spec
