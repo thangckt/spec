@@ -1,5 +1,1 @@
 
-repackRPM_rustdesk.spec
-repackRPM_electerm.spec
-tarball_helium.spec
-tarball_zed.spec
