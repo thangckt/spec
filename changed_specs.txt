@@ -1,1 +1,3 @@
 
+tarball_zed.spec
+tarball_zotero.spec
