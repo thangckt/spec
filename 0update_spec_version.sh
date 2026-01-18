@@ -147,15 +147,25 @@ spec_files="tarball_zed.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Mailspring
-repo_url="https://github.com/Foundry376/Mailspring"
-spec_files="rpm_mailspring.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
 spec_files="ovito.spec"
+new_version=$(fetch_gitlab_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Evolution
+repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
+spec_files="evolution1-data-server.spec"
+new_version=$(fetch_gitlab_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+repo_url="https://gitlab.gnome.org/GNOME/evolution"
+spec_files="evolution2.spec"
+new_version=$(fetch_gitlab_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
+spec_files="evolution3-ews.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -178,24 +188,15 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Evolution
-# repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
-# spec_files="evolution1-data-server.spec"
-# new_version=$(fetch_gitlab_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
-# repo_url="https://gitlab.gnome.org/GNOME/evolution"
-# spec_files="evolution2.spec"
-# new_version=$(fetch_gitlab_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
-# repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
-# spec_files="evolution3-ews.spec"
-# new_version=$(fetch_gitlab_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR vscodium
 # repo_url="https://github.com/VSCodium/vscodium"
 # spec_files="codium.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Mailspring
+### Not support EWS yet
+# repo_url="https://github.com/Foundry376/Mailspring"
+# spec_files="rpm_mailspring.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
