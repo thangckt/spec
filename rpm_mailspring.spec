@@ -7,7 +7,7 @@ License:        GNU
 URL:            https://github.com/Foundry376/Mailspring
 Source0:        %{url}/releases/download/%{version}/mailspring-%{version}-0.1.x86_64.rpm
 
-# AutoReqProv: no
+AutoReqProv: no
 %global debug_package %{nil}
 %global _build_id_links none
 
