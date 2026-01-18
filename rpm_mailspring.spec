@@ -32,8 +32,9 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 %{_bindir}/mailspring
 %dir %{_datadir}/mailspring
 %{_datadir}/mailspring/*
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/appdata/*
+%{_datadir}/applications/Mailspring.desktop
+%{_datadir}/icons/hicolor/*/apps/mailspring.png
 
 %changelog
 %autochangelog
