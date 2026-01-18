@@ -141,15 +141,15 @@ spec_files="tarball_helium.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR vscodium
-# repo_url="https://github.com/VSCodium/vscodium"
-# spec_files="codium.spec"
-# new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR zed
 repo_url="https://github.com/zed-industries/zed"
 spec_files="tarball_zed.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Mailspring
+repo_url="https://github.com/Foundry376/Mailspring"
+spec_files="rpm_mailspring.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -159,27 +159,10 @@ spec_files="ovito.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Evolution
-repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
-spec_files="evolution1-data-server.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
-repo_url="https://gitlab.gnome.org/GNOME/evolution"
-spec_files="evolution2.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
-repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
-spec_files="evolution3-ews.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Zotero
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
 update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####!SECTION
 
 #####SECTION: Retired
@@ -192,5 +175,27 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 #####ANCHOR pdf4qt
 # repo_url="https://github.com/JakubMelka/PDF4QT"
 # spec_files="pdf4qt.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Evolution
+# repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
+# spec_files="evolution1-data-server.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+# repo_url="https://gitlab.gnome.org/GNOME/evolution"
+# spec_files="evolution2.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+# repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
+# spec_files="evolution3-ews.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR vscodium
+# repo_url="https://github.com/VSCodium/vscodium"
+# spec_files="codium.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"

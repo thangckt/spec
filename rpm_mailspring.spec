@@ -21,13 +21,17 @@ Mailspring offers a modern, clean UI with fast search and multi-account support.
 # Nothing to build
 
 %install
+### Disable the RPATH QA check (avoid using: chrpath, patchelf)
+export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
+
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
 %files
-%dir /opt/Mailspring
-/opt/Mailspring/*
+%{_bindir}/mailspring
+%dir %{_datadir}/mailspring
+%{_datadir}/mailspring/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
