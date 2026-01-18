@@ -95,25 +95,25 @@ tee $store_file <<<"" >/dev/null
 
 #####ANCHOR rustdesk
 repo_url="https://github.com/rustdesk/rustdesk"
-spec_files="repackRPM_rustdesk.spec"
+spec_files="rpm_rustdesk.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR electerm
 repo_url="https://github.com/electerm/electerm"
-spec_files="repackRPM_electerm.spec"
+spec_files="rpm_electerm.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR github-desktop
 repo_url="https://github.com/pol-rivero/github-desktop-plus"
-spec_files="repackRPM_github-desktop-plus.spec"
+spec_files="rpm_github-desktop-plus.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR OnlyOffice
 repo_url="https://github.com/ONLYOFFICE/DesktopEditors"
-spec_files="repackRPM_onlyoffice.spec"
+spec_files="rpm_onlyoffice.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
