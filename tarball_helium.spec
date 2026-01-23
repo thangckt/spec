@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.8.2.1
+Version:        0.8.3.1
 Release:        1%{?dist}
 Summary:        Helium Browser
 
