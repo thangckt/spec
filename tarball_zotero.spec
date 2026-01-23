@@ -1,5 +1,8 @@
 ### REF: https://www.zotero.org/support/dev/client_coding/building_the_desktop_app
 ### building Zotero from source (dependences: nodejs, npm) is quite complex and may still have issues -> Use the official binary (Recommended)
+### Note on changing download URL in Zotero 8:
+# Zetero 7: https://download.zotero.org/client/release/7.0.32/Zotero-7.0.32_linux-x86_64.tar.bz2
+# Zotero 8: https://download.zotero.org/client/release/8.0/Zotero-8.0_linux-x86_64.tar.xz
 
 Name:           zotero
 Version:        8.0
@@ -8,11 +11,10 @@ Summary:        Zotero Reference Manager
 
 License:        AGPL-3.0-only
 URL:            https://www.zotero.org/
-Source0:        https://download.zotero.org/client/release/%{version}/Zotero-%{version}_linux-x86_64.tar.bz2
+Source0:        https://download.zotero.org/client/release/%{version}/Zotero-%{version}_linux-x86_64.tar.xz
 
 Requires:       gtk3 libXt libX11 dbus-glib
 
-# AutoReqProv:    no
 %global debug_package %{nil}
 %global _build_id_links none
 
