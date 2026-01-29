@@ -1,4 +1,2 @@
 
-rpm_electerm.spec
 tarball_zed.spec
-tarball_zotero.spec
