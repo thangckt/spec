@@ -1,1 +1,3 @@
 
+rpm_electerm.spec
+rpm_github-desktop-plus.spec
