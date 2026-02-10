@@ -1,6 +1,1 @@
 
-rpm_electerm.spec
-rpm_github-desktop-plus.spec
-tarball_helium.spec
-tarball_zed.spec
-tarball_zotero.spec
