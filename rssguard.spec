@@ -34,8 +34,8 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 Standalone article extraction helper for RSS Guard.
 
 %prep
-### rssguard-%{version}  rssguard-devbuild5
-%autosetup -n rssguard-devbuild5
+### rssguard-%{version}  rssguard-dev
+%autosetup -n rssguard-dev
 
 %build
 %cmake -DBUILD_WITH_QT6=ON \
