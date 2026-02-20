@@ -9,8 +9,8 @@ Summary:        Simple yet powerful feed reader
 
 License:        GPL-3.0-or-later AND BSD-3-Clause
 URL:            https://github.com/martinrotter/rssguard
-# Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
-Source0:        %{url}/releases/download/devbuild5/rssguard-devbuild5-1f5e6a0ae-src.tar.gz
+Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
+# Source0:        %{url}/releases/download/devbuild5/rssguard-devbuild5-1f5e6a0ae-src.tar.gz
 
 
 %global debug_package %{nil}
