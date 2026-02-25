@@ -1,2 +1,3 @@
 
-rpm_github-desktop-plus.spec
+rpm_electerm.spec
+tarball_helium.spec
