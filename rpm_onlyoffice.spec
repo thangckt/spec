@@ -1,5 +1,5 @@
 Name:           onlyoffice
-Version:        9.2.1
+Version:        9.3.0
 Release:        1%{?dist}
 Summary:        OnlyOffice Desktop Editors
 
