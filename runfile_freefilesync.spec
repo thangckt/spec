@@ -1,6 +1,6 @@
 ### Note: FreeFileSync’s installer requires a terminal (tty) and cannot run headlessly.
-    # Don’t execute the '.run' installer in Copr (fails without a terminal). Use '--keep --noexec' to unpack its contents.
-    # Manually install files into %{buildroot} using 'install/cp'.
+    # Don’t execute the '.run' installer in Copr (fails without a terminal).
+    # This spec reivse by GPT-codex-5.3, when ask it to refer Fflatpak approach.
 
 Name:       freefilesync
 Version:    14.8
