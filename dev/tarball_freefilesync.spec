@@ -41,23 +41,9 @@ if [ -z "${archive_line}" ]; then
 fi
 test -n "${archive_line}"
 
-compress=$(awk -F= '/^COMPRESS=/{gsub(/["[:space:]]/, "", $2); print tolower($2); exit}' "${installer}")
-
-case "${compress}" in
-    xz)
-        tail -n +"${archive_line}" "${installer}" | tar -xJf - -C "${extract_dir}"
-        ;;
-    bzip2|bz2)
-        tail -n +"${archive_line}" "${installer}" | tar -xjf - -C "${extract_dir}"
-        ;;
-    gzip|gz|pigz|"")
-        tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}"
-        ;;
-    *)
-        echo "Unsupported installer compression: ${compress}" >&2
-        exit 1
-        ;;
-esac
+tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}" || \
+tail -n +"${archive_line}" "${installer}" | tar -xJf - -C "${extract_dir}" || \
+tail -n +"${archive_line}" "${installer}" | tar -xjf - -C "${extract_dir}"
 
 ### Binaries
 install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
