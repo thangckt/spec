@@ -3,7 +3,7 @@
     # Manually install files into %{buildroot} using 'install/cp'.
 
 Name:       freefilesync
-Version:    14.6
+Version:    14.8
 Release:    1%{?dist}
 Summary:    A file synchronization utility
 
@@ -39,11 +39,21 @@ archive_line=$(awk '/^__ARCHIVE_BELOW__$/ {print NR + 1; exit}' "${installer}")
 if [ -z "${archive_line}" ]; then
     archive_line=$(awk -F= '/^SKIP=/{gsub(/[^0-9]/, "", $2); print $2; exit}' "${installer}")
 fi
-test -n "${archive_line}"
 
-tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}" || \
-tail -n +"${archive_line}" "${installer}" | tar -xJf - -C "${extract_dir}" || \
-tail -n +"${archive_line}" "${installer}" | tar -xjf - -C "${extract_dir}"
+if [ -n "${archive_line}" ]; then
+    tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}" || \
+    tail -n +"${archive_line}" "${installer}" | tar -xJf - -C "${extract_dir}" || \
+    tail -n +"${archive_line}" "${installer}" | tar -xjf - -C "${extract_dir}"
+else
+    archive_offset=$(grep -abo -m1 'ustar' "${installer}" | cut -d: -f1)
+    test -n "${archive_offset}"
+    archive_skip=$((archive_offset - 257))
+    test ${archive_skip} -ge 0
+
+    dd if="${installer}" bs=1 skip="${archive_skip}" 2>/dev/null | tar -xzf - -C "${extract_dir}" || \
+    dd if="${installer}" bs=1 skip="${archive_skip}" 2>/dev/null | tar -xJf - -C "${extract_dir}" || \
+    dd if="${installer}" bs=1 skip="${archive_skip}" 2>/dev/null | tar -xjf - -C "${extract_dir}"
+fi
 
 ### Binaries
 install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
