@@ -101,10 +101,3 @@ install -Dpm644 ffs-extracted/CHANGELOG \
 
 %changelog
 %autochangelog
-
-
-# ffs_name="FreeFileSync_14.3"
-# tarfile="${ffs_name}_Linux.tar.gz"
-# wget "https://freefilesync.org/download/$tarfile"
-# tar -zxvf $tarfile
-# ./${ffs_name}_Install.run
