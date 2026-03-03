@@ -48,7 +48,7 @@ Standalone article extraction helper for RSS Guard.
 %cmake_build
 
 ## clean up /lib/*.a files
-find . -name "/lib/*.a" -type f -delete
+find %{buildroot} -name "*.a" -delete
 
 %install
 %cmake_install
