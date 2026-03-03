@@ -29,8 +29,16 @@ tar -zxvf %{SOURCE0}
 %install
 rm -rf %{buildroot}
 
-### Extract installer WITHOUT executing it
-./FreeFileSync_%{version}_Install.run --noexec --target ffs-extracted
+### Extract installer payload WITHOUT executing the .run script (Copr-safe, no TTY required)
+installer="FreeFileSync_%{version}_Install.run"
+extract_dir="ffs-extracted"
+
+mkdir -p "${extract_dir}"
+
+archive_line=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "${installer}")
+test -n "${archive_line}"
+
+tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}"
 
 ### Binaries
 install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
