@@ -43,10 +43,20 @@ mkdir -p "${installer_dir}"
 tar -xzf "${installer_dir}/FreeFileSync.tar.gz" -C "${extract_dir}"
 
 ### Binaries
-install -Dpm755 ffs-extracted/FreeFileSync \
-    %{buildroot}%{_bindir}/FreeFileSync
-install -Dpm755 ffs-extracted/RealTimeSync \
-    %{buildroot}%{_bindir}/RealTimeSync
+install -d %{buildroot}%{_libexecdir}/freefilesync
+cp -a ffs-extracted/. %{buildroot}%{_libexecdir}/freefilesync/
+
+cat > FreeFileSync <<'EOF'
+#!/bin/sh
+exec %{_libexecdir}/freefilesync/FreeFileSync "$@"
+EOF
+install -Dpm755 FreeFileSync %{buildroot}%{_bindir}/FreeFileSync
+
+cat > RealTimeSync <<'EOF'
+#!/bin/sh
+exec %{_libexecdir}/freefilesync/RealTimeSync "$@"
+EOF
+install -Dpm755 RealTimeSync %{buildroot}%{_bindir}/RealTimeSync
 
 ### Desktop entries
 sed \
@@ -64,11 +74,6 @@ sed \
     > RealTimeSync.desktop
 install -Dpm644 RealTimeSync.desktop \
     %{buildroot}%{_datadir}/applications/RealTimeSync.desktop
-
-### Resources
-mkdir -p %{buildroot}%{_datadir}/freefilesync
-cp -a ffs-extracted/Resources \
-    %{buildroot}%{_datadir}/freefilesync/
 
 ### Icons
 for res in 16 24 32 48 64 128 256; do
@@ -89,10 +94,10 @@ install -Dpm644 ffs-extracted/CHANGELOG \
 %doc %{_docdir}/%{name}/CHANGELOG
 %{_bindir}/FreeFileSync
 %{_bindir}/RealTimeSync
+%{_libexecdir}/freefilesync
 %{_datadir}/applications/FreeFileSync.desktop
 %{_datadir}/applications/RealTimeSync.desktop
 %{_datadir}/icons/hicolor/*x*/*/*.png
-%{_datadir}/freefilesync
 
 %changelog
 %autochangelog
