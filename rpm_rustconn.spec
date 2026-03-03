@@ -29,15 +29,16 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
 
 %files
-%{_bindir}/rustconn
-%dir /opt/rustconn
-/opt/rustconn/*
-%{_datadir}/applications/rustconn.desktop
-%{_datadir}/icons/hicolor/*/apps/rustconn.png
-%{_datadir}/doc/**
-%{_datadir}/licenses/**
+%license %{_datadir}/licenses/*
+%doc %{_datadir}/doc/*
 
-%exclude /usr/lib/.build-id
+%{_bindir}/rustconn
+%{_bindir}/rustconn-cli
+
+%{_datadir}/applications/io.github.totoshko88.RustConn.desktop
+%{_datadir}/icons/hicolor/*/apps/io.github.totoshko88.RustConn.*
+%{_datadir}/metainfo/io.github.totoshko88.RustConn.metainfo.xml
+%{_datadir}/locale/*/LC_MESSAGES/rustconn.mo
 
 %changelog
 %autochangelog
