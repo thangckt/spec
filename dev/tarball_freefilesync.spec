@@ -34,8 +34,9 @@ installer="FreeFileSync_%{version}_Install.run"
 extract_dir="ffs-extracted"
 
 mkdir -p "${extract_dir}"
+chmod +x "${installer}"
 
-if ! sh "${installer}" --noexec --target "${extract_dir}"; then
+if ! "./${installer}" --noexec --target "${extract_dir}"; then
     archive_line=$(awk '/^__ARCHIVE_BELOW__$/ {print NR + 1; exit}' "${installer}")
     if [ -z "${archive_line}" ]; then
         archive_line=$(awk -F= '/^SKIP=/{gsub(/[^0-9]/, "", $2); print $2; exit}' "${installer}")
