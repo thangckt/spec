@@ -2,6 +2,9 @@
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
 ### rssguard-5 remove builtin web browser, so do not use `NO_LITE` option. https://rssguard.readthedocs.io/en/latest/5-vs-4.html
 
+#global         dev_version 3e7bdfd58
+#Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
+
 Name:           rssguard
 Version:        5.0.0
 Release:        %autorelease
@@ -10,9 +13,6 @@ Summary:        Simple yet powerful feed reader
 License:        GPL-3.0-or-later AND BSD-3-Clause
 URL:            https://github.com/martinrotter/rssguard
 Source0:        %{url}/archive/%{version}/rssguard-%{version}-src.tar.gz
-
-#global         dev_version 3e7bdfd58
-#Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
 %global debug_package %{nil}
 
