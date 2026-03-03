@@ -29,9 +29,6 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
 
 %files
-%license %{_datadir}/licenses/*
-%doc %{_datadir}/doc/*
-
 %{_bindir}/rustconn
 %{_bindir}/rustconn-cli
 
