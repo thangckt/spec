@@ -12,7 +12,7 @@ URL:            https://github.com/martinrotter/rssguard
 Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
 
 #global         dev_version 3e7bdfd58
-#Source0:        %{url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
+#Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
 %global debug_package %{nil}
 
@@ -35,7 +35,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 Standalone article extraction helper for RSS Guard.
 
 %prep
-### rssguard-%{version}  rssguard-dev-%{dev_version}
+### rssguard-{version}  rssguard-dev-{dev_version}
 %autosetup -n rssguard-%{version}
 
 %build
