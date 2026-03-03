@@ -5,7 +5,7 @@ Summary:        Manage remote connections easily.
 
 License:        GPL-3.0
 URL:            https://github.com/totoshko88/RustConn
-Source0:        %{url}/releases/download/v%{version}/rustconn-%{version}-%{release}.x86_64.rpm
+Source0:        %{url}/releases/download/v%{version}/rustconn-%{version}-1.x86_64.rpm
 
 %global debug_package %{nil}
 %global _build_id_links none
