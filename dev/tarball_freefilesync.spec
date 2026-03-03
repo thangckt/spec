@@ -35,7 +35,7 @@ extract_dir="ffs-extracted"
 
 mkdir -p "${extract_dir}"
 chmod +x "${installer}"
-"./${installer}" \
+env -u DISPLAY QT_QPA_PLATFORM=offscreen "./${installer}" \
     --accept-license \
     --skip-overview \
     --directory "${extract_dir}" \
