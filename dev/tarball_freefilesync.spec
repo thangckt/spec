@@ -34,13 +34,21 @@ installer="FreeFileSync_%{version}_Install.run"
 extract_dir="ffs-extracted"
 
 mkdir -p "${extract_dir}"
-chmod +x "${installer}"
-env -u DISPLAY QT_QPA_PLATFORM=offscreen "./${installer}" \
-    --accept-license \
-    --skip-overview \
-    --directory "${extract_dir}" \
-    --for-all-users false \
-    --create-shortcuts false
+
+payload_offset=""
+for off in $(grep -abo $'\x1f\x8b\x08' "${installer}" | cut -d: -f1); do
+    if dd if="${installer}" bs=1 skip="${off}" 2>/dev/null | \
+       gzip -dc 2>/dev/null | tar -tf - 2>/dev/null | \
+       grep -qE '^FreeFileSync$|^RealTimeSync$|^Resources/'; then
+        payload_offset="${off}"
+        break
+    fi
+done
+
+test -n "${payload_offset}"
+
+dd if="${installer}" bs=1 skip="${payload_offset}" 2>/dev/null | \
+    gzip -dc | tar -xf - -C "${extract_dir}"
 
 ### Binaries
 install -Dpm755 ffs-extracted/FreeFileSync \
