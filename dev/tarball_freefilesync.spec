@@ -35,39 +35,32 @@ extract_dir="ffs-extracted"
 
 mkdir -p "${extract_dir}"
 chmod +x "${installer}"
-
-if ! "./${installer}" --noexec --target "${extract_dir}"; then
-    archive_line=$(awk '/^__ARCHIVE_BELOW__$/ {print NR + 1; exit}' "${installer}")
-    if [ -z "${archive_line}" ]; then
-        archive_line=$(awk -F= '/^SKIP=/{gsub(/[^0-9]/, "", $2); print $2; exit}' "${installer}")
-    fi
-    test -n "${archive_line}"
-
-    tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}" || \
-    tail -n +"${archive_line}" "${installer}" | tar -xJf - -C "${extract_dir}" || \
-    tail -n +"${archive_line}" "${installer}" | tar -xjf - -C "${extract_dir}" || \
-    tail -n +"${archive_line}" "${installer}" | tar -xf - -C "${extract_dir}"
-fi
+"./${installer}" \
+    --accept-license \
+    --skip-overview \
+    --directory "${extract_dir}" \
+    --for-all-users false \
+    --create-shortcuts false
 
 ### Binaries
-install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
+install -Dpm755 ffs-extracted/FreeFileSync \
     %{buildroot}%{_bindir}/FreeFileSync
-install -Dpm755 ffs-extracted/FreeFileSync/RealTimeSync \
+install -Dpm755 ffs-extracted/RealTimeSync \
     %{buildroot}%{_bindir}/RealTimeSync
 
 ### Desktop entries
-install -Dpm644 ffs-extracted/FreeFileSync/FreeFileSync.desktop \
+install -Dpm644 ffs-extracted/Resources/FreeFileSync.desktop \
     %{buildroot}%{_datadir}/applications/FreeFileSync.desktop
-install -Dpm644 ffs-extracted/FreeFileSync/RealTimeSync.desktop \
+install -Dpm644 ffs-extracted/Resources/RealTimeSync.desktop \
     %{buildroot}%{_datadir}/applications/RealTimeSync.desktop
 
 ### Resources
 mkdir -p %{buildroot}%{_datadir}/freefilesync
-cp -a ffs-extracted/FreeFileSync/Resources \
+cp -a ffs-extracted/Resources \
     %{buildroot}%{_datadir}/freefilesync/
 
 ### Icons
-cp -a ffs-extracted/FreeFileSync/Icons/* \
+cp -a ffs-extracted/Resources/Icons/* \
     %{buildroot}%{_datadir}/icons/hicolor/
 
 
