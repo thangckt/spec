@@ -35,10 +35,29 @@ extract_dir="ffs-extracted"
 
 mkdir -p "${extract_dir}"
 
-archive_line=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "${installer}")
+archive_line=$(awk '/^__ARCHIVE_BELOW__$/ {print NR + 1; exit}' "${installer}")
+if [ -z "${archive_line}" ]; then
+    archive_line=$(awk -F= '/^SKIP=/{gsub(/[^0-9]/, "", $2); print $2; exit}' "${installer}")
+fi
 test -n "${archive_line}"
 
-tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}"
+compress=$(awk -F= '/^COMPRESS=/{gsub(/["[:space:]]/, "", $2); print tolower($2); exit}' "${installer}")
+
+case "${compress}" in
+    xz)
+        tail -n +"${archive_line}" "${installer}" | tar -xJf - -C "${extract_dir}"
+        ;;
+    bzip2|bz2)
+        tail -n +"${archive_line}" "${installer}" | tar -xjf - -C "${extract_dir}"
+        ;;
+    gzip|gz|pigz|"")
+        tail -n +"${archive_line}" "${installer}" | tar -xzf - -C "${extract_dir}"
+        ;;
+    *)
+        echo "Unsupported installer compression: ${compress}" >&2
+        exit 1
+        ;;
+esac
 
 ### Binaries
 install -Dpm755 ffs-extracted/FreeFileSync/FreeFileSync \
