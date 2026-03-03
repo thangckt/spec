@@ -11,8 +11,8 @@ License:        GPL-3.0-or-later AND BSD-3-Clause
 URL:            https://github.com/martinrotter/rssguard
 Source0:        %{url}/archive/%{version}/rssguard-%{version}.tar.gz
 
-#%global         dev_version 3e7bdfd58
-#Source0:        %{url}/releases/download/devbuild5/rssguard-dev-%{dev_version}-src.tar.gz
+#global         dev_version 3e7bdfd58
+#Source0:        %{url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
 %global debug_package %{nil}
 
