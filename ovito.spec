@@ -9,6 +9,8 @@ License:        MIT
 URL:            https://gitlab.com/stuko/ovito
 Source0:        %{url}/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 Source1:        %{url}/-/raw/master/doc/manual/images/team/ovito_logo_128.png
+# zstd is a git submodule not included in the GitLab archive tarball
+Source2:        https://github.com/facebook/zstd/archive/refs/tags/v1.5.7.tar.gz#/zstd-v1.5.7.tar.gz
 
 BuildRequires:  cmake ninja-build gcc-c++ pkg-config
 BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel
@@ -23,6 +25,9 @@ OVITO is a scientific data visualization and analysis software for atomistic, mo
 
 %prep
 %autosetup -n %{name}-v%{version}
+# Populate the zstd git submodule (not included in the archive tarball)
+mkdir -p src/3rdparty/zstd
+tar -xzf %{SOURCE2} --strip-components=1 -C src/3rdparty/zstd
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_DO_STRIP=ON
