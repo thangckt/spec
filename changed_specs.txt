@@ -1,2 +1,4 @@
 
-rpm_electerm.spec
+rpm_onlyoffice.spec
+rssguard.spec
+ovito.spec
