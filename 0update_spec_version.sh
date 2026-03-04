@@ -105,7 +105,7 @@ spec_files="rpm_electerm.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR github-desktop
+#####ANCHOR github-desktop-plus
 repo_url="https://github.com/pol-rivero/github-desktop-plus"
 spec_files="rpm_github-desktop-plus.spec"
 new_version=$(fetch_github_version "$repo_url")
@@ -138,6 +138,12 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 #####ANCHOR helium
 repo_url="https://github.com/imputnet/helium-linux"
 spec_files="tarball_helium.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR FreeFileSync
+repo_url="https://github.com/hkneptune/FreeFileSync"
+spec_files="runfile_freefilesync.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -174,12 +180,6 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 # repo_url="https://github.com/zed-industries/zed"
 # spec_files="tarball_zed.spec"
 # new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
-#####ANCHOR FreeFileSync
-# repo_url="https://gitlab.com/opensource-tracking/FreeFileSync"
-# spec_files="tarball_freefilesync.spec"
-# new_version=$(fetch_gitlab_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR pdf4qt
