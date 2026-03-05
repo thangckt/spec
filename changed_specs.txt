@@ -1,4 +1,4 @@
 
-rpm_onlyoffice.spec
+rpm_rustdesk.spec
+rpm_electerm.spec
 rssguard.spec
-ovito.spec
