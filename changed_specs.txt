@@ -1,4 +1,2 @@
 
-rpm_rustdesk.spec
 rpm_electerm.spec
-rssguard.spec
