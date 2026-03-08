@@ -1,2 +1,3 @@
 
-rpm_electerm.spec
+rssguard.spec
+tarball_zotero.spec
