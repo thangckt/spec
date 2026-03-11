@@ -3,7 +3,7 @@
 ## Gitlab push work well in version 3.5.4, but fail in version 3.5.5
 
 Name:           github-desktop-plus
-Version:        3.5.6.5
+Version:        3.5.6.6
 Release:        1%{?dist}
 Summary:        GitHub Desktop Plus
 
