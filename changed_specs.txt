@@ -1,2 +1,2 @@
 
-rpm_electerm.spec
+runfile_freefilesync.spec
