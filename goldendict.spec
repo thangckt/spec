@@ -6,6 +6,7 @@ Summary:        Feature-rich dictionary lookup program
 License:        GPL-3.0-or-later
 URL:            https://github.com/goldendict/goldendict
 Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
+Patch0:         goldendict-ffmpeg-compat.patch
 
 BuildRequires:  qt5-qtbase-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qtx11extras-devel
 BuildRequires:  qt5-qtmultimedia-devel hunspell-devel zlib-devel libvorbis-devel libXtst-devel
@@ -29,6 +30,9 @@ git submodule update --init --recursive
 cd ..
 cp -a goldendict/. ./
 rm -rf goldendict
+
+# Apply FFmpeg compatibility patch for Fedora 44+
+%patch0 -p0
 
 %build
 # Enable optimization flags for better performance

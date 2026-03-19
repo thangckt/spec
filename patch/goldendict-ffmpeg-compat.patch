@@ -1,0 +1,26 @@
+--- a/ffmpegaudio.cc
++++ b/ffmpegaudio.cc
+@@ -350,7 +350,7 @@ void Ffmpeg::DecoderContext::closeCodec()
+   if ( codecContext_ )
+   {
+-    avcodec_close( codecContext_ );
++    avcodec_free_context( &codecContext_ );
+     codecContext_ = nullptr;
+   }
+ }
+@@ -447,7 +447,7 @@ bool Ffmpeg::DecoderContext::play( QString &errorMessage )
+   {
+     AVPacket packet;
+-    av_init_packet( &packet );
++    av_packet_unref( &packet );
+     packet.data = nullptr;
+     packet.size = 0;
+ 
+@@ -507,7 +507,7 @@ bool Ffmpeg::DecoderContext::play( QString &errorMessage )
+   }
+   else
+   {
+-    av_init_packet( &packet );
++    av_packet_unref( &packet );
+     packet.data = nullptr;
+     packet.size = 0;
