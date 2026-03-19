@@ -3,7 +3,7 @@
     # This spec reivse by GPT-codex-5.3, when ask it to refer Fflatpak approach.
 
 Name:       freefilesync
-Version:    14.8
+Version:    14.7
 Release:    1%{?dist}
 Summary:    A file synchronization utility
 
