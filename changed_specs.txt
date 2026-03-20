@@ -1,2 +1,2 @@
 
-goldendict.spec
+tarball_helium.spec
