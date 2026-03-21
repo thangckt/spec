@@ -1,7 +1,7 @@
 ### REF: https://tug.org/texlive/
 
 Name:           texlive-basic
-Version:        2025
+Version:        2026
 Release:        1%{?dist}
 Summary:        TeX Live distribution
 

@@ -1,7 +1,7 @@
 ### REF: https://tug.org/texlive/
 
 Name:           texlive-full
-Version:        2025
+Version:        2026
 Release:        1%{?dist}
 Summary:        TeX Live distribution
 
@@ -12,7 +12,7 @@ Source0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{ver
 
 BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny
-Obsoletes:      texlive-basic
+Obsoletes:      texlive-basic <= 2025
 
 %global install_dir /opt/texlive/%{version}
 
@@ -20,12 +20,13 @@ Obsoletes:      texlive-basic
 TeX Live provides a comprehensive TeX system for GNU/Linux. This RPM installs a TeX Live tree in /opt/texlive.
 
 %prep
-mkdir extracted
+mkdir -p extracted
 cd extracted
 tar -xf %{SOURCE0}
 texlive_dir=$(ls -d install-tl-* | head -n1)
 mv "$texlive_dir" ../texlive_dir
 cd ..
+rm -rf extracted
 
 %build
 # Nothing to build
