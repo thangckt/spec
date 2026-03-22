@@ -1,2 +1,2 @@
 
-ovito.spec
+rpm_electerm.spec
