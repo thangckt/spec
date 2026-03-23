@@ -20,8 +20,7 @@
 
 Name:           freecad
 Epoch:          1
-#ersion:        1.0.2
-Version:        2026.03.19
+Version:        1.0.2
 Release:        1%{?dist}
 
 Summary:        A general purpose 3D CAD modeler
@@ -29,11 +28,11 @@ Group:          Applications/Engineering
 License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
-#ource0:        %{url}/archive/refs/tags/%{version}.tar.gz
-Source0:        %{url}/archive/refs/tags/weekly-%{version}.tar.gz
-Source1:        https://github.com/Ondsel-Development/OndselSolver/archive/refs/heads/main.tar.gz#/OndselSolver-main.tar.gz
-Source2:        https://github.com/microsoft/GSL/archive/refs/tags/v4.1.0.tar.gz#/GSL-4.1.0.tar.gz
-Source3:        https://github.com/FreeCAD/AddonManager/archive/refs/heads/main.tar.gz#/AddonManager-main.tar.gz
+Source0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
+
+%global pre_version 2026.03.19
+
+Source0:        %{url}/releases/download/weekly-%{pre_version}/freecad_source_weekly-%{pre_version}.tar.gz
 
 
 # Maintainers:  keep this list of plugins up to date
@@ -96,7 +95,6 @@ Provides:       bundled(libondselsolver) = %{bundled_ondsel_solver_version}
 Recommends:     python3-pysolar IfcOpenShell-python3
 
 
-
 # plugins and private shared libs in %%{_libdir}/freecad/lib are private;
 # prevent private capabilities being advertised in Provides/Requires
 %global plugin_exclude %( for i in %{plugins}; do  echo -n "\|$i\(Gui\)\?"; done )
@@ -106,7 +104,6 @@ Recommends:     python3-pysolar IfcOpenShell-python3
 %global __provides_exclude_from ^%{_libdir}/%{name}/Mod/.*
 %global __provides_exclude ^(libFreeCAD.*%{plugin_exclude})\.so.*
 %global __requires_exclude ^(libFreeCAD.*%{plugin_exclude}%{lib_exclude})\.so.*
-
 
 
 %description
@@ -146,15 +143,6 @@ Development file for OndselSolver
 %prep
     # FreeCAD-%{version}
     %autosetup -n FreeCAD-weekly-%{version}
-
-    # Extract and place git submodules
-    tar -xzf %{SOURCE1}
-    tar -xzf %{SOURCE2}
-    tar -xzf %{SOURCE3}
-    rmdir src/3rdParty/OndselSolver src/3rdParty/GSL src/Mod/AddonManager 2>/dev/null || true
-    mv OndselSolver-main src/3rdParty/OndselSolver
-    mv GSL-4.1.0 src/3rdParty/GSL
-    mv AddonManager-main src/Mod/AddonManager
 
 %build
      # Deal with cmake projects that tend to link excessively.
