@@ -28,7 +28,7 @@ Group:          Applications/Engineering
 License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
-Source0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
+#ource0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
 
 %global pre_version 2026.03.19
 
@@ -141,8 +141,8 @@ Development file for OndselSolver
 %endif
 
 %prep
-    # FreeCAD-%{version}
-    %autosetup -n FreeCAD-weekly-%{version}
+    # freecad_source-%{version}
+    %autosetup -n freecad_source_weekly-%{pre_version}
 
 %build
      # Deal with cmake projects that tend to link excessively.
