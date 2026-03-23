@@ -20,7 +20,9 @@
 
 Name:           freecad
 Epoch:          1
-Version:        1.0.2
+#ersion:        1.0.2
+
+Version:        2026.03.19
 Release:        1%{?dist}
 
 Summary:        A general purpose 3D CAD modeler
@@ -29,8 +31,6 @@ License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
 #ource0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
-
-%global pre_version 2026.03.19
 
 Source0:        %{url}/releases/download/weekly-%{pre_version}/freecad_source_weekly-%{pre_version}.tar.gz
 
@@ -142,7 +142,7 @@ Development file for OndselSolver
 
 %prep
     # freecad_source-%{version}
-    %autosetup -n freecad_source_weekly-%{pre_version}
+    %autosetup -n freecad_source_weekly-%{version}
 
 %build
      # Deal with cmake projects that tend to link excessively.
