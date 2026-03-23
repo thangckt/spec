@@ -21,7 +21,6 @@
 Name:           freecad
 Epoch:          1
 #ersion:        1.0.2
-
 Version:        2026.03.19
 Release:        1%{?dist}
 
@@ -31,8 +30,7 @@ License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
 #ource0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
-
-Source0:        %{url}/releases/download/weekly-%{pre_version}/freecad_source_weekly-%{pre_version}.tar.gz
+Source0:        %{url}/releases/download/weekly-%{version}/freecad_source_weekly-%{version}.tar.gz
 
 
 # Maintainers:  keep this list of plugins up to date
