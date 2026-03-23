@@ -73,7 +73,7 @@ EOF
 
 ### Icon
 install -D -m644 VSCodium-linux-%{vscode_arch}-%{version}/resources/app/resources/linux/code.png \
-  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+    %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
 %files
