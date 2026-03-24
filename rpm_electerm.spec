@@ -1,5 +1,5 @@
 Name:           electerm
-Version:        2.17.8
+Version:        2.17.16
 Release:        1%{?dist}
 Summary:        Terminal and remote connection client
 
