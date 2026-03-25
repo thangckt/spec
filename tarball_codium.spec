@@ -6,7 +6,7 @@
 %global debug_package %{nil}
 
 Name:           codium
-Version:        1.106.37943
+Version:        1.112.01907
 Release:        1%{?dist}
 Summary:        Free/Libre Open Source Software Binaries of VSCode
 
@@ -14,6 +14,8 @@ License:        MIT
 URL:            https://github.com/VSCodium/vscodium
 Source0:        %{url}/releases/download/%{version}/VSCodium-linux-%{vscode_arch}-%{version}.tar.gz
 
+## Filter out the problematic dependency: `libcurl.so.4(CURL_OPENSSL_4)(64bit)`
+%global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
 
 %description
 VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's VS Code.
