@@ -140,7 +140,7 @@ Development file for OndselSolver
 
 %prep
     # freecad_source-%{version}
-    %autosetup -n freecad-%{version}-build
+    %setup -c -n freecad-%{version}-build
 
 %build
      # Deal with cmake projects that tend to link excessively.

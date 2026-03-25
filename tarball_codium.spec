@@ -21,7 +21,7 @@ Source0:        %{url}/releases/download/%{version}/VSCodium-linux-%{vscode_arch
 VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's VS Code.
 
 %prep
-%autosetup -n VSCodium-linux-%{vscode_arch}-%{version}
+%setup -c -n VSCodium-linux-%{vscode_arch}-%{version}
 
 %build
 # Nothing to build (precompiled)
