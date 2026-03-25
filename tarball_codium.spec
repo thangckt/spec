@@ -15,7 +15,7 @@ URL:            https://github.com/VSCodium/vscodium
 Source0:        %{url}/releases/download/%{version}/VSCodium-linux-%{vscode_arch}-%{version}.tar.gz
 
 ## Filter out the problematic dependency: `libcurl.so.4(CURL_OPENSSL_4)(64bit)`
-%global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
+
 
 %description
 VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's VS Code.
