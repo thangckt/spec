@@ -31,17 +31,13 @@ VSCodium is a community-driven, freely-licensed binary distribution of Microsoft
 mkdir -p %{buildroot}%{_libexecdir}/vscodium
 cp -r * %{buildroot}%{_libexecdir}/vscodium/
 
-### Symlink main executable
-mkdir -p %{buildroot}%{_bindir}
-ln -s %{_libexecdir}/vscodium/bin/codium %{buildroot}%{_bindir}/codium
-
 ### Desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
 Name=VSCodium
 GenericName=Text Editor
-Exec=/usr/bin/codium %F
+Exec=/usr/libexec/vscodium/bin/codium %F
 Icon=%{name}
 Type=Application
 StartupNotify=true
@@ -52,7 +48,7 @@ Keywords=vscode;
 
 [Desktop Action new-empty-window]
 Name=New Empty Window
-Exec=/usr/bin/codium --new-window %F
+Exec=/usr/libexec/vscodium/bin/codium --new-window %F
 Icon=%{name}
 EOF
 
@@ -70,18 +66,18 @@ X-KDE-StartupNotify=false
 [Desktop Action openInCodium]
 Name=Open in Codium
 Icon=codium
-Exec=codium %u
+Exec=/usr/libexec/vscodium/bin/codium %u
 EOF
 
 ### Icon
 install -D -m644 resources/app/resources/linux/code.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
-
 %files
 %{_bindir}/codium
 %{_libexecdir}/vscodium
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/kio/servicemenus/open_in_codium.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %changelog
