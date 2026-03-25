@@ -74,7 +74,7 @@ Exec=codium %u
 EOF
 
 ### Icon
-install -D -m644 ./resources/app/resources/linux/code.png \
+install -D -m644 resources/app/resources/linux/code.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
