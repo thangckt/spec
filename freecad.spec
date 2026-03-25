@@ -143,7 +143,7 @@ Development file for OndselSolver
     %setup -c -n freecad-%{version}-build
 
 %build
-     # Deal with cmake projects that tend to link excessively.
+    # Deal with cmake projects that tend to link excessively.
     LDFLAGS='-Wl,--as-needed -Wl,--no-undefined'; export LDFLAGS
 
 #         -DCMAKE_INSTALL_DATADIR=%{_datadir}/%{name} \
