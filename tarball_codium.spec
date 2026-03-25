@@ -79,8 +79,6 @@ install -D -m644 resources/app/resources/linux/code.png \
 
 
 %files
-%license LICENSE
-%doc README.md
 %{_bindir}/codium
 %{_libexecdir}/vscodium
 %{_datadir}/applications/%{name}.desktop
