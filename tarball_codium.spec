@@ -74,7 +74,6 @@ install -D -m644 resources/app/resources/linux/code.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %files
-%{_bindir}/codium
 %{_libexecdir}/vscodium
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kio/servicemenus/open_in_codium.desktop
