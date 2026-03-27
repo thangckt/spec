@@ -4,7 +4,7 @@ name: Update versions of multiple .spec files
 on:  # Trigger manually or on a schedule (e.g., weekly)
   workflow_dispatch: # Manual trigger
   schedule:
-    - cron: '0 0 * * 0' # Weekly on Sunday at midnight
+    - cron: '0 18 * * 5' # 18:00 on Friday, https://en.wikipedia.org/wiki/Cron
   push:
     branches: [ dev]  # Trigger on push to `dev` branch
 
