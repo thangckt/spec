@@ -17,7 +17,7 @@ jobs:
         with:
           ref: dev    # Selected branch, default is `main`
 
-    ### Update the .spec files (this creates file `changed_specs.txt`)
+    ### Update the .spec files (this creates file `_changed_specs.txt`)
       - name: Update .spec files
         run: |
           bash 0update_spec_version.sh
@@ -74,4 +74,4 @@ jobs:
 
             ## Return to dev branch
             git checkout dev
-          done < changed_specs.txt
+          done < _changed_specs.txt
