@@ -86,7 +86,7 @@ function update_spec_version() {
 }
 
 ### initialize store file
-store_file="changed_specs.txt"
+store_file="_changed_specs.txt"
 tee $store_file <<<"" >/dev/null
 
 #####SECTION: From GitHub
@@ -101,7 +101,7 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR tailscale
 repo_url="https://github.com/tailscale/tailscale"
-spec_files="tailscale.spec"
+spec_files="build_tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -119,19 +119,19 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR goldendict
 repo_url="https://github.com/goldendict/goldendict"
-spec_files="goldendict.spec"
+spec_files="build_goldendict.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR rssguard
 repo_url="https://github.com/martinrotter/rssguard"
-spec_files="rssguard.spec"
+spec_files="build_rssguard.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR modules
 repo_url="https://github.com/envmodules/modules"
-spec_files="modules.spec"
+spec_files="build_modules.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -151,23 +151,23 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
-spec_files="ovito.spec"
+spec_files="build_ovito.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR Evolution
 repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
-spec_files="evolution1-data-server.spec"
+spec_files="build_evolution1-data-server.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 repo_url="https://gitlab.gnome.org/GNOME/evolution"
-spec_files="evolution2.spec"
+spec_files="build_evolution2.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
 repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
-spec_files="evolution3-ews.spec"
+spec_files="build_evolution3-ews.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
