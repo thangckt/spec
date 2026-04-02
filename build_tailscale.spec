@@ -1,4 +1,4 @@
-### https://gitlab.com/shadowblue/allthetools/-/blob/tailscale-1.94.2-1/tailscale/tailscale.spec
+### https://gitlab.com/shadowblue/allthetools/
 ### Revise by Claude
 
 %global debug_package %{nil}
