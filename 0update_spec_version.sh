@@ -85,23 +85,23 @@ function update_spec_version() {
     printf "%-15s %-15s %s\n" "$current_version" "$new_version" "$spec_file"
 }
 
-#####SECTION: From GitHub
-printf "%-15s %-15s %s\n" "Old_ver" "New_ver" "File"
-printf "%-15s %-15s %s\n" "---------" "---------" "---------"
-
 ### initialize store file
 store_file="changed_specs.txt"
 tee $store_file <<<"" >/dev/null
 
-#####ANCHOR rustdesk
-repo_url="https://github.com/rustdesk/rustdesk"
-spec_files="rpm_rustdesk.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
+#####SECTION: From GitHub
+printf "%-15s %-15s %s\n" "Old_ver" "New_ver" "File"
+printf "%-15s %-15s %s\n" "---------" "---------" "---------"
 
 #####ANCHOR electerm
 repo_url="https://github.com/electerm/electerm"
 spec_files="rpm_electerm.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR tailscale
+repo_url="https://github.com/tailscale/tailscale"
+spec_files="tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -146,6 +146,8 @@ repo_url="https://github.com/hkneptune/FreeFileSync"
 spec_files="runfile_freefilesync.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
+
+
 
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
@@ -198,5 +200,11 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 ### Not support EWS yet
 # repo_url="https://github.com/Foundry376/Mailspring"
 # spec_files="rpm_mailspring.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR rustdesk
+# repo_url="https://github.com/rustdesk/rustdesk"
+# spec_files="rpm_rustdesk.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
