@@ -73,23 +73,31 @@ WantedBy=multi-user.target
 EOF
 
 %post
+### reloads systemd's daemon configuration to recognize the new service file
 %systemd_post tailscaled.service
+### automatically enable and start tailscaled on install
+systemctl enable tailscaled.service
+systemctl start tailscaled.service
 
 %preun
+### Stops the running service
+systemctl stop tailscaled.service 2>/dev/null || true
+### disables the service and removes it from startup
 %systemd_preun tailscaled.service
 
 %postun
+### performs final cleanup (mean for upgrade scenarios)
 %systemd_postun_with_restart tailscaled.service
 
 %files
 %license LICENSE
 %doc README.md
-# Binaries
+### Binaries
 %{_bindir}/%{name}
 %{_bindir}/tailscaled
-# Systemd service
+### Systemd service
 %{_unitdir}/tailscaled.service
-# Shell completions
+### Shell completions
 %{bash_completions_dir}/%{name}
 %{fish_completions_dir}/%{name}.fish
 %{zsh_completions_dir}/_%{name}

@@ -56,8 +56,8 @@ install -m 644 %{buildroot}%{_datadir}/rustdesk/files/rustdesk.service %{buildro
 %preun
 if [ $1 -eq 0 ]; then
     # Only remove service if this is the last uninstall
-    systemctl --no-reload disable rustdesk.service >/dev/null 2>&1 || true
     systemctl --no-reload stop rustdesk.service >/dev/null 2>&1 || true
+    systemctl --no-reload disable rustdesk.service >/dev/null 2>&1 || true
 fi
 
 %changelog
