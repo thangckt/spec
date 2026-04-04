@@ -1,5 +1,5 @@
 Name:           rustconn
-Version:        0.10.9
+Version:        0.10.10
 Release:        1%{?dist}
 Summary:        Manage remote connections easily.
 
