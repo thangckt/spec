@@ -105,6 +105,12 @@ spec_files="build_tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR rustconn
+repo_url="https://github.com/totoshko88/RustConn"
+spec_files="rpm_rustconn.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####ANCHOR github-desktop-plus
 repo_url="https://github.com/pol-rivero/github-desktop-plus"
 spec_files="rpm_github-desktop-plus.spec"
