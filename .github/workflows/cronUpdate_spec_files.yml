@@ -12,7 +12,7 @@ jobs:
   update-repo:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Central Repository
+      - name: Checkout Repository
         uses: actions/checkout@v6
         with:
           ref: dev    # Selected branch, default is `main`
