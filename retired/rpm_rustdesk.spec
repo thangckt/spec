@@ -1,3 +1,5 @@
+### Retired on 2026Apr01, use `TailScale + krdp` instead of RustDesk for better performance, security, and Wayland support.
+
 Name:           rustdesk
 Version:        1.4.6
 Release:        1%{?dist}

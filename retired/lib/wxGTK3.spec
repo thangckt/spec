@@ -1,5 +1,6 @@
 ### REF: https://src.fedoraproject.org/rpms/wxGTK/blob/rawhide/f/wxGTK.spec
-# Note: FreeFileSync 14.4 depends on wxWidgets=3.3.0. It is better to build it in another spec file.
+### This lib needed for FreeFileSync 14.4 depends on wxWidgets=3.3.0. It is better to build it in another spec file.
+### Retired, use FreeFileSync runfile instead of building from source.
 
 Name:       wxGTK3
 Version:    3.3.0

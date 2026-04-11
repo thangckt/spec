@@ -105,8 +105,6 @@ spec_files="build_tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-
-
 #####ANCHOR github-desktop-plus
 repo_url="https://github.com/pol-rivero/github-desktop-plus"
 spec_files="rpm_github-desktop-plus.spec"
@@ -157,21 +155,7 @@ spec_files="build_ovito.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Evolution
-repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
-spec_files="build_evolution1-data-server.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
 
-repo_url="https://gitlab.gnome.org/GNOME/evolution"
-spec_files="build_evolution2.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
-repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
-spec_files="build_evolution3-ews.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR Zotero
 spec_files="tarball_zotero.spec"
@@ -215,4 +199,20 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 # repo_url="https://github.com/totoshko88/RustConn"
 # spec_files="rpm_rustconn.spec"
 # new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Evolution
+# repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
+# spec_files="build_evolution1-data-server.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+# repo_url="https://gitlab.gnome.org/GNOME/evolution"
+# spec_files="build_evolution2.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+# repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
+# spec_files="build_evolution3-ews.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"

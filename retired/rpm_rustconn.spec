@@ -1,3 +1,5 @@
+### Retired on 2026Apr01, use `Remmina` instead of RustConn, to avoid broken remote server.
+
 Name:           rustconn
 Version:        0.10.10
 Release:        1%{?dist}

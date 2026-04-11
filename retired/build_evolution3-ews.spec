@@ -1,6 +1,6 @@
 ### This spec to build Evolution EWS plugin
 # - evolution-ews: https://src.fedoraproject.org/rpms/evolution-ews/blob/rawhide/f/evolution-ews.spec
-### Retired on 2026Apr11, Fedora 44 already has it.
+### From 2026Apr11, Fedora 44 already has version 3.60.0
 
 Name:           evolution-ews
 Version:        3.60.1

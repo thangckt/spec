@@ -1,5 +1,6 @@
 ### ref: https://github.com/fedora-riscv/rssguard/blob/main/rssguard.spec
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
+### Retired on 2025Dec01, use `rssguard5`
 
 Name:           rssguard
 Version:        4.8.6

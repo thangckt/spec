@@ -1,4 +1,2 @@
 
-build_evolution1-data-server.spec
-build_evolution2.spec
-build_evolution3-ews.spec
+tarball_zotero.spec
