@@ -1,5 +1,6 @@
 ### This spec to build evolution-data-server
 # - evolution-data-server (EDS): https://src.fedoraproject.org/rpms/evolution-data-server/blob/rawhide/f/evolution-data-server.spec
+### Retired on 2026Apr11, Fedora 44 already has it.
 
 Name:           evolution-data-server
 Version:        3.60.1

@@ -1,5 +1,6 @@
 ### This spec to build Evolution
 # - evolution: https://src.fedoraproject.org/rpms/evolution/blob/rawhide/f/evolution.spec
+### Retired on 2026Apr11, Fedora 44 already has it.
 
 Name:           evolution
 Version:        3.60.1
