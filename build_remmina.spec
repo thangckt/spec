@@ -11,7 +11,7 @@ Summary:    Remote Desktop Client
 License:    GPL-2.0-or-later and MIT
 URL:        https://gitlab.com/Remmina/Remmina
 
-Source0:    %{url}/-/archive/v%{version}/Remmina-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:    %{url}/-/archive/v%{version}/Remmina-%{version}.tar.gz
 
 # Cmake helper file to easy build plugins outside remmina source tree
 # See http://www.muflone.com/remmina-plugin-rdesktop/english/install.html which
@@ -234,7 +234,7 @@ This package contains Remmina kiosk mode, including a Gnome Shell session
 that shows up under the display manager session menu.
 
 %prep
-%autosetup -p1 -n Remmina-v%{version}
+%autosetup -n Remmina-v%{version}
 
 %build
 %cmake \
