@@ -1,2 +1,2 @@
 
-build_remmina.spec
+tarball_helium.spec
