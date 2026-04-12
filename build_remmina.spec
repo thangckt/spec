@@ -2,10 +2,8 @@
 ### https://download.copr.fedorainfracloud.org/results/marcoaurelio/freerdp-server-el9/epel-9-x86_64/09075538-remmina/remmina.spe
 ### To get spec in copr, just click on build -> click on arch (firtst column in build list)
 
-%global commit cc2a72fdf4bbcd56edf4cc339cce02c12af4ccf4
-
 Name:       remmina
-Version:    1.4.41
+Version:    1.4.42
 Release:    1%{?dist}
 Summary:    Remote Desktop Client
 License:    GPL-2.0-or-later and MIT
@@ -234,7 +232,7 @@ This package contains Remmina kiosk mode, including a Gnome Shell session
 that shows up under the display manager session menu.
 
 %prep
-%autosetup -n Remmina-v%{version}
+%autosetup -n Remmina-%{version}
 
 %build
 %cmake \
