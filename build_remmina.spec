@@ -17,7 +17,9 @@ Source0:    %{url}/-/archive/v%{version}/Remmina-%{version}.tar.gz#/%{name}-%{ve
 # See http://www.muflone.com/remmina-plugin-rdesktop/english/install.html which
 # use http://www.muflone.com/remmina-plugin-builder/ with remmina bundled source.
 # So we can't use it directly only as instructions.
-Source1: pluginBuild-CMakeLists.txt
+#ource1: pluginBuild-CMakeLists.txt
+
+Source1: https://raw.githubusercontent.com/muflone/remmina-plugin-builder/refs/heads/master/CMakeLists.txt
 
 BuildRequires: cmake >= 3.2
 BuildRequires: cups-devel
@@ -357,5 +359,4 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.appdat
 %{_mandir}/man1/remmina-gnome.1*
 
 %changelog
-* Fri Feb 07 2025 Daniel Milnes <daniel@daniel-milnes.uk> - 1.4.39-3
-- Add support for EPEL10 rhbz#2332346
+%autochangelog
