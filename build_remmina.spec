@@ -3,7 +3,7 @@
 ### To get spec in copr, just click on build -> click on arch (firtst column in build list)
 
 Name:       remmina
-Version:    1.4.42
+Version:        1.4.43
 Release:    1%{?dist}
 Summary:    Remote Desktop Client
 License:    GPL-2.0-or-later and MIT
