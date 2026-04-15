@@ -1,2 +1,2 @@
 
-tarball_helium.spec
+build_ovito.spec
