@@ -3,7 +3,7 @@
 ## Gitlab push work well in version 3.5.4, but fail in version 3.5.5
 
 Name:           github-desktop-plus
-Version:        3.5.8.1
+Version:        3.5.6.1
 Release:        1%{?dist}
 Summary:        GitHub Desktop Plus
 
@@ -13,10 +13,11 @@ Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{versio
 
 BuildRequires:  chrpath, patchelf
 
-## Filter out the problematic dependency: `libcurl-gnutls`
-%global __requires_exclude ^libcurl-gnutls\\.so\\.[0-9]+.*$
-%global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
-%global __requires_exclude ^libjpeg\\.so\\.8.*$
+### Filter out the problematic dependency: `libcurl-gnutls`
+## 1. Filter the library files
+%global __requires_exclude ^(libcurl-gnutls|libcurl|libjpeg)\.so\.[0-9]+.*$
+## 2. Filter the specific versioned symbol that Fedora cannot provide
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^libcurl\.so\.4\(CURL_GNUTLS_3\)\(64bit\)$
 
 %description
 GitHub Desktop Plus is a graphical Git client for managing GitHub repositories easily.
