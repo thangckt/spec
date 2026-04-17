@@ -16,6 +16,7 @@ BuildRequires:  chrpath, patchelf
 ## Filter out the problematic dependency: `libcurl-gnutls`
 %global __requires_exclude ^libcurl-gnutls\\.so\\.[0-9]+.*$
 %global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
+%global __requires_exclude ^libjpeg\\.so\\.8.*$
 
 %description
 GitHub Desktop Plus is a graphical Git client for managing GitHub repositories easily.
@@ -36,7 +37,10 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*; do
     if file "$bin" | grep -q ELF; then
         chrpath -d "$bin" || true
+        ## Fix libcurl
         patchelf --replace-needed libcurl-gnutls.so.4 libcurl.so.4 "$bin" || true
+        ## Fix libjpeg 
+        patchelf --replace-needed libjpeg.so.8 libjpeg.so.62 "$bin" || true
     fi
 done
 
