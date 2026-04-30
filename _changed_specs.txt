@@ -1,2 +1,5 @@
 
 rpm_electerm.spec
+rpm_github-desktop-plus.spec
+build_rssguard.spec
+tarball_helium.spec
