@@ -6,7 +6,7 @@
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
 Name:           rssguard
-Version:        5.1.0
+Version:        5.0.0
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
@@ -44,6 +44,7 @@ Standalone article extraction helper for RSS Guard.
     -DENABLE_MEDIAPLAYER_LIBMPV=ON \
     -DENABLE_MEDIAPLAYER_QTMULTIMEDIA=OFF \
     -DFORCE_BUNDLE_ICONS=OFF \
+    -DWEB_ARTICLE_VIEWER_WEBENGINE=OFF \
     -DNO_UPDATE_CHECK=ON
 %cmake_build
 
