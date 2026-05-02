@@ -1,6 +1,6 @@
 ### ref: https://github.com/fedora-riscv/rssguard/blob/main/rssguard.spec
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
-### This script build `text` version without builtin webengine: -DWEB_ARTICLE_VIEWER_WEBENGINE=OFF . See https://github.com/martinrotter/rssguard/releases/tag/5.1.0
+### This script build `lite` version without builtin webengine: -DWEB_ARTICLE_VIEWER_WEBENGINE=OFF . See https://github.com/martinrotter/rssguard/releases/tag/5.1.0
 
 #global         dev_version 3e7bdfd58
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
