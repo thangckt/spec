@@ -4,7 +4,7 @@
 #  - simplify desktop file from the original: https://github.com/zed-industries/zed/blob/main/crates/zed/resources/zed.desktop.in
 
 Name:           zed
-Version:        0.213.7
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        High-performance, multiplayer code editor
 
