@@ -6,7 +6,7 @@
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
 Name:           rssguard
-Version:        5.1.0
+Version:        5.0.0
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
@@ -62,9 +62,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.xml
 %doc README.md
 %license LICENSE.md
 %{_bindir}/rssguard
-%{_datadir}/applications/io.github.martinrotter.rssguard.desktop
-%{_datadir}/icons/hicolor/*/apps/io.github.martinrotter.rssguard.png
-%{_datadir}/metainfo/io.github.martinrotter.rssguard.metainfo.xml
+%{_datadir}/applications/io.github.martinrotter.rssguard*.desktop
+%{_datadir}/icons/hicolor/*/apps/io.github.martinrotter.rssguard*.png
+%{_datadir}/metainfo/io.github.martinrotter.rssguard*.metainfo.xml
 %{_libdir}/librssguard.so
 %{_libdir}/rssguard/*.so
 %{_includedir}/librssguard/
