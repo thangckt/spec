@@ -1,12 +1,12 @@
 ### ref: https://github.com/fedora-riscv/rssguard/blob/main/rssguard.spec
 # https://github.com/flathub/io.github.martinrotter.rssguard/blob/master/io.github.martinrotter.rssguard.yml
-### rssguard-5 remove builtin web browser, so do not use `NO_LITE` option. https://rssguard.readthedocs.io/en/latest/5-vs-4.html
+### This script build `lite` version without builtin webengine: -DWEB_ARTICLE_VIEWER_WEBENGINE=OFF
 
 #global         dev_version 3e7bdfd58
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
-Name:           rssguard
-Version:        5.1.0
+Name:           rssguard_lite
+Version:        5.0.0
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
