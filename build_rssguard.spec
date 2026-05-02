@@ -5,8 +5,8 @@
 #global         dev_version 3e7bdfd58
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
-Name:           rssguard_lite
-Version:        5.1.0
+Name:           rssguard
+Version:        5.0.0
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
