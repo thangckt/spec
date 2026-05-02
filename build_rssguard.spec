@@ -5,8 +5,8 @@
 #global         dev_version 3e7bdfd58
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
-Name:           rssguard
-Version:        5.1.0
+Name:           rssguard_lite
+Version:        5.0.0
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
@@ -29,7 +29,7 @@ RSS Guard is simple, light and easy-to-use RSS/ATOM feed aggregator developed us
 
 %package extractor
 Summary: Article extractor for RSS Guard
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: rssguard%{?_isa} = %{version}-%{release}
 
 %description extractor
 Standalone article extraction helper for RSS Guard.
