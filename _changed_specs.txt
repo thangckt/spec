@@ -1,2 +1,4 @@
 
-rpm_electerm.spec
+build_rssguard.spec
+tarball_helium.spec
+tarball_zotero.spec
