@@ -3,13 +3,13 @@
 ### Wayland support: https://xiaoyifang.github.io/goldendict-ng/topic_wayland/
 
 Name:           goldendict-ng
-Version:        26.5.4
+Version:        26.7.0_alpha.928a3d9f
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
 License:        GPL-3.0-or-later
 URL:            https://github.com/xiaoyifang/goldendict-ng
-Source0:        %{url}/archive/refs/tags/v%{version}-Release.ea1a9803.tar.gz
+Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  gcc-c++ make pkgconfig git
 BuildRequires:  hunspell-devel zlib-devel bzip2-devel lzo-devel eb-devel
@@ -26,7 +26,7 @@ including Babylon, StarDict, Dictd, and others. It provides a modern Qt interfac
 Wikipedia, and various offline/online resources.
 
 %prep
-%autosetup -n %{name}-%{version}-Release.ea1a9803
+%autosetup -n %{name}-%{version}
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
