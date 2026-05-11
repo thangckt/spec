@@ -26,7 +26,11 @@ including Babylon, StarDict, Dictd, and others. It provides a modern Qt interfac
 Wikipedia, and various offline/online resources.
 
 %prep
-%setup -q -n %{name}-%{version}-Release.ea1a9803
+### Extract manually stripping the first path component
+# -c creates the directory first
+# -T disables the default extraction
+%setup -q -c -T -n %{name}-%{version}
+tar -xf %{SOURCE0} --strip-components=1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
