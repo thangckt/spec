@@ -14,7 +14,7 @@ Source0:        %{url}/archive/refs/tags/v%{version}-Release.ea1a9803.tar.gz
 BuildRequires:  gcc-c++ make pkgconfig git
 BuildRequires:  hunspell-devel zlib-devel bzip2-devel lzo-devel eb-devel
 BuildRequires:  libvorbis-devel libXtst-devel libavutil-free-devel libavformat-free-devel libzstd-devel
-BuildRequires:  libxkbcommon-devel libzim-devel opencc-devel fmt-devel xapian-core-devel tomlplusplus-devel
+BuildRequires:  libxkbcommon-devel libzim-devel opencc-devel fmt-devel xapian-core-devel tomlplusplus-devel cups-devel
 BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtmultimedia-devel qt6-qt5compat-devel
 BuildRequires:  qt6-qttools-devel qt6-qtspeech-devel qt6-qtwebchannel-devel qt6-qtwebengine-devel
 
@@ -33,7 +33,7 @@ Wikipedia, and various offline/online resources.
 %cmake_build
 
 ### List files to check after build
-ls %{buildroot}
+
 
 %install
 %cmake_install
