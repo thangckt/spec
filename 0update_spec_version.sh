@@ -2,6 +2,7 @@
 
 #####ANCHOR Info
 # This script to update the versions of .spec files in the current directory.
+# GoldenDict-ng is overwritten by Fedora's repository, where it uses version 2026 alway ahead of the latest release.
 
 #####ANCHOR Parameters
 ### Helper functions
@@ -120,9 +121,9 @@ spec_files="rpm_onlyoffice.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR goldendict-ng
-repo_url="https://github.com/xiaoyifang/goldendict-ng"
-spec_files="build_goldendict-ng.spec"
+#####ANCHOR goldendict
+repo_url="https://github.com/goldendict/goldendict"
+spec_files="build_goldendict.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -224,8 +225,8 @@ echo "Update Done!"
 # new_version=$(fetch_gitlab_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR goldendict
-# repo_url="https://github.com/goldendict/goldendict"
-# spec_files="build_goldendict.spec"
+#####ANCHOR goldendict-ng
+# repo_url="https://github.com/xiaoyifang/goldendict-ng"
+# spec_files="build_goldendict-ng.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
