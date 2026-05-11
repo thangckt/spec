@@ -32,9 +32,11 @@ Wikipedia, and various offline/online resources.
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
+### List files to check for after build
+find %{buildroot}
+
 %install
 ### Install binary
-mkdir -p %{buildroot}%{_bindir}
 install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
 
 ### Install .desktop file
