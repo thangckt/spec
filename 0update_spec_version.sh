@@ -225,7 +225,7 @@ echo "Update Done!"
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR goldendict
-repo_url="https://github.com/goldendict/goldendict"
-spec_files="build_goldendict.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
+# repo_url="https://github.com/goldendict/goldendict"
+# spec_files="build_goldendict.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
