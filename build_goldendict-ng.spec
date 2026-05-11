@@ -26,7 +26,7 @@ including Babylon, StarDict, Dictd, and others. It provides a modern Qt interfac
 Wikipedia, and various offline/online resources.
 
 %prep
-### Extract manually stripping the first path component
+### Extract manually to strip first subfolder
 # -c creates the directory first
 # -T disables the default extraction
 %setup -q -c -T -n %{name}-%{version}
