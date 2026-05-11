@@ -1,5 +1,6 @@
 ### goldendict-ng is actively maintained fork of goldendict with new features and bug fixes
-### Build from source: https://xiaoyifang.github.io/goldendict-ng/howto/build_from_source/
+### Build: https://xiaoyifang.github.io/goldendict-ng/howto/build_from_source/
+### Wayland support: https://xiaoyifang.github.io/goldendict-ng/topic_wayland/
 
 Name:           goldendict-ng
 Version:        26.5.4
