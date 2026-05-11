@@ -37,6 +37,9 @@ tar -xf %{SOURCE0} --strip-components=1
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
+### list files to check for debugging
+ls %{buildroot}
+
 %install
 %cmake_install
 
