@@ -41,7 +41,7 @@ ls %{buildroot}
 
 %install
 ### Install binary
-install -m 0755 goldendict %{buildroot}%{_bindir}/goldendict
+%cmake_install
 
 ### Install .desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
