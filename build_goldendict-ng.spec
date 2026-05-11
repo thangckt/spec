@@ -32,21 +32,21 @@ Wikipedia, and various offline/online resources.
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
-### List files to check for after build
+### List files to check after build
 find %{buildroot}
 
 %install
 ### Install binary
-install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
+install -m 0755 goldendict %{buildroot}%{_bindir}/goldendict
 
 ### Install .desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
+cat > %{buildroot}%{_datadir}/applications/goldendict.desktop << 'EOF'
 [Desktop Entry]
 Name=GoldenDict-ng
 GenericName=Multiformat Dictionary
-Exec=%{name}
-Icon=%{name}
+Exec=goldendict
+Icon=goldendict
 Terminal=false
 Type=Application
 Categories=Education;Languages;
@@ -54,17 +54,17 @@ EOF
 
 ### Install icon manually (SVG preferred if available)
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/64x64/apps
-cp icons/programicon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+cp icons/programicon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
 
 ### Install help files
-mkdir -p %{buildroot}%{_datadir}/%{name}/help
-cp -a help/* %{buildroot}%{_datadir}/%{name}/help/
+mkdir -p %{buildroot}%{_datadir}/goldendict/help
+cp -a help/* %{buildroot}%{_datadir}/goldendict/help/
 
 %files
-%{_bindir}/%{name}
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/%{name}/help/
+%{_bindir}/goldendict
+%{_datadir}/applications/goldendict.desktop
+%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
+%{_datadir}/goldendict/help/
 
 %changelog
 %autochangelog
