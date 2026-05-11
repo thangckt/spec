@@ -11,10 +11,10 @@ URL:            https://github.com/xiaoyifang/goldendict-ng
 Source0:        %{url}/archive/refs/tags/v%{version}-Release.ea1a9803.tar.gz
 
 
-BuildRequires:  qt5-qtbase-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qtx11extras-devel
-BuildRequires:  qt5-qtmultimedia-devel hunspell-devel zlib-devel libvorbis-devel libXtst-devel
-BuildRequires:  qt5-qttools-devel qt5-qttools python3-sphinxcontrib-qthelp eb-devel ffmpeg-free-devel
+BuildRequires:  hunspell-devel zlib-devel libvorbis-devel libXtst-devel
 BuildRequires:  lzo-devel bzip2-devel libao-devel libtiff-devel gcc-c++ make pkgconfig git
+BuildRequires:  qt6-qtbase-devel qt6-qtwebkit-devel qt6-qtsvg-devel qt6-qtx11extras-devel qt6-qtmultimedia-devel
+BuildRequires:  qt6-qttools-devel qt6-qttools python3-sphinxcontrib-qthelp eb-devel ffmpeg-free-devel
 Requires:       hunspell translate-shell mpg123
 
 %description
