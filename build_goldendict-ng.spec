@@ -19,6 +19,7 @@ BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtmultimedia-devel qt6-qt5c
 BuildRequires:  qt6-qttools-devel qt6-qtspeech-devel qt6-qtwebchannel-devel qt6-qtwebengine-devel
 
 Requires:       hunspell translate-shell mpg123
+Requires:       eb tomlplusplus libzim opencc
 
 %description
 GoldenDict is a feature-rich dictionary lookup program supporting multiple dictionary formats,
