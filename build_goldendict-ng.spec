@@ -11,16 +11,17 @@ URL:            https://github.com/xiaoyifang/goldendict-ng
 Source0:        %{url}/archive/refs/tags/v%{version}-Release.ea1a9803.tar.gz
 
 BuildRequires:  gcc-c++ make pkgconfig git
-BuildRequires:  hunspell-devel zlib-devel lzo-devel bzip2-devel eb-devel ffmpeg-free-devel
-BuildRequires:  libao-devel libtiff-devel libvorbis-devel libXtst-devel
-BuildRequires:  libavutil-free-devel libavformat-free-devel libzstd-devel libxkbcommon-devel libzimpl-devel opencc-devel fmt-devel xapian-core-devel
-BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtmultimedia-devel
+BuildRequires:  hunspell-devel zlib-devel bzip2-devel lzo-devel eb-devel
+BuildRequires:  libvorbis-devel libXtst-devel
+BuildRequires:  libavutil-free-devel libavformat-free-devel libzstd-devel libxkbcommon-devel libzim-devel opencc-devel fmt-devel xapian-core-devel
+BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtmultimedia-devel qt6-qt5compat-devel
 BuildRequires:  qt6-qttools-devel qt6-qtspeech-devel qt6-qtwebchannel-devel qt6-qtwebengine-devel
 
 Requires:       hunspell translate-shell mpg123
 
-#  x11proto-record-dev qt6-5compat-dev
+#  ffmpeg-free-devel libao-devel libtiff-devel
 
+#  x11proto-record-dev
 
 %description
 GoldenDict is a feature-rich dictionary lookup program supporting multiple dictionary formats,
