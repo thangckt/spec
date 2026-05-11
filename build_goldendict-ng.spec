@@ -1,4 +1,5 @@
 ### goldendict-ng is actively maintained fork of goldendict with new features and bug fixes
+### Build from source: https://xiaoyifang.github.io/goldendict-ng/howto/build_from_source/
 
 Name:           goldendict-ng
 Version:        26.5.4
@@ -25,13 +26,8 @@ Wikipedia, and various offline/online resources.
 %setup -q -n goldendict-ng-%{version}-Release.ea1a9803
 
 %build
-# Enable optimization flags for better performance
-export CXXFLAGS="%{optflags} -O2 -march=native -flto"
-export CFLAGS="%{optflags} -O2 -march=native -flto"
-export LDFLAGS="-flto"
-
-qmake-qt5 goldendict.pro CONFIG+=release CONFIG+=optimize
-make -j%{?_smp_build_ncpus}
+%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_DO_STRIP=ON
+%cmake_build
 
 %install
 mkdir -p %{buildroot}%{_bindir}
