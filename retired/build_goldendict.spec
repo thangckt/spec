@@ -9,9 +9,9 @@ Source0:        %{url}/archive/refs/tags/%{version}.tar.gz
 
 BuildRequires:  gcc-c++ make pkgconfig git
 BuildRequires:  hunspell-devel zlib-devel libvorbis-devel libXtst-devel
-BuildRequires:  lzo-devel bzip2-devel libao-devel libtiff-devel
+BuildRequires:  lzo-devel bzip2-devel libao-devel libtiff-devel eb-devel ffmpeg-free-devel
 BuildRequires:  qt5-qtbase-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qtx11extras-devel qt5-qtmultimedia-devel
-BuildRequires:  qt5-qttools-devel qt5-qttools python3-sphinxcontrib-qthelp eb-devel ffmpeg-free-devel
+BuildRequires:  qt5-qttools-devel python3-sphinxcontrib-qthelp
 
 Requires:       hunspell translate-shell mpg123
 
