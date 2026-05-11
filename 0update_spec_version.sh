@@ -43,8 +43,10 @@ fetch_gitlab_version() {
 function fetch_github_version() {
     local repo_url="$1"
     local new_version
+    ### capture everything after /tag/ (stripping a leading 'v' if present)
+    ### looks for a version starting with a digit, followed by any characters until the next quote
     new_version=$(curl -sL "${repo_url}/releases/latest" |
-        sed -nE 's|.*href="[^"]*/tag/v?([0-9]+(\.[0-9]+)+)".*|\1|p' |
+        sed -nE 's|.*href="[^"]*/tag/v?([0-9][^"]*)".*|\1|p' |
         head -n1)
     if [[ -z "$new_version" ]]; then
         echo "Failed to get version for $repo_url" >&2
@@ -75,7 +77,8 @@ function update_spec_version() {
     local store_file="$3"
 
     current_version=$(grep -E '^Version:' "$spec_file" | awk '{print $2}')
-    # Compare versions using sort -V (version sort)
+    ### Compare versions using sort -V (version sort)
+    ### sort -V handles hyphens and dots (e.g., 26.5.4-Release.ea1a9803)
     if [[ "$new_version" != "$current_version" ]] && [[ "$(printf "%s\n%s" "$current_version" "$new_version" | sort -V | tail -n1)" == "$new_version" ]]; then
         sed -i "s/^Version:[[:space:]]\+$current_version/Version:        $new_version/" "$spec_file"
         tee -a "$store_file" <<<"$spec_file" >/dev/null
