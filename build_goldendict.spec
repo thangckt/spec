@@ -1,5 +1,5 @@
 Name:           goldendict
-Version:        1.5.0
+Version:        1.5.1
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
