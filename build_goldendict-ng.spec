@@ -19,55 +19,48 @@ BuildRequires:  qt6-qttools-devel qt6-qtspeech-devel qt6-qtwebchannel-devel qt6-
 
 Requires:       hunspell translate-shell mpg123
 
-#  ffmpeg-free-devel libao-devel libtiff-devel
-
-#  x11proto-record-dev
-
 %description
 GoldenDict is a feature-rich dictionary lookup program supporting multiple dictionary formats,
 including Babylon, StarDict, Dictd, and others. It provides a modern Qt interface, support for
 Wikipedia, and various offline/online resources.
 
 %prep
-%setup -q -n goldendict-ng-%{version}-Release.ea1a9803
+%setup -q -n %{name}-%{version}-Release.ea1a9803
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_DO_STRIP=ON
+%cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/applications
+### Install binary
+install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
 
-# Install binary
-install -m 0755 goldendict %{buildroot}%{_bindir}/goldendict
-
-# Install .desktop file
+### Install .desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
-Name=GoldenDict
+Name=GoldenDict-ng
 GenericName=Multiformat Dictionary
-Exec=goldendict
-Icon=goldendict
+Exec=%{name}
+Icon=%{name}
 Terminal=false
 Type=Application
 Categories=Education;Languages;
 EOF
 
-# Install icon manually (SVG preferred if available)
+### Install icon manually (SVG preferred if available)
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/64x64/apps
-cp icons/programicon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
+cp icons/programicon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 
-# Install help files
-mkdir -p %{buildroot}%{_datadir}/goldendict/help
-cp -a help/* %{buildroot}%{_datadir}/goldendict/help/
+### Install help files
+mkdir -p %{buildroot}%{_datadir}/%{name}/help
+cp -a help/* %{buildroot}%{_datadir}/%{name}/help/
 
 %files
-%{_bindir}/goldendict
-%{_datadir}/applications/goldendict.desktop
-%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
-%{_datadir}/goldendict/help/
+%{_bindir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%{_datadir}/%{name}/help/
 
 %changelog
 %autochangelog
