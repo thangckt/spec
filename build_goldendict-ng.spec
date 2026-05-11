@@ -35,9 +35,14 @@ Wikipedia, and various offline/online resources.
 %install
 %cmake_install
 
+### Install icon manually (SVG preferred if available)
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/64x64/apps
+cp icons/programicon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
+
 %files
 %{_bindir}/goldendict
 %{_datadir}
+%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
 
 %changelog
 %autochangelog
