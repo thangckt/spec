@@ -117,9 +117,9 @@ spec_files="rpm_onlyoffice.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR goldendict
-repo_url="https://github.com/goldendict/goldendict"
-spec_files="build_goldendict.spec"
+#####ANCHOR goldendict-ng
+repo_url="https://github.com/xiaoyifang/goldendict-ng"
+spec_files="build_goldendict-ng.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -219,4 +219,10 @@ echo "Update Done!"
 # repo_url="https://gitlab.gnome.org/GNOME/evolution-ews"
 # spec_files="build_evolution3-ews.spec"
 # new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR goldendict
+# repo_url="https://github.com/goldendict/goldendict"
+# spec_files="build_goldendict.spec"
+# new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
