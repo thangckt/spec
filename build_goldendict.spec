@@ -1,5 +1,5 @@
 Name:           goldendict
-Version:        1.5.1
+Version:        1.5.0
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
@@ -43,7 +43,6 @@ make -j%{?_smp_build_ncpus}
 
 %install
 ### Install binary
-mkdir -p %{buildroot}%{_bindir}
 install -m 0755 goldendict %{buildroot}%{_bindir}/goldendict
 
 ### Install .desktop file
