@@ -26,14 +26,16 @@ including Babylon, StarDict, Dictd, and others. It provides a modern Qt interfac
 Wikipedia, and various offline/online resources.
 
 %prep
-%autosetup -n %{name}-%{version}-Release.ea1a9803
+### Extract the archive but strip the first directory level
+# -c: Create the top-level directory (goldendict-ng-%{version}-build)
+# -T: Disable default extraction (we do it manually to strip the nested folder)
+# -n: Tells RPM the resulting source directory name
+%setup -q -c -T -n %{name}-%{version}-build
+tar -xf %{SOURCE0} --strip-components=1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
-
-### List files to check after build
-
 
 %install
 %cmake_install
