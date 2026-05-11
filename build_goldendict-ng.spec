@@ -40,7 +40,6 @@ tar -xf %{SOURCE0} --strip-components=1
 ls %{buildroot}
 
 %install
-### Install binary
 %cmake_install
 
 ### Install .desktop file
