@@ -1,2 +1,3 @@
 
 build_goldendict-ng.spec
+build_goldendict.spec
