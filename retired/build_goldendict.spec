@@ -42,13 +42,11 @@ qmake-qt5 goldendict.pro CONFIG+=release CONFIG+=optimize
 make -j%{?_smp_build_ncpus}
 
 %install
+### Install binary
 mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/applications
-
-# Install binary
 install -m 0755 goldendict %{buildroot}%{_bindir}/goldendict
 
-# Install .desktop file
+### Install .desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
@@ -61,11 +59,11 @@ Type=Application
 Categories=Education;Languages;
 EOF
 
-# Install icon manually (SVG preferred if available)
+### Install icon manually (SVG preferred if available)
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/64x64/apps
 cp icons/programicon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
 
-# Install help files
+### Install help files
 mkdir -p %{buildroot}%{_datadir}/goldendict/help
 cp -a help/* %{buildroot}%{_datadir}/goldendict/help/
 

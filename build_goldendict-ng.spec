@@ -33,6 +33,7 @@ Wikipedia, and various offline/online resources.
 
 %install
 ### Install binary
+mkdir -p %{buildroot}%{_bindir}
 install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
 
 ### Install .desktop file
