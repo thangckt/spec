@@ -43,6 +43,7 @@ make -j%{?_smp_build_ncpus}
 
 %install
 ### Install binary
+mkdir -p %{buildroot}%{_bindir}
 install -m 0755 goldendict %{buildroot}%{_bindir}/goldendict
 
 ### Install .desktop file
