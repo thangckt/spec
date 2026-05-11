@@ -1,13 +1,13 @@
 ### goldendict-ng is actively maintained fork of goldendict with new features and bug fixes
 
 Name:           goldendict-ng
-Version:        26.5.3-Release.ea1a9803
+Version:        26.5.4
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
 License:        GPL-3.0-or-later
 URL:            https://github.com/xiaoyifang/goldendict-ng
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/v%{real_version}-Release.ea1a9803.tar.gz
 
 
 BuildRequires:  qt5-qtbase-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qtx11extras-devel
@@ -22,7 +22,7 @@ including Babylon, StarDict, Dictd, and others. It provides a modern Qt interfac
 Wikipedia, and various offline/online resources.
 
 %prep
-%setup -q -n goldendict-ng-%{version}
+%setup -q -n goldendict-ng-%{real_version}-Release.ea1a9803
 
 %build
 # Enable optimization flags for better performance
