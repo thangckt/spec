@@ -1,7 +1,7 @@
 ### goldendict-ng is actively maintained fork of goldendict with new features and bug fixes
 
 Name:           goldendict-ng
-Version:        26.5.4
+Version:        26.5.3
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
