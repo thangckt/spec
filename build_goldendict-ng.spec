@@ -37,7 +37,7 @@ tar -xf %{SOURCE0} --strip-components=1
 %cmake_build
 
 ### List files to check after build
-ls %{build}
+ls %{buildroot}
 
 %install
 ### Install binary
