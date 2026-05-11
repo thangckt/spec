@@ -1,2 +1,2 @@
 
-build_rssguard.spec
+build_goldendict-ng.spec
