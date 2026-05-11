@@ -10,9 +10,9 @@ License:        GPL-3.0-or-later
 URL:            https://github.com/xiaoyifang/goldendict-ng
 Source0:        %{url}/archive/refs/tags/v%{version}-Release.ea1a9803.tar.gz
 
-
+BuildRequires:  gcc-c++ make pkgconfig git
 BuildRequires:  hunspell-devel zlib-devel libvorbis-devel libXtst-devel
-BuildRequires:  lzo-devel bzip2-devel libao-devel libtiff-devel gcc-c++ make pkgconfig git
+BuildRequires:  lzo-devel bzip2-devel libao-devel libtiff-devel
 BuildRequires:  qt6-qtbase-devel qt6-qtwebkit-devel qt6-qtsvg-devel qt6-qtx11extras-devel qt6-qtmultimedia-devel
 BuildRequires:  qt6-qttools-devel qt6-qttools python3-sphinxcontrib-qthelp eb-devel ffmpeg-free-devel
 Requires:       hunspell translate-shell mpg123
