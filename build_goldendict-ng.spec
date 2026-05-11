@@ -33,7 +33,7 @@ Wikipedia, and various offline/online resources.
 %cmake_build
 
 ### List files to check after build
-ls ./
+ls %{build}
 
 %install
 ### Install binary
