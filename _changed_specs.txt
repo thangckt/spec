@@ -1,2 +1,2 @@
 
-build_goldendict-ng.spec
+rpm_electerm.spec
