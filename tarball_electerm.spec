@@ -28,7 +28,7 @@ cp -r * %{buildroot}%{_datadir}/electerm/
 
 ### Symlink main executable to /usr/bin/electerm
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{_datadir}/electerm/bin/electerm %{buildroot}%{_bindir}/electerm
+ln -sf %{_datadir}/electerm %{buildroot}%{_bindir}/electerm
 
 ### Create desktop entry
 cat > %{buildroot}%{_datadir}/applications/electerm.desktop <<'EOF'
