@@ -10,7 +10,7 @@ License:        AGPL-3.0-only AND Apache-2.0 AND GPL-3.0-or-later
 URL:            https://github.com/zed-industries/zed
 Source0:        %{url}/releases/download/v%{version}/zed-linux-x86_64.tar.gz
 
-# Disable debug package
+### Disable debug package
 %define debug_package %{nil}
 %define __strip /bin/true
 
@@ -28,7 +28,7 @@ Code at the speed of thought — Zed is a high-performance, multiplayer code edi
 mkdir -p %{buildroot}%{_libexecdir}/zed
 cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 
-### Symlink main executable
+### Symlink main executable to /usr/bin/zed
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 

@@ -14,7 +14,7 @@ Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_lin
 Requires:       desktop-file-utils
 Requires:       gtk3 libX11 libdrm mesa-libGL
 
-# Disable debug package
+### Disable debug package
 %define debug_package %{nil}
 %define __strip /bin/true
 
