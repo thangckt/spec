@@ -59,11 +59,5 @@ EOF
 %{_datadir}/applications/%{name}.desktop
 # %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
-%post
-%{_bindir}/update-desktop-database &> /dev/null || :
-
-%postun
-%{_bindir}/update-desktop-database &> /dev/null || :
-
 %changelog
 %autochangelog
