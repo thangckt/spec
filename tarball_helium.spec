@@ -28,26 +28,23 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 # Nothing to build
 
 %install
-### Create directories
-mkdir -p %{buildroot}/usr/share/helium
-mkdir -p %{buildroot}/usr/bin
-mkdir -p %{buildroot}/usr/share/applications
-mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps
-
 ### Copy all extracted files to /usr/share/helium
-cp -r * %{buildroot}/usr/share/helium/
+mkdir -p %{buildroot}%{_datadir}/helium
+cp -r * %{buildroot}%{_datadir}/helium/
 
-# Find and link the main executable
+# Find and link the main executable to /usr/bin/helium
 # The executable might be named 'helium' or 'chrome' in the extracted files
+mkdir -p %{buildroot}%{_bindir}
 if [ -f chrome ]; then
-    cp chrome %{buildroot}/usr/share/helium/
-    ln -sf /usr/share/helium/chrome %{buildroot}/usr/bin/helium
+    cp chrome %{buildroot}%{_datadir}/helium/
+    ln -sf %{_datadir}/helium/chrome %{buildroot}%{_bindir}/helium
 elif [ -f helium ]; then
-    cp helium %{buildroot}/usr/share/helium/
-    ln -sf /usr/share/helium/helium %{buildroot}/usr/bin/helium
+    cp helium %{buildroot}%{_datadir}/helium/
+    ln -sf %{_datadir}/helium/helium %{buildroot}%{_bindir}/helium
 fi
 
 ### Create desktop entry
+mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Browser
@@ -68,24 +65,25 @@ Exec=helium --incognito
 EOF
 
 ### Use the product logo as icon
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
 if [ -f product_logo_256.png ]; then
-    cp product_logo_256.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/helium.png
+    cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 else
     # Create a simple placeholder icon if logo not found
-    touch %{buildroot}/usr/share/icons/hicolor/256x256/apps/helium.png
+    touch %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 fi
 
 %files
-/usr/share/helium/
-/usr/bin/helium
-/usr/share/applications/helium.desktop
-/usr/share/icons/hicolor/256x256/apps/helium.png
+%{_datadir}/helium/
+%{_bindir}/helium
+%{_datadir}/applications/helium.desktop
+%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %post
-/usr/bin/update-desktop-database &> /dev/null || :
+%{_bindir}/update-desktop-database &> /dev/null || :
 
 %postun
-/usr/bin/update-desktop-database &> /dev/null || :
+%{_bindir}/update-desktop-database &> /dev/null || :
 
 %changelog
 %autochangelog

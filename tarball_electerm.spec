@@ -30,11 +30,25 @@ cp -r * %{buildroot}%{_datadir}/electerm/
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_datadir}/electerm/bin/electerm %{buildroot}%{_bindir}/electerm
 
+### Create desktop entry
+cat > %{buildroot}%{_datadir}/applications/electerm.desktop <<'EOF'
+[Desktop Entry]
+Name=electerm
+Exec=electerm %U
+Terminal=false
+Type=Application
+Icon=electerm
+StartupWMClass=electerm
+Comment=Terminal/ssh/telnet/serialport/sftp client(linux, mac, win)
+MimeType=x-scheme-handler/ssh;x-scheme-handler/telnet;x-scheme-handler/rdp;x-scheme-handler/vnc;x-scheme-handler/serial;x-scheme-handler/spice;x-scheme-handler/electerm;
+Categories=Development;System;TerminalEmulator;
+EOF
+
 %files
 %{_bindir}/electerm
 %{_datadir}/electerm
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+
 
 %changelog
 %autochangelog
