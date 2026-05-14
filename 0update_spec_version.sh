@@ -99,7 +99,7 @@ printf "%-15s %-15s %s\n" "---------" "---------" "---------"
 
 #####ANCHOR electerm
 repo_url="https://github.com/electerm/electerm"
-spec_files="rpm_electerm.spec"
+spec_files="tarball_electerm.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
