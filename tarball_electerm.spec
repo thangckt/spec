@@ -9,8 +9,6 @@ License:        MIT
 URL:            https://github.com/electerm/electerm
 Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x64.tar.gz
 
-Requires:       desktop-file-utils
-
 ### Disable debug package
 %global debug_package %{nil}
 AutoReqProv: no
