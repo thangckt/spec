@@ -31,6 +31,7 @@ mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_datadir}/electerm %{buildroot}%{_bindir}/electerm
 
 ### Create desktop entry
+mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/electerm.desktop <<'EOF'
 [Desktop Entry]
 Name=electerm
