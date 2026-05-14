@@ -11,6 +11,7 @@ Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x
 
 ### Disable debug package
 %global debug_package %{nil}
+AutoReqProv: no
 
 %description
 Electerm (prebuilt binary). This spec repackages the upstream tarball for distribution via Copr.
@@ -45,10 +46,15 @@ MimeType=x-scheme-handler/ssh;x-scheme-handler/telnet;x-scheme-handler/rdp;x-sch
 Categories=Development;System;TerminalEmulator;
 EOF
 
+### Copy icon
+# mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+# cp icon.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/electerm.png
+
 %files
 %{_bindir}/electerm
 %{_datadir}/electerm
 %{_datadir}/applications/%{name}.desktop
+# %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 
 %changelog
