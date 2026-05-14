@@ -23,8 +23,8 @@ Electerm (prebuilt binary). This spec repackages the upstream tarball for distri
 
 %install
 ### Copy all extracted files to /usr/share/electerm
-mkdir -p %{_datadir}/electerm
-cp -r * %{_datadir}/electerm/
+mkdir -p %{buildroot}%{_datadir}/electerm
+cp -r * %{buildroot}%{_datadir}/electerm/
 
 ### Symlink main executable to /usr/bin/electerm
 mkdir -p %{buildroot}%{_bindir}
