@@ -49,14 +49,14 @@ Categories=Development;System;TerminalEmulator;
 EOF
 
 ### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/electerm.png
+# mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+# cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/electerm.png
 
 %files
 %{_bindir}/electerm
 %{_datadir}/electerm
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+# %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
 %autochangelog
