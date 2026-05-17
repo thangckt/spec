@@ -38,6 +38,7 @@ Wikipedia, and various offline/online resources.
 ### Desktop Entry
 mkdir -p %{buildroot}%{_datadir}/applications
 mv %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
+rm %{buildroot}%{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.xml
 
 ### Copy icon to the correct raster directory (48x48 or 64x64 is standard for PNG pixmaps)
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
@@ -48,7 +49,6 @@ mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/
 %{_datadir}/goldendict
 %{_datadir}/applications/goldendict_ng.desktop
 %{_datadir}/icons/hicolor/48x48/apps/goldendict.png
-%{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.xml
 
 %changelog
 %autochangelog
