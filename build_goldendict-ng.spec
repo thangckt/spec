@@ -44,8 +44,10 @@ mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/
 
 %files
 %{_bindir}/goldendict
-%{_datadir}
+%{_datadir}/goldendict
+%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop
 %{_datadir}/icons/hicolor/*/apps/goldendict.png
+%{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.xml
 
 %changelog
 %autochangelog
