@@ -17,7 +17,6 @@ BuildRequires:  libvorbis-devel libXtst-devel libavutil-free-devel libavformat-f
 BuildRequires:  libxkbcommon-devel libzim-devel opencc-devel fmt-devel xapian-core-devel tomlplusplus-devel cups-devel
 BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtmultimedia-devel qt6-qt5compat-devel
 BuildRequires:  qt6-qttools-devel qt6-qtspeech-devel qt6-qtwebchannel-devel qt6-qtwebengine-devel
-BuildRequires:  desktop-file-utils
 
 Requires:       hunspell translate-shell mpg123
 
@@ -36,10 +35,9 @@ Wikipedia, and various offline/online resources.
 %install
 %cmake_install
 
-### Fix and Validate Desktop Entry Permissions
-desktop-file-install \
-  --dir=%{buildroot}%{_datadir}/applications \
-  %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop
+### Desktop Entry
+mkdir -p %{buildroot}%{_datadir}/applications
+mv %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
 
 ### Copy icon to the correct raster directory (48x48 or 64x64 is standard for PNG pixmaps)
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
