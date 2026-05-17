@@ -35,9 +35,17 @@ Wikipedia, and various offline/online resources.
 %install
 %cmake_install
 
+### Desktop entry
+# already included
+
+### Copy icon
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/goldendict.png
+
 %files
 %{_bindir}/goldendict
 %{_datadir}
+%{_datadir}/icons/hicolor/*/apps/goldendict.png
 
 %changelog
 %autochangelog
