@@ -35,18 +35,20 @@ Wikipedia, and various offline/online resources.
 %install
 %cmake_install
 
-### Desktop entry
-# already included
+### Fix and Validate Desktop Entry Permissions
+desktop-file-install \
+  --dir=%{buildroot}%{_datadir}/applications \
+  %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop
 
-### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/goldendict.png
+### Copy icon to the correct raster directory (48x48 or 64x64 is standard for PNG pixmaps)
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/goldendict.png
 
 %files
 %{_bindir}/goldendict
 %{_datadir}/goldendict
 %{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop
-%{_datadir}/icons/hicolor/*/apps/goldendict.png
+%{_datadir}/icons/hicolor/48x48/apps/goldendict.png
 %{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.xml
 
 %changelog
