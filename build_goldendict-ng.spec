@@ -3,7 +3,7 @@
 ### Wayland support: https://xiaoyifang.github.io/goldendict-ng/topic_wayland/
 
 Name:           goldendict-ng
-Version:        26.5.5
+Version:        26.7.0_alpha.5c746298
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
