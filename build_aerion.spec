@@ -10,7 +10,8 @@ License:        Apache-2.0
 URL:            https://github.com/hkdb/aerion
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
 
-BuildRequires:  go make pkgconfig
+BuildRequires:  gcc-c++ make pkgconfig
+BuildRequires:  webkit2gtk4.1-devel
 
 %description
 Aerion is an open source, lightweight email client built for people who want a modern email experience without the bloat.
