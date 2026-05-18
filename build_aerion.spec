@@ -23,10 +23,11 @@ Aerion is an open source, lightweight email client built for people who want a m
 %build
 ### Setup Go paths and install Wails safely inside Copr's build workspace
 export GO111MODULE=on
-export GOCACHE=%{gocachedir}
-export GOPATH=%{gopath}
-export PATH="%{gopath}/bin:$PATH"
+export GOPATH="%{_builddir}/go"
+export GOCACHE="%{_builddir}/go-cache"
+export PATH="$GOPATH/bin:$PATH"
 
+mkdir -p $GOPATH $GOCACHE
 go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 ### Build based on the native Makefile target for Linux
