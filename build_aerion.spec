@@ -38,21 +38,27 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 %make_build build-linux
 
 %install
-### Create all target filesystem directories inside the buildroot securely
+### Create all target directories and copy the pre-built binary and desktop assets explicitly (No 'make' invoked here)
+### Executable binary
 install -d -m 0755 %{buildroot}%{_bindir}
-install -d -m 0755 %{buildroot}%{_datadir}/applications
-install -d -m 0755 %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
-
-### Copy the pre-built binary and desktop assets explicitly (No 'make' invoked here)
 install -p -m 0755 build/bin/aerion %{buildroot}%{_bindir}/aerion
-install -p -m 0644 build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/io.github.hkdb.Aerion.desktop
-install -p -m 0644 build/linux/aerion.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
+
+### Desktop entry
+# Changes "Exec=aerion" to "Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion"
+sed -i 's|^Exec=aerion|Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion|' build/linux/aerion.desktop
+
+install -d -m 0755 %{buildroot}%{_datadir}/applications
+install -p -m 0644 build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/aerion.desktop
+
+### Icon
+install -d -m 0755 %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
+install -p -m 0644 build/linux/aerion.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/aerion.png
 
 %files
 %license LICENSE
 %{_bindir}/aerion
-%{_datadir}/applications/io.github.hkdb.Aerion.desktop
-%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
+%{_datadir}/applications/aerion.desktop
+%{_datadir}/icons/hicolor/256x256/apps/aerion.png
 
 %changelog
 %autochangelog
