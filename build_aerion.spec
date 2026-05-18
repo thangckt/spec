@@ -20,7 +20,7 @@ Aerion is an open source, lightweight email client built for people who want a m
 %autosetup -n %{name}-%{version}
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release
+%cmake
 %cmake_build
 
 %install
