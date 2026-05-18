@@ -54,6 +54,7 @@ find . -name "/lib/*.a" -type f -delete
 %install
 %cmake_install
 
+### Desktop Entry
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.xml

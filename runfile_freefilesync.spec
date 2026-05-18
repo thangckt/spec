@@ -2,16 +2,17 @@
     # Don’t execute the '.run' installer in Copr (fails without a terminal).
     # This spec reivse by GPT-codex-5.3, when ask it to refer Fflatpak approach.
 
-Name:       freefilesync
-Version:        14.9
-Release:    1%{?dist}
-Summary:    A file synchronization utility
+#RL:            http://www.freefilesync.org/
+#RL:            https://github.com/flathub/org.freefilesync.FreeFileSync
 
-License:    GPLv3
-#RL:        http://www.freefilesync.org/
-#RL:        https://github.com/flathub/org.freefilesync.FreeFileSync
-URL:        https://github.com/hkneptune/FreeFileSync
-Source0:    %{url}/releases/download/v%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
+Name:           freefilesync
+Version:        14.9
+Release:        1%{?dist}
+Summary:        A file synchronization utility
+
+License:        GPLv3
+URL:            https://github.com/hkneptune/FreeFileSync
+Source0:        %{url}/releases/download/v%{version}/FreeFileSync_%{version}_Linux_x86_64.tar.gz
 
 %define debug_package %{nil}
 %define __strip /bin/true
@@ -26,7 +27,7 @@ This spec does not build from source, but only repacks the official precompiled 
 tar -zxvf %{SOURCE0}
 
 %build
-# Nothing to build
+### Nothing to build
 
 %install
 rm -rf %{buildroot}
