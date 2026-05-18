@@ -14,6 +14,9 @@ Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
 BuildRequires:  golang gcc-c++ make pkgconfig nodejs npm
 BuildRequires:  webkit2gtk4.1-devel gtk3-devel
 
+### Disable debug package
+%global debug_package %{nil}
+
 %description
 Aerion is an open source, lightweight email client built for people who want a modern email experience without the bloat.
 
