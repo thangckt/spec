@@ -21,20 +21,28 @@ Aerion is an open source, lightweight email client built for people who want a m
 %autosetup -n %{name}-%{version}
 
 %build
-###Setup local Go path constraints to run the build cleanly inside the Copr container sandbox
+### Setup Go paths and install Wails safely inside Copr's build workspace
 export GO111MODULE=on
-export GOPATH="%{_builddir}/go"
-export PATH="$GOPATH/bin:$PATH"
+export GOCACHE=%{gocachedir}
+export GOPATH=%{gopath}
+export PATH="%{gopath}/bin:$PATH"
 
-### Install Wails framework locally as required by the build automation pipeline
 go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-### Buidl using the native Makefile target for Linux
+### Build based on the native Makefile target for Linux
+# This generates the binary at 'build/bin/aerion' and assets under 'build/linux/'
 %make_build build-linux
 
 %install
-### Set standard system environment variable prefixes for the Makefile installation engine
-%make_install PREFIX=%{_prefix}
+### Create all target filesystem directories inside the buildroot securely
+install -d -m 0755 %{buildroot}%{_bindir}
+install -d -m 0755 %{buildroot}%{_datadir}/applications
+install -d -m 0755 %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
+
+### Copy the pre-built binary and desktop assets explicitly (No 'make' invoked here)
+install -p -m 0755 build/bin/aerion %{buildroot}%{_bindir}/aerion
+install -p -m 0644 build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/io.github.hkdb.Aerion.desktop
+install -p -m 0644 build/linux/aerion.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %files
 %license LICENSE
