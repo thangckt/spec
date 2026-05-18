@@ -1,5 +1,6 @@
 ### https://github.com/hkdb/aerion/blob/main/docs/BUILD.md
 ### https://github.com/hkdb/aerion/blob/main/build/linux/install.sh
+### Revise by Gemini
 
 Name:           aerion
 Version:        0.2.3
@@ -28,7 +29,7 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 ### 2. Build the production asset pipeline (Wails automates frontend npm build & cgo compilation)
 # Note: Aerion requires the webkit2_41 build tag for modern WebKit libraries on modern Fedora
-wails build -tags
+wails build -tags webkit2_41
 
 %install
 ### Install the compiled binary
