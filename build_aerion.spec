@@ -8,7 +8,7 @@ Summary:        An Open Source Lightweight E-Mail Client
 
 License:        Apache-2.0
 URL:            https://github.com/hkdb/aerion
-Source0:        %{url}/releases/download/v%{version}/aerion-%{version}-linux-x64
+Source0:        %{url}/releases/download/v%{version}/aerion-%{version}.tar.gz
 
 ### Disable debug package
 %global debug_package %{nil}
