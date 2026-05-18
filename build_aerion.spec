@@ -34,7 +34,6 @@ cp %{SOURCE1}/build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/ae
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
 cp %{SOURCE1}/build/linux/aerion.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/aerion.png
 
-
 %files
 %{_bindir}/aerion
 %{_datadir}/aerion
