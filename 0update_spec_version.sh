@@ -133,6 +133,12 @@ spec_files="build_rssguard.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR Aerion
+repo_url="https://github.com/hkdb/aerion"
+spec_files="build_aerion.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####ANCHOR modules
 repo_url="https://github.com/envmodules/modules"
 spec_files="build_modules.spec"

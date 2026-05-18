@@ -44,7 +44,7 @@ install -d -m 0755 %{buildroot}%{_bindir}
 install -p -m 0755 build/bin/aerion %{buildroot}%{_bindir}/aerion
 
 ### Desktop entry
-# Changes "Exec=aerion" to "Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion"
+# Add the environment variable to disable DMABUF renderer
 sed -i 's|^Exec=aerion|Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion|' build/linux/aerion.desktop
 
 install -d -m 0755 %{buildroot}%{_datadir}/applications
