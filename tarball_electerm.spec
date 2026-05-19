@@ -8,7 +8,7 @@ Summary:        Terminal and remote connection client
 License:        MIT
 URL:            https://github.com/electerm/electerm
 Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x64.tar.gz
-Source1:        https://github.com/electerm/electerm-resource/blob/master/build-res/appx/Square150x150Logo.png?raw=true
+Source1:        https://github.com/electerm/electerm-resource/blob/master/res/imgs/electerm-round-128x128.png?raw=true
 
 ### Disable debug package
 %global debug_package %{nil}
@@ -49,14 +49,14 @@ Categories=Development;System;TerminalEmulator;
 EOF
 
 ### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/electerm.png
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %files
 %{_bindir}/electerm
 %{_datadir}/electerm
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %changelog
 %autochangelog
