@@ -4,7 +4,7 @@
 %global debug_package %{nil}
 
 Name:           tailscale
-Version:        1.96.5
+Version:        1.98.2
 Release:        1%{?dist}
 Summary:        The easiest, most secure way to use WireGuard and 2FA.
 
