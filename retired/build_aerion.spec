@@ -1,6 +1,7 @@
 ### https://github.com/hkdb/aerion/blob/main/docs/BUILD.md
 ### https://github.com/hkdb/aerion/blob/main/build/linux/install.sh
 ### Revise by Gemini
+### Retired. Since Aerion does not support EWS.
 
 Name:           aerion
 Version:        0.2.3
