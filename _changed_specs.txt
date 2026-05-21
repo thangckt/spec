@@ -1,2 +1,3 @@
 
-rpm_onlyoffice.spec
+tarball_electerm.spec
+tarball_helium.spec
