@@ -1,6 +1,7 @@
 ### goldendict-ng is actively maintained fork of goldendict with new features and bug fixes
 ### Build: https://xiaoyifang.github.io/goldendict-ng/howto/build_from_source/
 ### Wayland support: https://xiaoyifang.github.io/goldendict-ng/topic_wayland/
+### https://src.fedoraproject.org/rpms/goldendict-ng/blob/rawhide/f/goldendict-ng.spec
 
 Name:           goldendict-ng
 Version:        26.7.0_alpha.5c746298
