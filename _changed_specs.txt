@@ -1,2 +1,2 @@
 
-build_tailscale.spec
+tarball_zotero.spec
