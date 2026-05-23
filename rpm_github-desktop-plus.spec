@@ -13,6 +13,8 @@ Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{versio
 
 BuildRequires:  chrpath, patchelf
 
+AutoReqProv: no
+
 ### Filter out the problematic dependency: `libcurl-gnutls`
 ## 1. Filter the library files
 %global __requires_exclude ^(libcurl-gnutls|libcurl|libjpeg)\.so\.[0-9]+.*$
@@ -40,17 +42,17 @@ for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*
         chrpath -d "$bin" || true
         ## Fix libcurl
         patchelf --replace-needed libcurl-gnutls.so.4 libcurl.so.4 "$bin" || true
-        ## Fix libjpeg 
+        ## Fix libjpeg
         patchelf --replace-needed libjpeg.so.8 libjpeg.so.62 "$bin" || true
     fi
 done
 
 %files
 %{_bindir}/%{name}
+/usr/lib/%{name}/**
+%{_datadir}/doc/%{name}/copyright
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-/usr/lib/%{name}/**
-/usr/share/doc/%{name}/copyright
 
 %changelog
 %autochangelog

@@ -68,9 +68,6 @@ EOF
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
 if [ -f product_logo_256.png ]; then
     cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
-else
-    # Create a simple placeholder icon if logo not found
-    touch %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 fi
 
 %files

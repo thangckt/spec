@@ -10,9 +10,10 @@ URL:            https://github.com/electerm/electerm
 Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x64.tar.gz
 Source1:        https://github.com/electerm/electerm-resource/blob/master/res/imgs/electerm-round-128x128.png?raw=true
 
+AutoReqProv: no
+
 ### Disable debug package
 %global debug_package %{nil}
-AutoReqProv: no
 
 %description
 Electerm (prebuilt binary). This spec repackages the upstream tarball for distribution via Copr.
