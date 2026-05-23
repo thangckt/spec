@@ -1,6 +1,5 @@
-### DO NOT replace bundled git with system git. It will break the app.
-### The bundled git is not pure git, it has customize with extra features.
-## Gitlab push work well in version 3.5.4, but fail in version 3.5.5
+### DO NOT replace bundled git with system git. It will break the app. The bundled git is not pure git, it has customize with extra features.
+### Use 'AutoReqProv: no' to disable automatic dependency generation.
 
 Name:           github-desktop-plus
 Version:        3.5.9.3
@@ -14,12 +13,6 @@ Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{versio
 BuildRequires:  chrpath, patchelf
 
 AutoReqProv: no
-
-### Filter out the problematic dependency: `libcurl-gnutls`
-# ## 1. Filter the library files
-# %global __requires_exclude ^(libcurl-gnutls|libcurl|libjpeg)\.so\.[0-9]+.*$
-# ## 2. Filter the specific versioned symbol that Fedora cannot provide
-# %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^libcurl\.so\.4\(CURL_GNUTLS_3\)\(64bit\)$
 
 %description
 GitHub Desktop Plus is a graphical Git client for managing GitHub repositories easily.
