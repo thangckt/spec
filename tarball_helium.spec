@@ -66,9 +66,7 @@ EOF
 
 ### Copy icon
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
-if [ -f product_logo_256.png ]; then
-    cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
-fi
+cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %files
 %{_datadir}/helium/
