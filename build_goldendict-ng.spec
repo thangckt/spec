@@ -4,7 +4,7 @@
 ### https://src.fedoraproject.org/rpms/goldendict-ng/blob/rawhide/f/goldendict-ng.spec
 
 Name:           goldendict-ng
-Version:        26.7.0_alpha.a9958911
+Version:        26.5.5
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
@@ -18,6 +18,7 @@ BuildRequires:  libvorbis-devel libXtst-devel libavutil-free-devel libavformat-f
 BuildRequires:  libxkbcommon-devel libzim-devel opencc-devel fmt-devel xapian-core-devel tomlplusplus-devel cups-devel
 BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtmultimedia-devel qt6-qt5compat-devel
 BuildRequires:  qt6-qttools-devel qt6-qtspeech-devel qt6-qtwebchannel-devel qt6-qtwebengine-devel
+BuildRequires:  desktop-file-utils
 
 Requires:       hunspell translate-shell mpg123
 
@@ -30,15 +31,15 @@ Wikipedia, and various offline/online resources.
 %autosetup -n %{name}-%{version}
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release
+%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON
 %cmake_build
 
 %install
 %cmake_install
 
-### Desktop Entry
-mkdir -p %{buildroot}%{_datadir}/applications
-mv %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
+### Desktop Entry (already included)
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 ### Copy icon to the correct raster directory (48x48 or 64x64 is standard for PNG pixmaps)
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
@@ -50,7 +51,7 @@ rm %{buildroot}%{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.
 %files
 %{_bindir}/goldendict
 %{_datadir}/goldendict
-%{_datadir}/applications/goldendict_ng.desktop
+%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop
 %{_datadir}/icons/hicolor/48x48/apps/goldendict.png
 
 %changelog
