@@ -4,7 +4,7 @@
 ### https://src.fedoraproject.org/rpms/goldendict-ng/blob/rawhide/f/goldendict-ng.spec
 
 Name:           goldendict-ng
-Version:        26.7.0_alpha.5c746298
+Version:        26.7.0_alpha.a9958911
 Release:        1%{?dist}
 Summary:        Feature-rich dictionary lookup program
 
