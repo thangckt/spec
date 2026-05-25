@@ -11,7 +11,7 @@ License:        BSD 3-Clause
 URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
-Requires:       desktop-file-utils
+BuildRequires:  desktop-file-utils
 Requires:       gtk3 libX11 libdrm mesa-libGL
 
 ### Disable debug package
@@ -32,7 +32,7 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 mkdir -p %{buildroot}%{_datadir}/helium
 cp -r * %{buildroot}%{_datadir}/helium/
 
-# Find and link the main executable to /usr/bin/helium
+### Find and link the main executable to /usr/bin/helium
 # The executable might be named 'helium' or 'chrome' in the extracted files
 mkdir -p %{buildroot}%{_bindir}
 if [ -f chrome ]; then
@@ -75,9 +75,6 @@ cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/heliu
 %{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %post
-%{_bindir}/update-desktop-database &> /dev/null || :
-
-%postun
 %{_bindir}/update-desktop-database &> /dev/null || :
 
 %changelog
