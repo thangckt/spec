@@ -109,9 +109,9 @@ spec_files="build_tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR rgitui
-repo_url="https://github.com/noahbclarkson/rgitui"
-spec_files="tarball_rgitui.spec"
+#####ANCHOR github-desktop-plus
+repo_url="https://github.com/pol-rivero/github-desktop-plus"
+spec_files="rpm_github-desktop-plus.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -237,8 +237,8 @@ echo "Update Done!"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR github-desktop-plus
-# repo_url="https://github.com/pol-rivero/github-desktop-plus"
-# spec_files="rpm_github-desktop-plus.spec"
-# new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
+#####ANCHOR rgitui
+repo_url="https://github.com/noahbclarkson/rgitui"
+spec_files="tarball_rgitui.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
