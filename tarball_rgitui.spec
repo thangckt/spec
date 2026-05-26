@@ -38,7 +38,8 @@ ln -sf %{_datadir}/rgitui/rgitui %{buildroot}%{_bindir}/rgitui
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/rgitui.desktop <<'EOF'
 [Desktop Entry]
-Name=rgitui
+Name=Rust GitUI
+Comment=A GPU-accelerated desktop Git client built with GPUI and Rust.
 Exec=rgitui %U
 Terminal=false
 Type=Application
