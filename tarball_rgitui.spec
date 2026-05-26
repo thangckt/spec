@@ -8,8 +8,7 @@ URL:            https://github.com/noahbclarkson/rgitui
 Source0:        %{url}/releases/download/v%{version}/rgitui-%{version}-x86_64-linux.tar.gz
 Source1:        https://github.com/noahbclarkson/rgitui/blob/main/assets/icons/app-icon-512.png?raw=true
 
-
-AutoReqProv: no
+Requires:       git
 
 ### Disable debug package
 %global debug_package %{nil}
