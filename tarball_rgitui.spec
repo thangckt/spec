@@ -1,3 +1,5 @@
+### This package use system Git, unlike github-desktop which bundles its own Git.
+
 Name:           rgitui
 Version:        0.2.2
 Release:        1%{?dist}
