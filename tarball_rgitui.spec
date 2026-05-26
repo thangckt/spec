@@ -8,7 +8,7 @@ Summary:        A GPU-accelerated desktop Git client built with GPUI and Rust.
 License:        MIT
 URL:            https://github.com/noahbclarkson/rgitui
 Source0:        %{url}/releases/download/v%{version}/rgitui-%{version}-x86_64-linux.tar.gz
-Source1:        https://github.com/noahbclarkson/rgitui/blob/main/assets/icons/app-icon-512.png?raw=true
+Source1:        https://github.com/noahbclarkson/rgitui/blob/main/assets/icons/app-icon-256.png?raw=true
 
 Requires:       git
 
@@ -49,14 +49,14 @@ Categories=Development;
 EOF
 
 ### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/512x512/apps
-cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
+cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 
 %files
 %{_bindir}/rgitui
 %{_datadir}/rgitui/
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
+%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 
 %changelog
 %autochangelog
