@@ -19,7 +19,7 @@ Requires:       git
 rgitui (prebuilt binary). This spec repackages the upstream tarball for distribution via Copr.
 
 %prep
-%autosetup -n rgitui-%{version}-x86_64-linux
+%autosetup -n rgitui
 
 %build
 # Nothing to build
