@@ -40,9 +40,7 @@ cat > %{buildroot}%{_bindir}/helium << 'EOF'
 FLAGS="--use-gl=angle \
        --use-angle=swiftshader \
        --ignore-gpu-blocklist \
-       --disable-gpu-sandbox \
-       --enable-gpu-rasterization \
-       --enable-oop-rasterization
+       --disable-gpu-sandbox
 
 exec /usr/libexec/helium/helium $FLAGS "$@"
 EOF
