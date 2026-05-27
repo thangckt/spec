@@ -31,8 +31,7 @@ cp -r * %{buildroot}%{_datadir}/rgitui/
 
 ### Symlink main executable to /usr/bin/rgitui
 mkdir -p %{buildroot}%{_bindir}
-cp rgitui %{buildroot}%{_datadir}/rgitui/
-ln -sf %{_datadir}/rgitui/rgitui %{buildroot}%{_bindir}/rgitui
+ln -sf %{buildroot}%{_datadir}/rgitui/rgitui %{buildroot}%{_bindir}/rgitui
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications

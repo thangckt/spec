@@ -30,6 +30,7 @@ mkdir -p %{buildroot}%{_datadir}/electerm
 cp -r * %{buildroot}%{_datadir}/electerm/
 
 ### Symlink main executable to /usr/bin/electerm
+mkdir -p %{buildroot}%{_bindir}
 ln -sf %{buildroot}%{_datadir}/electerm/electerm %{buildroot}%{_bindir}/electerm
 
 ### Create desktop entry

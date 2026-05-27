@@ -30,12 +30,12 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 
 %install
 ### Copy all extracted files to /usr/share/helium
-mkdir -p %{buildroot}%{_datadir}/helium
-cp -r * %{buildroot}%{_datadir}/helium/
+mkdir -p %{buildroot}%{_libexecdir}/helium
+cp -r * %{buildroot}%{_libexecdir}/helium/
 
-### Create wrapper script for executable in /usr/bin/helium
+### Symlink main executable to /usr/bin/helium
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{buildroot}%{_datadir}/helium/helium %{buildroot}%{_bindir}/helium
+ln -sf %{buildroot}%{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -64,7 +64,7 @@ cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/heliu
 
 %files
 %{_bindir}/helium
-%{_datadir}/helium/
+%{_libexecdir}/helium/
 %{_datadir}/applications/helium.desktop
 %{_datadir}/icons/hicolor/256x256/apps/helium.png
 
