@@ -34,7 +34,8 @@ mkdir -p %{buildroot}%{_libexecdir}/helium
 cp -r * %{buildroot}%{_libexecdir}/helium/
 
 ### Symlink main executable to /usr/bin/helium
-ln -sf %{_libexecdir}/helium/helium %{_bindir}/helium
+mkdir -p %{buildroot}%{_bindir}
+ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
