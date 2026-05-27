@@ -36,15 +36,13 @@ cp -r * %{buildroot}%{_libexecdir}/helium/
 mkdir -p %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/helium << 'EOF'
 #!/bin/bash
-# 1. Pass down Wayland display environment variables so the browser can see your desktop
-export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-
-# 2. Force hardware graphics flags, bypass blocks, and use EGL for Wayland
-FLAGS="--disable-gpu-sandbox \
+# 2. Force software rendering for stability, but explicitly override the blocks on other features
+FLAGS="--use-gl=angle \
+       --use-angle=swiftshader \
        --ignore-gpu-blocklist \
-       --use-gl=egl \
-       --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan \
-       --enable-accelerated-video-decode"
+       --disable-gpu-sandbox \
+       --enable-gpu-rasterization \
+       --enable-oop-rasterization
 
 exec /usr/libexec/helium/helium $FLAGS "$@"
 EOF
