@@ -33,9 +33,13 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 mkdir -p %{buildroot}%{_datadir}/helium
 cp -r * %{buildroot}%{_datadir}/helium/
 
-### Create symlink to main executable in /usr/bin/helium
+### Create wrapper script for executable in /usr/bin/helium
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{buildroot}%{_datadir}/helium/helium %{buildroot}%{_bindir}/helium
+cat > %{buildroot}%{_bindir}/helium << 'EOF'
+#!/bin/bash
+exec /usr/share/helium/helium "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
