@@ -12,8 +12,7 @@ URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
 BuildRequires:  desktop-file-utils
-### Added libglvnd-glx and vulkan-loader for modern WebGL/GPU acceleration support
-Requires:       gtk3 libX11 libdrm mesa-libGL libglvnd-glx vulkan-loader
+Requires:       gtk3 libX11 libdrm mesa-libGL libglvnd-glx vulkan-loader libva mesa-dri-drivers
 
 ### Disable debug package
 %define debug_package %{nil}
@@ -42,7 +41,7 @@ mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Browser
-Exec=helium %U
+Exec=--disable-features=VaapiVideoDecoder helium %U
 StartupWMClass=helium
 Terminal=false
 Icon=helium
