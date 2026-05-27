@@ -35,11 +35,7 @@ cp -r * %{buildroot}%{_datadir}/helium/
 
 ### Create wrapper script for executable in /usr/bin/helium
 mkdir -p %{buildroot}%{_bindir}
-cat > %{buildroot}%{_bindir}/helium << 'EOF'
-#!/bin/bash
-exec /usr/share/helium/helium "$@"
-EOF
-chmod +x %{buildroot}%{_bindir}/helium
+ln -sf %{buildroot}%{_datadir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
