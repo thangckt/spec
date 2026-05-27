@@ -11,12 +11,13 @@ License:        BSD 3-Clause
 URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
-BuildRequires:  desktop-file-utils
-Requires:       gtk3 libX11 libdrm mesa-libGL libglvnd-glx libglvnd-egl vulkan-loader mesa-dri-drivers
-
 ### Disable debug package
 %define debug_package %{nil}
 %define __strip /bin/true
+
+AutoReqProv: no
+
+BuildRequires:  desktop-file-utils
 
 %description
 Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromium.

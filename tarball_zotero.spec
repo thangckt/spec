@@ -13,8 +13,6 @@ License:        AGPL-3.0-only
 URL:            https://www.zotero.org/
 Source0:        https://download.zotero.org/client/release/%{version}/Zotero-%{version}_linux-x86_64.tar.xz
 
-# Requires:       gtk3 libXt libX11 dbus-glib
-
 %global debug_package %{nil}
 %global _build_id_links none
 
