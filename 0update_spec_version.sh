@@ -238,7 +238,7 @@ echo "Update Done!"
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR rgitui
-repo_url="https://github.com/noahbclarkson/rgitui"
-spec_files="tarball_rgitui.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
+# repo_url="https://github.com/noahbclarkson/rgitui"
+# spec_files="tarball_rgitui.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
