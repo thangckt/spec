@@ -13,10 +13,12 @@ License:        AGPL-3.0-only
 URL:            https://www.zotero.org/
 Source0:        https://download.zotero.org/client/release/%{version}/Zotero-%{version}_linux-x86_64.tar.xz
 
-Requires:       gtk3 libXt libX11 dbus-glib
+# Requires:       gtk3 libXt libX11 dbus-glib
 
 %global debug_package %{nil}
 %global _build_id_links none
+
+AutoReqProv: no
 
 %description
 Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share research. This package contains the official Zotero binary.
