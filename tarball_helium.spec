@@ -32,16 +32,22 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 mkdir -p %{buildroot}%{_libexecdir}/helium
 cp -r * %{buildroot}%{_libexecdir}/helium/
 
-### Symlink main executable to /usr/bin/helium
+### Wrapper script for main executable in /usr/bin/helium
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
+cat > %{buildroot}%{_bindir}/helium << 'EOF'
+#!/bin/bash
+# Force-enable hardware acceleration and bypass aggressive sandbox blocks on host drivers
+FLAGS="--disable-gpu-sandbox --ignore-gpu-blocklist --enable-zero-copy"
+exec /usr/libexec/helium/helium $FLAGS "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Browser
-Exec=--disable-features=VaapiVideoDecoder helium %U
+Exec=helium %U
 StartupWMClass=helium
 Terminal=false
 Icon=helium

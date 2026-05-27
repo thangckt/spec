@@ -26,12 +26,16 @@ Electerm (prebuilt binary). This spec repackages the upstream tarball for distri
 
 %install
 ### Copy all extracted files to /usr/share/electerm
-mkdir -p %{buildroot}%{_datadir}/electerm
-cp -r * %{buildroot}%{_datadir}/electerm/
+mkdir -p %{buildroot}%{_libexecdir}/electerm
+cp -r * %{buildroot}%{_libexecdir}/electerm/
 
-### Symlink main executable to /usr/bin/electerm
+### Wrapper script for main executable in /usr/bin/electerm
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{buildroot}%{_datadir}/electerm/electerm %{buildroot}%{_bindir}/electerm
+cat > %{buildroot}%{_bindir}/electerm << 'EOF'
+#!/bin/bash
+exec /usr/libexec/electerm/electerm "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/electerm
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -54,7 +58,7 @@ cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %files
 %{_bindir}/electerm
-%{_datadir}/electerm/
+%{_libexecdir}/electerm/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
