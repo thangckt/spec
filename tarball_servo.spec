@@ -45,6 +45,7 @@ Icon=servo
 Type=Application
 MimeType=text/html;text/xml;application/xhtml+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
 Categories=Network;WebBrowser;
+StartupWMClass=org.servo.Servo
 
 [Desktop Action new-window]
 Name=Open a New Window
