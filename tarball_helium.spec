@@ -12,7 +12,8 @@ URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
 BuildRequires:  desktop-file-utils
-Requires:       gtk3 libX11 libdrm mesa-libGL
+### Added libglvnd-glx and vulkan-loader for modern WebGL/GPU acceleration support
+Requires:       gtk3 libX11 libdrm mesa-libGL libglvnd-glx vulkan-loader
 
 ### Disable debug package
 %define debug_package %{nil}
@@ -32,16 +33,13 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 mkdir -p %{buildroot}%{_datadir}/helium
 cp -r * %{buildroot}%{_datadir}/helium/
 
-### Find and link the main executable to /usr/bin/helium
-# The executable might be named 'helium' or 'chrome' in the extracted files
+### Create a wrapper script instead of a symlink. This ensures Chromium knows its exact execution directory and preserves the sandbox/GPU environment
 mkdir -p %{buildroot}%{_bindir}
-if [ -f chrome ]; then
-    cp chrome %{buildroot}%{_datadir}/helium/
-    ln -sf %{_datadir}/helium/chrome %{buildroot}%{_bindir}/helium
-elif [ -f helium ]; then
-    cp helium %{buildroot}%{_datadir}/helium/
-    ln -sf %{_datadir}/helium/helium %{buildroot}%{_bindir}/helium
-fi
+cat > %{buildroot}%{_bindir}/helium << 'EOF'
+#!/bin/bash
+exec /usr/share/helium/chrome "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -69,8 +67,8 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
 cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %files
-%{_datadir}/helium/
 %{_bindir}/helium
+%{_datadir}/helium/
 %{_datadir}/applications/helium.desktop
 %{_datadir}/icons/hicolor/256x256/apps/helium.png
 
