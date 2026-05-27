@@ -1,7 +1,7 @@
 ### Update 26May: use tarball instead of rpm release.
 
 Name:           electerm
-Version:        3.11.0
+Version:        3.10.0
 Release:        1%{?dist}
 Summary:        Terminal and remote connection client
 
@@ -30,8 +30,6 @@ mkdir -p %{buildroot}%{_datadir}/electerm
 cp -r * %{buildroot}%{_datadir}/electerm/
 
 ### Symlink main executable to /usr/bin/electerm
-mkdir -p %{buildroot}%{_bindir}
-cp electerm %{buildroot}%{_datadir}/electerm/
 ln -sf %{_datadir}/electerm/electerm %{buildroot}%{_bindir}/electerm
 
 ### Create desktop entry
@@ -55,7 +53,7 @@ cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %files
 %{_bindir}/electerm
-%{_datadir}/electerm
+%{_datadir}/electerm/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
