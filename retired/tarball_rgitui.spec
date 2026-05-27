@@ -25,13 +25,17 @@ rgitui (prebuilt binary). This spec repackages the upstream tarball for distribu
 # Nothing to build
 
 %install
-### Copy all extracted files to /usr/share/rgitui
-mkdir -p %{buildroot}%{_datadir}/rgitui
-cp -r * %{buildroot}%{_datadir}/rgitui/
+### Copy all extracted files to /usr/libexec/rgitui
+mkdir -p %{buildroot}%{_libexecdir}/rgitui
+cp -r * %{buildroot}%{_libexecdir}/rgitui/
 
-### Symlink main executable to /usr/bin/rgitui
+### Wrapper script for main executable in /usr/bin/rgitui
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{buildroot}%{_datadir}/rgitui/rgitui %{buildroot}%{_bindir}/rgitui
+cat > %{buildroot}%{_bindir}/rgitui << 'EOF'
+#!/bin/bash
+exec /usr/libexec/rgitui/rgitui "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/rgitui
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
