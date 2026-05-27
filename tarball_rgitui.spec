@@ -58,7 +58,7 @@ cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 
 %files
 %{_bindir}/rgitui
-%{_datadir}/rgitui/
+%{_libexecdir}/rgitui/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 
