@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.12.3.1
+Version:        0.12.4.1
 Release:        1%{?dist}
 Summary:        Helium Browser
 
@@ -33,13 +33,9 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 mkdir -p %{buildroot}%{_datadir}/helium
 cp -r * %{buildroot}%{_datadir}/helium/
 
-### Create a wrapper script instead of a symlink. This ensures Chromium knows its exact execution directory and preserves the sandbox/GPU environment
+### Create symlink to main executable in /usr/bin/helium
 mkdir -p %{buildroot}%{_bindir}
-cat > %{buildroot}%{_bindir}/helium << 'EOF'
-#!/bin/bash
-exec /usr/share/helium/helium "$@"
-EOF
-chmod +x %{buildroot}%{_bindir}/helium
+ln -sf %{_datadir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications

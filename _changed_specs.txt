@@ -1,2 +1,4 @@
 
-build_goldendict-ng.spec
+tarball_electerm.spec
+tarball_helium.spec
+tarball_rgitui.spec
