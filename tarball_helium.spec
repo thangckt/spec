@@ -12,7 +12,7 @@ URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
 BuildRequires:  desktop-file-utils
-Requires:       gtk3 libX11 libdrm mesa-libGL libglvnd-glx vulkan-loader libva mesa-dri-drivers
+Requires:       gtk3 libX11 libdrm mesa-libGL libglvnd-glx libglvnd-egl vulkan-loader mesa-dri-drivers
 
 ### Disable debug package
 %define debug_package %{nil}
