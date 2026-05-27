@@ -48,7 +48,7 @@ chmod +x %{buildroot}%{_bindir}/helium
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
 [Desktop Entry]
-Name=Helium Browser
+Name=Helium Web Browser
 Exec=helium %U
 StartupWMClass=helium
 Terminal=false

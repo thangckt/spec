@@ -38,9 +38,8 @@ chmod +x %{buildroot}%{_bindir}/servo
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/servo.desktop <<'EOF'
 [Desktop Entry]
-Name=Web Browser
+Name=Servo Web Browser
 Exec=servo %u
-StartupWMClass=servo
 Terminal=false
 Icon=servo
 Type=Application
@@ -48,7 +47,7 @@ MimeType=text/html;text/xml;application/xhtml+xml;text/mml;x-scheme-handler/http
 Categories=Network;WebBrowser;
 
 [Desktop Action new-window]
-Name=New Window
+Name=Open a New Window
 Exec=servo %u
 EOF
 
