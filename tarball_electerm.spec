@@ -25,7 +25,7 @@ Electerm (prebuilt binary). This spec repackages the upstream tarball for distri
 # Nothing to build
 
 %install
-### Copy all extracted files to /usr/share/electerm
+### Copy all extracted files to /usr/libexec/electerm
 mkdir -p %{buildroot}%{_libexecdir}/electerm
 cp -r * %{buildroot}%{_libexecdir}/electerm/
 

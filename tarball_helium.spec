@@ -28,7 +28,7 @@ Helium Browser - A fast, privacy-focused Chromium fork based on ungoogled-chromi
 # Nothing to build
 
 %install
-### Copy all extracted files to /usr/share/helium
+### Copy all extracted files to /usr/libexec/helium
 mkdir -p %{buildroot}%{_libexecdir}/helium
 cp -r * %{buildroot}%{_libexecdir}/helium/
 

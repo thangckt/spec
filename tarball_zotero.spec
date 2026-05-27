@@ -28,16 +28,16 @@ Zotero is a free, easy-to-use tool to help you collect, organize, cite, and shar
 # Nothing to build - this is a binary package
 
 %install
-### Install whole zotero package under /opt/zotero
-mkdir -p %{buildroot}/opt/zotero
-cp -a * %{buildroot}/opt/zotero/
+### Install whole zotero package under /usr/libexec/zotero
+mkdir -p %{buildroot}%{_libexecdir}/zotero
+cp -a * %{buildroot}%{_libexecdir}/zotero/
 
-### Create wrapper script
+### Wrapper script for main executable in /usr/bin/zotero
 mkdir -p %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/zotero << 'EOF'
 #!/bin/bash
-export LD_LIBRARY_PATH=/opt/zotero:$LD_LIBRARY_PATH
-exec /opt/zotero/zotero "$@"
+export LD_LIBRARY_PATH=/usr/libexec/zotero:$LD_LIBRARY_PATH
+exec /usr/libexec/zotero/zotero "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/zotero
 
@@ -58,9 +58,8 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
 cp icons/icon128.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/zotero.png
 
 %files
-%dir /opt/zotero
-/opt/zotero/*
 %{_bindir}/zotero
+%{_libexecdir}/zotero/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/128x128/apps/zotero.png
 

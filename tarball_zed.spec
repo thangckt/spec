@@ -28,9 +28,13 @@ Code at the speed of thought — Zed is a high-performance, multiplayer code edi
 mkdir -p %{buildroot}%{_libexecdir}/zed
 cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 
-### Symlink main executable to /usr/bin/zed
+### Wrapper script for main executable in /usr/bin/zed
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
+cat > %{buildroot}%{_bindir}/zed << 'EOF'
+#!/bin/bash
+exec /usr/libexec/zed/bin/zed "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/zed
 
 ### Desktop file
 mkdir -p %{buildroot}%{_datadir}/applications

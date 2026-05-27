@@ -31,13 +31,21 @@ VSCodium is a community-driven, freely-licensed binary distribution of Microsoft
 mkdir -p %{buildroot}%{_libexecdir}/vscodium
 cp -r * %{buildroot}%{_libexecdir}/vscodium/
 
+### Wrapper script for main executable in /usr/bin/codium
+mkdir -p %{buildroot}%{_bindir}
+cat > %{buildroot}%{_bindir}/codium << 'EOF'
+#!/bin/bash
+exec /usr/libexec/vscodium/bin/codium "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/codium
+
 ### Desktop entry
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
 Name=VSCodium
 GenericName=Text Editor
-Exec=/usr/libexec/vscodium/bin/codium %F
+Exec=codium %F
 Icon=%{name}
 Type=Application
 StartupNotify=true
@@ -74,6 +82,7 @@ install -D -m644 resources/app/resources/linux/code.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %files
+%{_bindir}/codium
 %{_libexecdir}/vscodium/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kio/servicemenus/open_in_codium.desktop
