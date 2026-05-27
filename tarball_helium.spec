@@ -37,7 +37,7 @@ cp -r * %{buildroot}%{_datadir}/helium/
 mkdir -p %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/helium << 'EOF'
 #!/bin/bash
-exec /usr/share/helium/chrome "$@"
+exec /usr/share/helium/helium "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/helium
 
