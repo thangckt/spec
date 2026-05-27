@@ -43,7 +43,7 @@ done
 
 %files
 %{_bindir}/%{name}
-/usr/lib/%{name}/**
+/usr/lib/%{name}/
 %{_datadir}/doc/%{name}/copyright
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
