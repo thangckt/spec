@@ -72,14 +72,14 @@ install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitb
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-as
 
-## Desktop file
+### Desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/gitbutler.desktop <<'EOF'
 [Desktop Entry]
 Name=GitButler
 GenericName=Git Client
 Comment=Modern Git-based version control interface
-Exec=env GDK_BACKEND=x11 gitbutler %U
+Exec=env GDK_BACKEND=x11 WEBKIT_DISABLE_DMABUF_SANDBOX=1 gitbutler %U
 Icon=gitbutler
 Type=Application
 StartupNotify=true
