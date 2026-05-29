@@ -11,22 +11,20 @@ License:        FSL-1.1-MIT
 URL:            https://github.com/gitbutlerapp/gitbutler
 Source0:        %{url}/archive/refs/tags/release/%{version}.tar.gz
 
-
 BuildRequires:  cargo-rpm-macros >= 24
 BuildRequires:  gcc gcc-c++ clang cmake git-core lld sccache
-
 ### Linux Tauri UI and system layout dependencies specified in DEVELOPMENT.md
 BuildRequires:  nodejs >= 20, npm
 BuildRequires:  webkit2gtk4.1-devel libxdo-devel libayatana-appindicator3-devel
 BuildRequires:  librsvg2-devel alsa-lib-devel fontconfig-devel wayland-devel libxkbcommon-x11-devel
-
 ### Fedora system libraries for fully unvendored Rust compilation
 BuildRequires:  openssl-devel, libgit2-devel, zlib-devel, libssh2-devel
 BuildRequires:  perl-FindBin, perl-File-Compare, perl-podlators
 BuildRequires:  xdg-utils
-
 ### Enforce host environment presence at runtime
 Requires:       git-core libgit2 libssh2 openssl-libs
+
+%global debug_package %{nil}
 
 %description
 GitButler is a modern Git-based version control interface with both a GUI and CLI built from the ground up for AI-powered workflows.
@@ -63,6 +61,9 @@ cargo build --release --bin but --bin gitbutler-git-askpass
 # Compile the final Tauri production assets, skipping AppImage bundling
 pnpm tauri build --no-bundle --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
 
+### check build output
+find . -type f
+
 %install
 # Install the main tauri desktop binary wrapper (using the tauri specific release path)
 install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
@@ -91,9 +92,6 @@ EOF
 ### App Icon (Tauri populates icons in the src-tauri/icons directory during setup)
 install -Dpm644 crates/gitbutler-tauri/icons/release/128x128.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/gitbutler.png
-
-### check build output
-find %{buildroot} -type f
 
 %files
 %license LICENSE.md

@@ -160,12 +160,6 @@ spec_files="runfile_freefilesync.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR zed
-repo_url="https://github.com/zed-industries/zed"
-spec_files="tarball_zed.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
 spec_files="build_ovito.spec"
@@ -187,6 +181,12 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 echo "Update Done!"
 
 #####SECTION: Retired
+
+#####ANCHOR zed
+# repo_url="https://github.com/zed-industries/zed"
+# spec_files="tarball_zed.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR pdf4qt
 # repo_url="https://github.com/JakubMelka/PDF4QT"
