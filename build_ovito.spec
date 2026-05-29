@@ -1,7 +1,7 @@
 ### REF: https://www.ovito.org/docs/current/development/build_linux.html
 
 Name:           ovito
-Version:        3.15.4
+Version:        3.15.3
 Release:        1%{?dist}
 Summary:        OVITO - Open Visualization Tool (GUI)
 
@@ -44,7 +44,7 @@ cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
 Name=OVITO
 GenericName=Scientific Visualization Tool
-Exec=ovito
+Exec=env QT_SUBSET_OPENGL_API=desktop ovito
 Icon=ovito
 Type=Application
 Terminal=false
