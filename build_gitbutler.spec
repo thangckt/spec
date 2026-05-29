@@ -89,7 +89,7 @@ Keywords=git;gitbutler;version-control;
 StartupWMClass=gitbutler-tauri
 EOF
 
-### App Icon (Tauri populates icons in the src-tauri/icons directory during setup)
+### App Icon
 install -Dpm644 crates/gitbutler-tauri/icons/release/128x128.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/gitbutler.png
 
