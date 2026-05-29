@@ -70,7 +70,7 @@ install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitb
 
 # Pull the core companion engines from the workspace native release directory
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
-install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-as
+install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
 
 ### Desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
