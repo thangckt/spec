@@ -55,16 +55,15 @@ export PATH="$(pwd)/.node_modules_local/node_modules/.bin:$PATH"
 # Install UI assets
 pnpm install --frozen-lockfile
 
-# Let Tauri compile the entire production package natively
-# This bundles the frontend assets directly inside the binary so clicks actually register!
-pnpm tauri build --no-bundle --features devtools,builtin-but,disable-auto-updates
+# Compile matching the exact production flags utilized in upstream publish.yaml
+# (Bypassing bundling tasks to optimize for native RPM layout distribution)
+pnpm tauri build --no-bundle --features builtin-but,disable-auto-updates
 
 ### check build output
 find . -type f
 
 %install
-# When Tauri builds everything natively without the override config,
-# production binaries land in standard target/release/
+# Extracted from the exact production build target path generated via publish.yaml config paths
 install -Dpm755 target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
