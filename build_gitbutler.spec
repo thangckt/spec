@@ -14,10 +14,18 @@ Source0:        %{url}/archive/refs/tags/release/%{version}.tar.gz
 BuildRequires:  cargo-rpm-macros >= 24
 BuildRequires:  gcc gcc-c++ clang cmake git-core lld sccache
 
-### Linux Tauri and system dependencies specified in DEVELOPMENT.md
+### Linux Tauri UI and system layout dependencies specified in DEVELOPMENT.md
 BuildRequires:  nodejs >= 20, npm
-BuildRequires:  webkit2gtk4.1-devel libxdo-devel openssl-devel libayatana-appindicator3-devel
-BuildRequires:  librsvg2-devel alsa-lib-devel perl-devel fontconfig-devel wayland-devel libxkbcommon-x11-devel
+BuildRequires:  webkit2gtk4.1-devel libxdo-devel libayatana-appindicator3-devel
+BuildRequires:  librsvg2-devel alsa-lib-devel fontconfig-devel wayland-devel libxkbcommon-x11-devel
+
+### Fedora system libraries for fully unvendored Rust compilation
+BuildRequires:  openssl-devel, libgit2-devel, zlib-devel, libssh2-devel
+BuildRequires:  perl-FindBin, perl-File-Compare, perl-podlators
+
+### Enforce host environment presence at runtime
+Requires:       git-core
+Requires:       hicolor-icon-theme
 
 %description
 GitButler is a modern Git-based version control interface with both a GUI and CLI built from the ground up for AI-powered workflows.
@@ -29,30 +37,36 @@ GitButler is a modern Git-based version control interface with both a GUI and CL
 export CARGO_HOME=./.cargo
 export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
 
+### FORCE CARGO CRATES TO LINK TO SYSTEM LIBRARIES (UNVENDOR ALL)
+export OPENSSL_NO_VENDOR=1
+export LIBGIT2_NO_VENDOR=1
+export LIBSSH2_SYS_USE_PKG_CONFIG=1
+export ZLIB_NO_VENDOR=1
+
 # Leverage sccache if available in the environment
 if [ -x "%{_bindir}/sccache" ]; then
     export RUSTC_WRAPPER=%{_bindir}/sccache
 fi
 
-# Bypass global corepack constraint by installing pnpm into the build environment
+# Set up local pnpm binary cache instead of relying on global corepack
 mkdir -p .node_modules_local
 npm install --prefix .node_modules_local pnpm
 export PATH="$(pwd)/.node_modules_local/node_modules/.bin:$PATH"
 
-# Install Node.js frontend dependencies
+# Install UI assets
 pnpm install --frozen-lockfile
 
-# Build supplementary binaries and core CLI engine ('but')
+# Build supplementary workspace binaries and the core CLI engine ('but')
 cargo build --release --bin but --bin gitbutler-git-askpass
 
-# Build the production release using Tauri
+# Compile the final Tauri wrapper production bundle
 pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
 
 %install
 # Install the main tauri desktop binary wrapper
 install -Dpm755 target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
 
-# Install the accompanying core 'but' CLI utility binary
+# Install the accompanying core 'but' CLI utility binaries
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
 
