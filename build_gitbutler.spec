@@ -34,18 +34,19 @@ if [ -x "%{_bindir}/sccache" ]; then
     export RUSTC_WRAPPER=%{_bindir}/sccache
 fi
 
-# Set up pnpm via corepack as instructed by the project's guide
-corepack enable
-corepack prepare pnpm@latest --activate
+# Bypass global corepack constraint by installing pnpm into the build environment
+mkdir -p .node_modules_local
+npm install --prefix .node_modules_local pnpm
+export PATH="$(pwd)/.node_modules_local/node_modules/.bin:$PATH"
 
-# Install Node.js frontend dependencies (requires git-core to resolve targets)
+# Install Node.js frontend dependencies
 pnpm install --frozen-lockfile
 
 # Build supplementary binaries and core CLI engine ('but')
 cargo build --release --bin but --bin gitbutler-git-askpass
 
 # Build the production release using Tauri
-pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
+pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbu
 
 %install
 # Install the main tauri desktop binary wrapper
