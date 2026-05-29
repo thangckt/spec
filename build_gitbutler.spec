@@ -12,7 +12,7 @@ Source0:        %{url}/archive/refs/tags/release/%{version}.tar.gz
 
 
 BuildRequires:  cargo-rpm-macros >= 24
-BuildRequires:  gcc, gcc-c++, clang, cmake, git, lld, sccache
+BuildRequires:  gcc, gcc-c++, clang, cmake, git-core, lld, sccache
 
 ### Linux Tauri and system dependencies specified in DEVELOPMENT.md
 BuildRequires:  nodejs >= 20, npm
@@ -26,23 +26,34 @@ GitButler is a modern Git-based version control interface with both a GUI and CL
 %autosetup -n gitbutler-release-%{version}
 
 %build
-export CARGO_HOME=.cargo
+export CARGO_HOME=./.cargo
 export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
-export RUSTC_WRAPPER=%{_bindir}/sccache
+
+# Leverage sccache if available in the environment
+if [ -x "%{_bindir}/sccache" ]; then
+    export RUSTC_WRAPPER=%{_bindir}/sccache
+fi
 
 # Set up pnpm via corepack as instructed by the project's guide
 corepack enable
 corepack prepare pnpm@latest --activate
 
-# Install Node.js frontend dependencies
+# Install Node.js frontend dependencies (requires git-core to resolve targets)
 pnpm install --frozen-lockfile
+
+# Build supplementary binaries and core CLI engine ('but')
+cargo build --release --bin but --bin gitbutler-git-askpass
 
 # Build the production release using Tauri
 pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
 
 %install
-# Install the main tauri desktop binary
-install -Dpm755 src-tauri/target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+# Install the main tauri desktop binary wrapper
+install -Dpm755 target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+
+# Install the accompanying core 'but' CLI utility binary
+install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
+install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
 
 ## Desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -62,12 +73,14 @@ StartupWMClass=gitbutler-tauri
 EOF
 
 ### App Icon (Tauri populates icons in the src-tauri/icons directory during setup)
-install -Dpm644 src-tauri/icons/128x128.png \
+install -Dpm644 crates/gitbutler-tauri/icons/release/128x128.png \
     %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/gitbutler.png
 
 %files
 %license LICENSE.md
 %{_bindir}/gitbutler
+%{_bindir}/but
+%{_bindir}/gitbutler-git-askpass
 %{_datadir}/applications/gitbutler.desktop
 %{_datadir}/icons/hicolor/128x128/apps/gitbutler.png
 
