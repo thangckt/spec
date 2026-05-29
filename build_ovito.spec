@@ -13,7 +13,7 @@ Source1:        %{url}/-/raw/master/doc/manual/images/team/ovito_logo_128.png
 Source2:        https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
 
 BuildRequires:  cmake ninja-build gcc-c++ pkg-config
-BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel
+BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel libstdc++-devel
 BuildRequires:  boost-devel netcdf-devel libssh-devel ffmpeg-free-devel libzstd-devel
 BuildRequires:  python3-sphinx python3-sphinx_rtd_theme python3-devel
 BuildRequires:  pkgconfig(libzstd)
