@@ -12,12 +12,12 @@ Source0:        %{url}/archive/refs/tags/release/%{version}.tar.gz
 
 
 BuildRequires:  cargo-rpm-macros >= 24
-BuildRequires:  gcc, gcc-c++, clang, cmake, git-core, lld, sccache, perl-devel
+BuildRequires:  gcc gcc-c++ clang cmake git-core lld sccache
 
 ### Linux Tauri and system dependencies specified in DEVELOPMENT.md
 BuildRequires:  nodejs >= 20, npm
 BuildRequires:  webkit2gtk4.1-devel libxdo-devel openssl-devel libayatana-appindicator3-devel
-BuildRequires:  librsvg2-devel alsa-lib-devel fontconfig-devel wayland-devel libxkbcommon-x11-devel
+BuildRequires:  librsvg2-devel alsa-lib-devel perl-devel fontconfig-devel wayland-devel libxkbcommon-x11-devel
 
 %description
 GitButler is a modern Git-based version control interface with both a GUI and CLI built from the ground up for AI-powered workflows.
