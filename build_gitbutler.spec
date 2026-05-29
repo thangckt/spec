@@ -55,18 +55,22 @@ export PATH="$(pwd)/.node_modules_local/node_modules/.bin:$PATH"
 # Install UI assets
 pnpm install --frozen-lockfile
 
-# Compile matching the exact production flags utilized in upstream publish.yaml
-# (Bypassing bundling tasks to optimize for native RPM layout distribution)
+# Explicitly build the background companion engine binaries
+cargo build --release --bin but --bin gitbutler-git-askpass
+
+# Compile the UI shell assets matching upstream production flags
 pnpm tauri build --no-bundle --features builtin-but,disable-auto-updates
 
 ### check build output
 find . -type f
 
 %install
-# Extracted from the exact production build target path generated via publish.yaml config paths
-install -Dpm755 target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+# Pull the UI wrapper from the Tauri release target directory
+install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+
+# Pull the core companion engines from the workspace native release directory
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
-install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
+install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-as
 
 ## Desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
