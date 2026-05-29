@@ -23,7 +23,7 @@ BuildRequires:  librsvg2-devel alsa-lib-devel fontconfig-devel wayland-devel lib
 GitButler is a modern Git-based version control interface with both a GUI and CLI built from the ground up for AI-powered workflows.
 
 %prep
-%autosetup -n gitbutler-%{version}
+%autosetup -n gitbutler-release-%{version}
 
 %build
 export CARGO_HOME=.cargo
