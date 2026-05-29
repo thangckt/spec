@@ -63,9 +63,12 @@ cargo build --release --bin but --bin gitbutler-git-askpass
 # Compile the final Tauri production assets, skipping AppImage bundling
 pnpm tauri build --no-bundle --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
 
+### check build output
+ls %{buildroot}
+
 %install
-# Install the main tauri desktop binary wrapper
-install -Dpm755 target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+# Install the main tauri desktop binary wrapper (using the tauri specific release path)
+install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
 
 # Install the accompanying core 'but' CLI utility binaries
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
