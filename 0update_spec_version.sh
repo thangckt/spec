@@ -44,11 +44,13 @@ fetch_gitlab_version() {
 function fetch_github_version() {
     local repo_url="$1"
     local new_version
-    ### capture everything after /tag/ (stripping a leading 'v' if present)
-    ### looks for a version starting with a digit, followed by any characters until the next quote
+    ### ([^"]*[0-9][^"]*) captures the entire tag string after /tag/, ensuring it terminates with a digit-based version number.
+    # [^"]*: Matches anything (any prefix like release/, v, build-) up until it hits a digit.
+    # [0-9][^"]*: Ensures it finds the version number and grabs the rest of the string until the closing quote.
     new_version=$(curl -sL "${repo_url}/releases/latest" |
-        sed -nE 's|.*href="[^"]*/tag/v?([0-9][^"]*)".*|\1|p' |
+        sed -nE 's|.*href="[^"]*/tag/([^"]*[0-9][^"]*)".*|\1|p' |
         head -n1)
+
     if [[ -z "$new_version" ]]; then
         echo "Failed to get version for $repo_url" >&2
         exit 1
@@ -157,6 +159,12 @@ spec_files="runfile_freefilesync.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR zed
+repo_url="https://github.com/zed-industries/zed"
+spec_files="tarball_zed.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
 spec_files="build_ovito.spec"
@@ -178,11 +186,6 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 echo "Update Done!"
 
 #####SECTION: Retired
-#####ANCHOR zed
-# repo_url="https://github.com/zed-industries/zed"
-# spec_files="tarball_zed.spec"
-# new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR pdf4qt
 # repo_url="https://github.com/JakubMelka/PDF4QT"

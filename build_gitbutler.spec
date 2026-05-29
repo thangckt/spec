@@ -1,4 +1,5 @@
 ### ref: https://github.com/gitbutlerapp/gitbutler/blob/master/.github/workflows/publish.yaml
+### The GitButler desktop app is a Tauri-based application
 ### Revise by Gemini
 
 Name:           gitbutler
