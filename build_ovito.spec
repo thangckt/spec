@@ -44,7 +44,7 @@ cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
 Name=OVITO
 GenericName=Scientific Visualization Tool
-Exec=env QT_SUBSET_OPENGL_API=desktop ovito
+Exec=env QT_QPA_PLATFORM=xcb ovito
 Icon=ovito
 Type=Application
 Terminal=false
