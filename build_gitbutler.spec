@@ -34,7 +34,7 @@ GitButler is a modern Git-based version control interface with both a GUI and CL
 
 %build
 export CARGO_HOME=./.cargo
-export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
+export RUSTFLAGS="-C link-arg=-fuse-ld=lld -A unused-imports -A unused-variables"
 
 ### FORCE CARGO CRATES TO LINK TO SYSTEM LIBRARIES (UNVENDOR ALL)
 export OPENSSL_NO_VENDOR=1
@@ -55,20 +55,17 @@ export PATH="$(pwd)/.node_modules_local/node_modules/.bin:$PATH"
 # Install UI assets
 pnpm install --frozen-lockfile
 
-# Build supplementary workspace binaries and the core CLI engine ('but')
-cargo build --release --bin but --bin gitbutler-git-askpass
-
-# Compile the final Tauri production assets, skipping AppImage bundling
-pnpm tauri build --no-bundle --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
+# Let Tauri compile the entire production package natively
+# This bundles the frontend assets directly inside the binary so clicks actually register!
+pnpm tauri build --no-bundle --features devtools,builtin-but,disable-auto-updates
 
 ### check build output
 find . -type f
 
 %install
-# Install the main tauri desktop binary wrapper (using the tauri specific release path)
-install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
-
-# Install the accompanying core 'but' CLI utility binaries
+# When Tauri builds everything natively without the override config,
+# production binaries land in standard target/release/
+install -Dpm755 target/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
 
@@ -79,7 +76,7 @@ cat > %{buildroot}%{_datadir}/applications/gitbutler.desktop <<'EOF'
 Name=GitButler
 GenericName=Git Client
 Comment=Modern Git-based version control interface
-Exec=gitbutler %U
+Exec=env GDK_BACKEND=x11 gitbutler %U
 Icon=gitbutler
 Type=Application
 StartupNotify=true
