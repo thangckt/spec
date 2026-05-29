@@ -1,4 +1,5 @@
 ### REF: https://www.ovito.org/docs/current/development/build_linux.html
+### OVITO need x11 session
 
 Name:           ovito
 Version:        3.15.4
