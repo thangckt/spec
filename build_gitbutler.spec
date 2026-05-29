@@ -46,7 +46,7 @@ pnpm install --frozen-lockfile
 cargo build --release --bin but --bin gitbutler-git-askpass
 
 # Build the production release using Tauri
-pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbu
+pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
 
 %install
 # Install the main tauri desktop binary wrapper
