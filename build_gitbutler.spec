@@ -24,8 +24,7 @@ BuildRequires:  openssl-devel, libgit2-devel, zlib-devel, libssh2-devel
 BuildRequires:  perl-FindBin, perl-File-Compare, perl-podlators
 
 ### Enforce host environment presence at runtime
-Requires:       git-core
-Requires:       hicolor-icon-theme
+Requires:       git-core libgit2 libssh2 openssl-libs
 
 %description
 GitButler is a modern Git-based version control interface with both a GUI and CLI built from the ground up for AI-powered workflows.
