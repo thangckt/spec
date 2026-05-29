@@ -12,7 +12,7 @@ Source0:        %{url}/archive/refs/tags/release/%{version}.tar.gz
 
 
 BuildRequires:  cargo-rpm-macros >= 24
-BuildRequires:  gcc, gcc-c++, clang, cmake, git-core, lld, sccache
+BuildRequires:  gcc, gcc-c++, clang, cmake, git-core, lld, sccache, perl-devel
 
 ### Linux Tauri and system dependencies specified in DEVELOPMENT.md
 BuildRequires:  nodejs >= 20, npm
