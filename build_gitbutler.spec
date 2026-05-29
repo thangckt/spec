@@ -23,6 +23,7 @@ BuildRequires:  librsvg2-devel alsa-lib-devel fontconfig-devel wayland-devel lib
 ### Fedora system libraries for fully unvendored Rust compilation
 BuildRequires:  openssl-devel, libgit2-devel, zlib-devel, libssh2-devel
 BuildRequires:  perl-FindBin, perl-File-Compare, perl-podlators
+BuildRequires:  xdg-utils
 
 ### Enforce host environment presence at runtime
 Requires:       git-core libgit2 libssh2 openssl-libs
@@ -59,8 +60,8 @@ pnpm install --frozen-lockfile
 # Build supplementary workspace binaries and the core CLI engine ('but')
 cargo build --release --bin but --bin gitbutler-git-askpass
 
-# Compile the final Tauri wrapper production bundle
-pnpm tauri build --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
+# Compile the final Tauri production assets, skipping AppImage bundling
+pnpm tauri build --no-bundle --features devtools,builtin-but,disable-auto-updates --config crates/gitbutler-tauri/tauri.conf.nightly-local.json
 
 %install
 # Install the main tauri desktop binary wrapper
