@@ -49,7 +49,8 @@ function fetch_github_version() {
     # [0-9][^"]*: Ensures it finds the version number and grabs the rest of the string until the closing quote.
     new_version=$(curl -sL "${repo_url}/releases/latest" |
         sed -nE 's|.*href="[^"]*/tag/([^"]*[0-9][^"]*)".*|\1|p' |
-        head -n1)
+        head -n1 |
+        sed -E 's/^[^0-9]*//')
 
     if [[ -z "$new_version" ]]; then
         echo "Failed to get version for $repo_url" >&2
