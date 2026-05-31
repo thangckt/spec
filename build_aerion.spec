@@ -45,7 +45,11 @@ install -Dpm 0755 build/bin/aerion %{buildroot}%{_bindir}/aerion
 
 ### Desktop entry
 # Add the environment variable to disable DMABUF renderer
-sed -i 's|^Exec=aerion|Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion|' build/linux/aerion.desktop
+# sed -i 's|^Exec=aerion|Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion|' build/linux/aerion.desktop
+
+# Injects a standard Chrome User-Agent string to bypass Google's embedded WebView blocker
+sed -i 's|^Exec=aerion|Exec=env WEBKIT_USER_AGENT="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" aerion|' build/linux/aerion.desktop
+
 install -Dpm 0644 build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/aerion.desktop
 
 ### Icon
