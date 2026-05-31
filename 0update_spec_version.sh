@@ -130,12 +130,6 @@ spec_files="rpm_onlyoffice.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Aerion
-repo_url="https://github.com/hkdb/aerion"
-spec_files="build_aerion.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR goldendict-ng
 repo_url="https://github.com/xiaoyifang/goldendict-ng"
 spec_files="build_goldendict-ng.spec"
@@ -250,5 +244,11 @@ echo "Update Done!"
 #####ANCHOR rgitui
 # repo_url="https://github.com/noahbclarkson/rgitui"
 # spec_files="tarball_rgitui.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Aerion
+# repo_url="https://github.com/hkdb/aerion"
+# spec_files="build_aerion.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
