@@ -48,7 +48,7 @@ install -Dpm 0755 build/bin/aerion %{buildroot}%{_bindir}/aerion
 # sed -i 's|^Exec=aerion|Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion|' build/linux/aerion.desktop
 install -Dpm 0644 build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/aerion.desktop
 
-### Icon
+### Icon (rename to match the desktop file's Icon entry, which is 'io.github.hkdb.Aerion')
 install -Dpm 0644 build/linux/aerion.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %files
