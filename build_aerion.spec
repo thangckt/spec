@@ -4,7 +4,7 @@
 ### Retired. Since Aerion does not support EWS.
 
 Name:           aerion
-Version:        0.2.5
+Version:        0.2.4
 Release:        1%{?dist}
 Summary:        An Open Source Lightweight E-Mail Client
 
@@ -46,10 +46,10 @@ install -Dpm 0755 build/bin/aerion %{buildroot}%{_bindir}/aerion
 ### Desktop entry
 # Add the environment variable to disable DMABUF renderer
 sed -i 's|^Exec=aerion|Exec=env WEBKIT_DISABLE_DMABUF_RENDERER=1 aerion|' build/linux/aerion.desktop
-
 install -Dpm 0644 build/linux/aerion.desktop %{buildroot}%{_datadir}/applications/aerion.desktop
 
 ### Icon
+sed -i 's|^Icon=io.github.hkdb.Aerion|Icon=aerion|' build/linux/aerion.desktop
 install -Dpm 0644 build/linux/aerion.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/aerion.png
 
 %files
