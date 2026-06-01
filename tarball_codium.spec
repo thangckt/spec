@@ -75,7 +75,7 @@ Actions=openInCodium
 X-KDE-StartupNotify=false
 
 [Desktop Action openInCodium]
-Name=Open in Codium
+Name=Open in VSCodium
 Icon=codium
 Exec=codium %u
 EOF
