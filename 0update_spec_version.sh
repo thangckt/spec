@@ -179,7 +179,7 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR vscodium
 repo_url="https://github.com/VSCodium/vscodium"
-spec_files="codium.spec"
+spec_files="tarball_codium.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
