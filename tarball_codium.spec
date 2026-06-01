@@ -3,7 +3,6 @@
 ### Use tarball to avoid building time.
 
 %global vscode_arch x64
-%global debug_package %{nil}
 
 Name:           codium
 Version:        1.112.01907
@@ -15,7 +14,11 @@ URL:            https://github.com/VSCodium/vscodium
 Source0:        %{url}/releases/download/%{version}/VSCodium-linux-%{vscode_arch}-%{version}.tar.gz
 
 ## Filter out the problematic dependency: `libcurl.so.4(CURL_OPENSSL_4)(64bit)`
-%global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
+# %global __requires_exclude ^libcurl\\.so\\.[0-9]+.*$
+
+%global debug_package %{nil}
+
+AutoReqProv: no
 
 %description
 VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's VS Code.
@@ -56,7 +59,7 @@ Keywords=vscode;
 
 [Desktop Action new-empty-window]
 Name=New Empty Window
-Exec=/usr/libexec/vscodium/bin/codium --new-window %F
+Exec=codium --new-window %F
 Icon=%{name}
 EOF
 
@@ -74,12 +77,11 @@ X-KDE-StartupNotify=false
 [Desktop Action openInCodium]
 Name=Open in Codium
 Icon=codium
-Exec=/usr/libexec/vscodium/bin/codium %u
+Exec=codium %u
 EOF
 
 ### Icon
-install -D -m644 resources/app/resources/linux/code.png \
-    %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+install -Dpm 0644 resources/app/resources/linux/code.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %files
 %{_bindir}/codium

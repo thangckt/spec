@@ -176,6 +176,13 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
 update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR vscodium
+repo_url="https://github.com/VSCodium/vscodium"
+spec_files="codium.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####!SECTION
 
 echo "Update Done!"
@@ -191,12 +198,6 @@ echo "Update Done!"
 #####ANCHOR pdf4qt
 # repo_url="https://github.com/JakubMelka/PDF4QT"
 # spec_files="pdf4qt.spec"
-# new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
-#####ANCHOR vscodium
-# repo_url="https://github.com/VSCodium/vscodium"
-# spec_files="codium.spec"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
