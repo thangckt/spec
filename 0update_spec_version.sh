@@ -176,18 +176,17 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
 update_spec_version "$spec_files" "$new_version" "$store_file"
-
-#####ANCHOR vscodium
-repo_url="https://github.com/VSCodium/vscodium"
-spec_files="tarball_codium.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####!SECTION
 
 echo "Update Done!"
 
 #####SECTION: Retired
+
+#####ANCHOR vscodium
+# repo_url="https://github.com/VSCodium/vscodium"
+# spec_files="tarball_codium.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR zed
 # repo_url="https://github.com/zed-industries/zed"
