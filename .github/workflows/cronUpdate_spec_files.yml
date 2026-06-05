@@ -17,19 +17,19 @@ jobs:
         with:
           ref: dev    # Selected branch, default is `main`
 
-    ### Update the .spec files (this creates file `_changed_specs.txt`)
+    ### Fetch updated versions and save to file `_changed_specs.txt`
       - name: Update .spec files
         run: |
           bash 0update_spec_version.sh
 
-    ### Update the repository (commit change on selected branch)
-      - name: Commit and Push Changes on selected branch      # Commit all changed files back to the repository
+    ### Commit and Push to the current repository (selected branch)
+      - name: Commit and Push Changes back to the repository
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto update versions of multiple .spec files"
+          commit_message: "Update versions in multiple .spec files"
 
 
-    ### Update multiple branches: each branch for each .spec file
+    ### Push updates to multiple branches (create if not exists): each .spec file for a branch, e.g., branch `up_foo` for file `foo.spec`
       - name: Push updates to multiple branches
         if: success()
         env:
@@ -38,40 +38,31 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          ## Ensure branch `dev` is up to date
-          git fetch origin dev
-          git checkout dev
-          git pull origin dev --ff-only
-
+          ### Read changed specs and push updates directly
           while IFS= read -r spec; do
             [ -z "$spec" ] && continue
             pkg=$(basename "$spec" .spec)
             branch="up_${pkg}"
 
-            echo "==> Processing branch $branch for $spec"
+            echo "==> Updating branch: $branch based on $spec"
 
-            ## Create or switch to the branch
-            if git ls-remote --exit-code origin "refs/heads/$branch" >/dev/null 2>&1; then
-              git checkout "$branch"
-              git pull origin "$branch" --ff-only || true
-            else
-              ## Create empty branch
-              git checkout --orphan "$branch"
-              git rm -rf . >/dev/null 2>&1 || true
-            fi
+            ## Create a temporary isolated, history-free (orphan) environment and add only the single .spec file
+            ## 4b825dc642cb6eb9a030e54d74e2e1aa7429177f is the magic SHA for an empty git tree (a repository with absolutely zero files and no history).
+            ## with `--detach`, you are telling Git: "Drop me into a temporary state where the working directory is completely blank and not tied to any branch."
+            git checkout --detach 4b825dc642cb6eb9a030e54d74e2e1aa7429177f
 
-            ## Bring the latest .spec file *from dev branch* into this branch
+            ## Bring the latest .spec file from the `dev` branch into this branch
             git checkout dev -- "$spec"
-
-            ## Commit and push
             git add "$spec"
-            if git diff --cached --quiet; then
-              echo "No change for $spec"
-            else
-              git commit -m "Auto update ${pkg}.spec from dev"
-              git push origin "$branch" --force
-            fi
 
-            ## Return to dev branch
-            git checkout dev
+            ## Commit and force-push directly to the target branch (create if not exists)
+            if ! git diff --cached --quiet; then
+              git commit -m "Auto update ${pkg}.spec from dev"
+              git push origin HEAD:"refs/heads/$branch" --force
+            else
+              echo "No changes for $spec"
+            fi
           done < _changed_specs.txt
+
+          ### Ensure we leave the runner working directory back on the dev branch
+          git checkout dev --force
