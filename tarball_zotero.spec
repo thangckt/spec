@@ -42,8 +42,7 @@ EOF
 chmod +x %{buildroot}%{_bindir}/zotero
 
 ### Create desktop file
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
+cat > zotero.desktop << 'EOF'
 [Desktop Entry]
 Name=Zotero
 Comment=Zotero Reference Manager
@@ -52,15 +51,15 @@ Icon=zotero
 Type=Application
 Categories=Office;Education;Science;
 EOF
+install -Dpm644 zotero.desktop %{buildroot}%{_datadir}/applications/zotero.desktop
 
-### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
-cp icons/icon128.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/zotero.png
+### Install icon
+install -Dpm644 icons/icon128.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/zotero.png
 
 %files
 %{_bindir}/zotero
 %{_libexecdir}/zotero/
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/zotero.desktop
 %{_datadir}/icons/hicolor/128x128/apps/zotero.png
 
 %changelog

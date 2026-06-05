@@ -34,9 +34,8 @@ exec /usr/libexec/servo/servoshell "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/servo
 
-### Create desktop entry
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/servo.desktop <<'EOF'
+### Create desktop file
+cat > servo.desktop <<'EOF'
 [Desktop Entry]
 Name=Servo Web Browser
 Exec=servo %u
@@ -51,10 +50,10 @@ StartupWMClass=org.servo.Servo
 Name=Open a New Window
 Exec=servo %u
 EOF
+install -Dpm644 servo.desktop %{buildroot}%{_datadir}/applications/servo.desktop
 
-### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/64x64/apps
-cp resources/servo_64.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+### Install icon
+install -Dpm644 resources/servo_64.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 
 %files
 %{_bindir}/servo

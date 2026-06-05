@@ -28,7 +28,7 @@ Code at the speed of thought — Zed is a high-performance, multiplayer code edi
 mkdir -p %{buildroot}%{_libexecdir}/zed
 cp -r bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 
-### Wrapper script for main executable
+### Wrapper script for main executable in /usr/bin/zed
 mkdir -p %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/zed << 'EOF'
 #!/bin/bash
@@ -36,9 +36,8 @@ exec /usr/libexec/zed/bin/zed "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/zed
 
-### Desktop file
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/zed.desktop <<'EOF'
+### Create desktop file
+cat > zed.desktop <<'EOF'
 [Desktop Entry]
 Name=Zed Preview
 GenericName=Text Editor
@@ -56,10 +55,10 @@ StartupWMClass=dev.zed.Zed-Preview
 Name=Open a new workspace
 Exec=zed --new %U
 EOF
+install -Dpm644 zed.desktop %{buildroot}%{_datadir}/applications/zed.desktop
 
 ### Create "Open with" menu
-mkdir -p %{buildroot}%{_datadir}/kio/servicemenus
-cat > %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop <<'EOF'
+cat > open_in_zed.desktop <<'EOF'
 [Desktop Entry]
 Type=Service
 ServiceTypes=KonqPopupMenu/Plugin
@@ -73,9 +72,10 @@ Name=Open in Zed
 Icon=zed
 Exec=zed %u
 EOF
+install -Dpm644 open_in_zed.desktop %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop
 
 ### Install icons (already in correct structure)
-cp -r share/icons %{buildroot}%{_datadir}/
+install -Dpm644 share/icons/hicolor/128x128/apps/zed.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/zed.png
 
 %files
 %license %{_libexecdir}/zed/licenses.md

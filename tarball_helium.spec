@@ -39,7 +39,6 @@ cat > %{buildroot}%{_bindir}/helium << 'EOF'
 #!/bin/bash
 # Force the browser to initialize software GL and emulate WebGL via the CPU
 FLAGS="--use-gl=angle --use-angle=swiftshader"
-
 exec /usr/libexec/helium/helium $FLAGS "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/helium
