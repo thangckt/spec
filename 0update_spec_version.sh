@@ -170,17 +170,18 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
 update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR gitbutler
+repo_url="https://github.com/gitbutlerapp/gitbutler"
+spec_files="build_gitbutler.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####!SECTION
 
 echo -e "------------ Update Done !------------"
 
 #####SECTION: Retired
-
-#####ANCHOR gitbutler
-# repo_url="https://github.com/gitbutlerapp/gitbutler"
-# spec_files="build_gitbutler.spec"
-# new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR vscodium
 # repo_url="https://github.com/VSCodium/vscodium"
