@@ -103,6 +103,7 @@ install -Dpm644 crates/gitbutler-tauri/icons/release/128x128.png \
 %files
 %license LICENSE.md
 %{_bindir}/gitbutler
+%{_bindir}/gitbutler-tauri
 %{_bindir}/but
 %{_bindir}/gitbutler-git-askpass
 %{_datadir}/applications/gitbutler.desktop
