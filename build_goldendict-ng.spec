@@ -36,13 +36,11 @@ Wikipedia, and various offline/online resources.
 %install
 %cmake_install
 
-### Desktop Entry
-mkdir -p %{buildroot}%{_datadir}/applications
-mv %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
+### Install desktop file
+install -Dpm644 %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
 
-### Copy icon to the correct raster directory (48x48 or 64x64 is standard for PNG pixmaps)
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
-mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/goldendict.png
+### Install Icon (48x48 or 64x64 is standard for PNG pixmaps)
+install -Dpm644 %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/goldendict.png
 
 ### Delete metainfo
 rm %{buildroot}%{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.xml
