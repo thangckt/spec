@@ -64,6 +64,14 @@ pnpm tauri build --no-bundle --features builtin-but,disable-auto-updates
 ### check build output
 find . -type f
 
+%install
+### Pull the UI wrapper from the Tauri release target directory
+install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+
+### Pull the core companion engines from the workspace native release directory
+install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
+install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
+
 ### Create desktop file
 cat > gitbutler.desktop <<'EOF'
 [Desktop Entry]
@@ -79,16 +87,6 @@ MimeType=x-scheme-handler/gitbutler;
 Keywords=git;gitbutler;version-control;
 StartupWMClass=gitbutler-tauri
 EOF
-
-%install
-### Pull the UI wrapper from the Tauri release target directory
-install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
-
-### Pull the core companion engines from the workspace native release directory
-install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
-install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
-
-### Install desktop file
 install -Dpm644 gitbutler.desktop %{buildroot}%{_datadir}/applications/gitbutler.desktop
 
 ### Install Icon

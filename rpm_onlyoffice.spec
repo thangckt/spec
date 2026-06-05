@@ -27,7 +27,6 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-
 %files
 %{_bindir}/desktopeditors
 %{_bindir}/onlyoffice-desktopeditors

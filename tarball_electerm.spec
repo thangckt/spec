@@ -37,9 +37,8 @@ exec /usr/libexec/electerm/electerm "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/electerm
 
-### Create desktop entry
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/electerm.desktop <<'EOF'
+### Install desktop file
+cat > electerm.desktop <<'EOF'
 [Desktop Entry]
 Name=electerm
 Exec=electerm %U
@@ -51,16 +50,16 @@ Comment=Terminal/ssh/telnet/serialport/sftp client(linux, mac, win)
 MimeType=x-scheme-handler/ssh;x-scheme-handler/telnet;x-scheme-handler/rdp;x-scheme-handler/vnc;x-scheme-handler/serial;x-scheme-handler/spice;x-scheme-handler/electerm;
 Categories=Development;System;TerminalEmulator;
 EOF
+install -Dpm644 electerm.desktop %{buildroot}%{_datadir}/applications/electerm.desktop
 
-### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
-cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+### Install icon
+install -Dpm644 %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/electerm.png
 
 %files
 %{_bindir}/electerm
 %{_libexecdir}/electerm/
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/applications/electerm.desktop
+%{_datadir}/icons/hicolor/128x128/apps/electerm.png
 
 %changelog
 %autochangelog

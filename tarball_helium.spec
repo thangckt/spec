@@ -44,9 +44,8 @@ exec /usr/libexec/helium/helium $FLAGS "$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/helium
 
-### Create desktop entry
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
+### Create desktop file
+cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
 Exec=helium %U
@@ -64,10 +63,10 @@ Exec=helium
 Name=New Incognito Window
 Exec=helium --incognito
 EOF
+install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
 
-### Copy icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
-cp product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
+### Install icon
+install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %files
 %{_bindir}/helium

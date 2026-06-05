@@ -35,13 +35,15 @@ tar -xzf %{SOURCE2} --strip-components=1 -C src/3rdparty/zstd
 ## add '--target documentation' to build the documentation (may error and heavy size)
 %cmake_build
 
+### Clean up
+rm -f %{buildroot}%{_bindir}/ssh_askpass
+
 %install
 %cmake_install
 strip %{buildroot}%{_bindir}/ovito
 
-# Install .desktop file
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
+### Create desktop file
+cat > ovito.desktop << 'EOF'
 [Desktop Entry]
 Name=OVITO
 GenericName=Scientific Visualization Tool
@@ -51,13 +53,10 @@ Type=Application
 Terminal=false
 Categories=Science;Education;Graphics;
 EOF
+install -Dpm644 ovito.desktop %{buildroot}%{_datadir}/applications/ovito.desktop
 
-# Copy icon (since it is not included in the source)
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-cp %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/ovito.png
-
-# Clean up
-rm -f %{buildroot}%{_bindir}/ssh_askpass
+### Install icon
+install -Dpm644 %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/ovito.png
 
 %files
 %{_bindir}/ovito
