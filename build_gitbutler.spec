@@ -66,19 +66,26 @@ find . -type f
 
 %install
 ### Pull the UI wrapper from the Tauri release target directory
-install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler
+install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler-tauri
 
 ### Pull the core companion engines from the workspace native release directory
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
+
+### Create wrapper script for main executable
+cat > gitbutler-wrapper << 'EOF'
+#!/bin/bash
+export GDK_BACKEND=x11 WEBKIT_DISABLE_DMABUF_SANDBOX=1
+exec /usr/bin/gitbutler-tauri "$@"
+EOF
+install -Dpm0755 gitbutler-wrapper %{buildroot}%{_bindir}/gitbutler
 
 ### Create desktop file
 cat > gitbutler.desktop <<'EOF'
 [Desktop Entry]
 Name=GitButler
 GenericName=Git Client
-Comment=Modern Git-based version control interface
-Exec=env GDK_BACKEND=x11 WEBKIT_DISABLE_DMABUF_SANDBOX=1 gitbutler %U
+Exec=gitbutler %U
 Icon=gitbutler
 Type=Application
 StartupNotify=true
