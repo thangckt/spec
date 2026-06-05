@@ -46,7 +46,7 @@ jobs:
 
             echo "==> Updating branch: $branch based on $spec"
 
-            ## Create a temporary isolated, history-free (orphan) environment and add only the single .spec file
+            ## Create a temporary isolated, no-history (orphan) environment and add only the single .spec file
             ## 4b825dc642cb6eb9a030e54d74e2e1aa7429177f is the magic SHA for an empty git tree (a repository with absolutely zero files and no history).
             ## with `--detach`, you are telling Git: "Drop me into a temporary state where the working directory is completely blank and not tied to any branch."
             git checkout --detach 4b825dc642cb6eb9a030e54d74e2e1aa7429177f
