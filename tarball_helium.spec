@@ -69,6 +69,7 @@ Exec=helium
 Name=New Incognito Window
 Exec=helium --incognito
 EOF
+
 desktop-file-validate %{buildroot}%{_datadir}/applications/helium.desktop
 
 ### Copy icon
