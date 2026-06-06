@@ -57,8 +57,8 @@ export PNPM_HOME="$(pwd)/.pnpm-store"
 # Install UI production assets
 pnpm install --frozen-lockfile
 
-# Compile the background companion engine binaries using standard macro options
-%cargo_build -- --bin but --bin gitbutler-git-askpass
+# Explicitly build the background companion engine binaries
+cargo build --release --bin but --bin gitbutler-git-askpass
 
 # Compile the UI shell assets matching upstream production flags
 export TAURI_ENV_DEBUG=false
