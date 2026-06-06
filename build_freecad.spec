@@ -29,7 +29,7 @@ Group:          Applications/Engineering
 License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
-#ource0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
+#ource0:        {url}/releases/download/{version}/freecad_source_{version}.tar.gz
 Source0:        %{url}/releases/download/weekly-%{version}/freecad_source_weekly-%{version}.tar.gz
 
 
