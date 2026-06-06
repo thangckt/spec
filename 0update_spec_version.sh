@@ -93,7 +93,7 @@ function update_spec_version() {
 }
 
 ### initialize store file
-store_file="_changed_specs.txt"
+store_file="_new_versions.txt"
 tee $store_file <<<"" >/dev/null
 
 #####SECTION: From GitHub
