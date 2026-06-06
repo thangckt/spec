@@ -59,6 +59,8 @@ pnpm install --frozen-lockfile
 cargo build --release --bin but --bin gitbutler-git-askpass
 
 # Compile the UI shell assets matching upstream production flags
+# TAURI_ENV_DEBUG=false forces production mode despite --no-bundle
+export TAURI_ENV_DEBUG=false
 pnpm tauri build --no-bundle --features builtin-but,disable-auto-updates
 
 ### check build output
@@ -75,7 +77,12 @@ install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitb
 ### Create wrapper script for main executable
 cat > gitbutler-wrapper << 'EOF'
 #!/bin/bash
-export GDK_BACKEND=x11 WEBKIT_DISABLE_DMABUF_SANDBOX=1
+# Fix WebKitGTK rendering crashes on modern Mesa/Fedora systems
+export GDK_BACKEND=x11
+export WEBKIT_DISABLE_DMABUF_SANDBOX=1
+export WEBKIT_DISABLE_COMPOSITING_MODE=1
+export WEBKIT_FORCE_SANDBOX=0
+
 exec /usr/bin/gitbutler-tauri "$@"
 EOF
 install -Dpm0755 gitbutler-wrapper %{buildroot}%{_bindir}/gitbutler
