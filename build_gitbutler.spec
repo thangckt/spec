@@ -21,6 +21,8 @@ BuildRequires:  librsvg2-devel alsa-lib-devel fontconfig-devel wayland-devel lib
 BuildRequires:  openssl-devel, libgit2-devel, zlib-devel, libssh2-devel
 BuildRequires:  perl-FindBin, perl-File-Compare, perl-podlators
 BuildRequires:  xdg-utils
+BuildRequires:  desktop-file-utils libglibutil-devel
+
 ### Enforce host environment presence at runtime
 Requires:       git-core libgit2 libssh2 openssl-libs
 
@@ -74,17 +76,17 @@ install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
 
 ### Create wrapper script for main executable
-cat > gitbutler-wrapper << 'EOF'
+cat > gitbutler_wrapper << 'EOF'
 #!/bin/bash
 # Fix WebKitGTK rendering crashes on modern Mesa/Fedora systems
 export GDK_BACKEND=x11
 export WEBKIT_DISABLE_DMABUF_SANDBOX=1
 export WEBKIT_DISABLE_COMPOSITING_MODE=1
-export WEBKIT_FORCE_SANDBOX=0
+export WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=0
 
 exec %{_bindir}/gitbutler-tauri "$@"
 EOF
-install -Dpm755 gitbutler-wrapper %{buildroot}%{_bindir}/gitbutler
+install -Dpm755 gitbutler_wrapper %{buildroot}%{_bindir}/gitbutler
 
 ### Create desktop file
 cat > gitbutler.desktop <<'EOF'
@@ -100,6 +102,8 @@ MimeType=x-scheme-handler/gitbutler;
 Keywords=git;gitbutler;version-control;
 StartupWMClass=gitbutler-tauri
 EOF
+
+desktop-file-validate gitbutler.desktop
 install -Dpm644 gitbutler.desktop %{buildroot}%{_datadir}/applications/gitbutler.desktop
 
 ### Install Icon
