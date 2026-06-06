@@ -38,7 +38,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          ### Read changed specs and push updates directly
+          ### Read only .spec files in `_new_versions.txt` and push updates directly
           while IFS= read -r spec; do
             [ -z "$spec" ] && continue
             pkg=$(basename "$spec" .spec)
@@ -62,7 +62,7 @@ jobs:
             else
               echo "No changes for $spec"
             fi
-          done < _changed_specs.txt
+          done < _new_versions.txt
 
           ### Ensure we leave the runner working directory back on the dev branch
           git checkout dev --force
