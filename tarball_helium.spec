@@ -38,13 +38,14 @@ cp -rp * %{buildroot}%{_libexecdir}/helium/
 # ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 # ### Create wrapper script for main executable (to easy set execution flags)
-cat > helium_wrapper<< 'EOF'
+mkdir -p %{buildroot}%{_bindir}
+cat > %{buildroot}%{_bindir}/helium<< 'EOF'
 #!/bin/bash
 # Force the browser to initialize software GL and emulate WebGL via the CPU
 FLAGS="--use-gl=angle --use-angle=swiftshader"
 exec %{_libexecdir}/helium/helium $FLAGS "$@"
 EOF
-install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
+chmod +x %{buildroot}%{_bindir}/helium
 
 ### Create desktop file (replace the existing one in the tarball)
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -57,6 +58,8 @@ Terminal=false
 Icon=helium
 Type=Application
 Categories=Network;WebBrowser;
+# This line to register your desktop actions:
+Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
@@ -68,8 +71,9 @@ Exec=helium --incognito
 EOF
 desktop-file-validate %{buildroot}%{_datadir}/applications/helium.desktop
 
-### Install icon
-install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
+### Copy icon
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
+cp -p product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %files
 %{_bindir}/helium
