@@ -12,7 +12,7 @@ URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
 BuildRequires:  desktop-file-utils
-Requires:       nss libX11 vulkan-loader hicolor-icon-theme
+Requires:       vulkan-loader
 
 # Disable debuginfo packaging and stripping for pre-compiled binaries
 %global debug_package %{nil}
