@@ -50,6 +50,7 @@ install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
 cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
+GenericName=Web Browser
 Exec=helium %U
 StartupWMClass=helium
 Terminal=false
