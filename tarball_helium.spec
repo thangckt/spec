@@ -11,7 +11,7 @@ License:        BSD-3-Clause
 URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
-BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-file-utils libglibutil-devel
 Requires:       vulkan-loader
 
 # Disable debuginfo packaging and stripping for pre-compiled binaries
