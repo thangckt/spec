@@ -20,6 +20,8 @@
 
 Name:           freecad
 Epoch:          1
+#ersion:        1.0.2
+Version:        2026.06.03
 Release:        1%{?dist}
 
 Summary:        A general purpose 3D CAD modeler
@@ -27,10 +29,7 @@ Group:          Applications/Engineering
 License:        LGPL-2.0-or-later
 URL:            https://github.com/FreeCAD/FreeCAD
 
-#ersion:        1.0.2
 #ource0:        %{url}/releases/download/%{version}/freecad_source_%{version}.tar.gz
-
-Version:        2026.06.03
 Source0:        %{url}/releases/download/weekly-%{version}/freecad_source_weekly-%{version}.tar.gz
 
 
