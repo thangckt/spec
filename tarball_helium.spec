@@ -12,9 +12,8 @@ URL:            https://github.com/imputnet/helium-linux
 Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_linux.tar.xz
 
 BuildRequires:  desktop-file-utils
-
-# Tarballs bypass the standard RPM dependency generator
-# AutoReqProv:    no
+Requires:       nss libX11 vulkan-loader hicolor-icon-theme
+Requires:       glibc>=2.34
 
 # Disable debuginfo packaging and stripping for pre-compiled binaries
 %global debug_package %{nil}
@@ -34,7 +33,7 @@ Helium Browser is a fast, privacy-focused Chromium fork based on ungoogled-chrom
 mkdir -p %{buildroot}%{_libexecdir}/helium
 cp -rp * %{buildroot}%{_libexecdir}/helium/
 
-### Create wrapper script for main executable (available in the tarball)
+### Create symlink for main executable
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
 

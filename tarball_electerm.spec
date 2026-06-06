@@ -27,14 +27,11 @@ Electerm (prebuilt binary). This spec repackages the upstream tarball for distri
 %install
 ### Copy all extracted files to /usr/libexec/electerm
 mkdir -p %{buildroot}%{_libexecdir}/electerm
-cp -r * %{buildroot}%{_libexecdir}/electerm/
+cp -rp * %{buildroot}%{_libexecdir}/electerm/
 
-### Create wrapper script for main executable in /usr/bin/electerm
-cat > electerm-wrapper << 'EOF'
-#!/bin/bash
-exec /usr/libexec/electerm/electerm "$@"
-EOF
-install -Dpm0755 electerm-wrapper %{buildroot}%{_bindir}/electerm
+### Create symlink for main executable
+mkdir -p %{buildroot}%{_bindir}
+ln -sf %{_libexecdir}/electerm/electerm %{buildroot}%{_bindir}/electerm
 
 ### Install desktop file
 cat > electerm.desktop <<'EOF'

@@ -33,10 +33,11 @@ GitButler is a modern Git-based version control interface with both a GUI and CL
 %autosetup -n gitbutler-release-%{version}
 
 %build
+### Set up isolated Rust environment using official RPM helper structures
 export CARGO_HOME=./.cargo
 export RUSTFLAGS="-C link-arg=-fuse-ld=lld -A unused-imports -A unused-variables"
 
-### FORCE CARGO CRATES TO LINK TO SYSTEM LIBRARIES (UNVENDOR ALL)
+### Force Cargo crates to link to system libraries (unvendor all)
 export OPENSSL_NO_VENDOR=1
 export LIBGIT2_NO_VENDOR=1
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
@@ -47,30 +48,28 @@ if [ -x "%{_bindir}/sccache" ]; then
     export RUSTC_WRAPPER=%{_bindir}/sccache
 fi
 
-# Set up local pnpm binary cache instead of relying on global corepack
+# Set up local pnpm environment to isolate the build from global npm states
 mkdir -p .node_modules_local
 npm install --prefix .node_modules_local pnpm
 export PATH="$(pwd)/.node_modules_local/node_modules/.bin:$PATH"
+export PNPM_HOME="$(pwd)/.pnpm-store"
 
-# Install UI assets
+# Install UI production assets
 pnpm install --frozen-lockfile
 
-# Explicitly build the background companion engine binaries
-cargo build --release --bin but --bin gitbutler-git-askpass
+# Compile the background companion engine binaries using standard macro options
+%cargo_build -- --bin but --bin gitbutler-git-askpass
 
 # Compile the UI shell assets matching upstream production flags
-# TAURI_ENV_DEBUG=false forces production mode despite --no-bundle
 export TAURI_ENV_DEBUG=false
 pnpm tauri build --no-bundle --features builtin-but,disable-auto-updates
 
 ### check build output
-find . -type f
+# find . -type f
 
 %install
-### Pull the UI wrapper from the Tauri release target directory
+### Install core components into system binaries
 install -Dpm755 target/tauri/release/gitbutler-tauri %{buildroot}%{_bindir}/gitbutler-tauri
-
-### Pull the core companion engines from the workspace native release directory
 install -Dpm755 target/release/but %{buildroot}%{_bindir}/but
 install -Dpm755 target/release/gitbutler-git-askpass %{buildroot}%{_bindir}/gitbutler-git-askpass
 
@@ -83,9 +82,9 @@ export WEBKIT_DISABLE_DMABUF_SANDBOX=1
 export WEBKIT_DISABLE_COMPOSITING_MODE=1
 export WEBKIT_FORCE_SANDBOX=0
 
-exec /usr/bin/gitbutler-tauri "$@"
+exec %{_bindir}/gitbutler-tauri "$@"
 EOF
-install -Dpm0755 gitbutler-wrapper %{buildroot}%{_bindir}/gitbutler
+install -Dpm755 gitbutler-wrapper %{buildroot}%{_bindir}/gitbutler
 
 ### Create desktop file
 cat > gitbutler.desktop <<'EOF'
