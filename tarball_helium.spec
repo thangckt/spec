@@ -46,7 +46,7 @@ ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
 # install -Dpm755 helium-wrapper %{buildroot}%{_libexecdir}/helium/helium
 
 ### Create desktop file (replace the existing one in the tarball)
-cat > helium.desktop <<'EOF'
+cat > custom_helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
 Exec=helium --use-gl=angle --use-angle=swiftshader %U
@@ -66,13 +66,12 @@ Exec=helium --incognito
 EOF
 
 ### Create desktop file (available in the tarball)
-install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
+install -Dpm644 custom_helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
 
 ### Install icon
 install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %files
-%license %{_libexecdir}/helium/apparmor.cfg
 %{_bindir}/helium
 %{_libexecdir}/helium/
 %{_datadir}/applications/helium.desktop
