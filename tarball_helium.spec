@@ -13,7 +13,6 @@ Source0:        %{url}/releases/download/%{version}/helium-%{version}-x86_64_lin
 
 BuildRequires:  desktop-file-utils
 Requires:       nss libX11 vulkan-loader hicolor-icon-theme
-Requires:       glibc>=2.34
 
 # Disable debuginfo packaging and stripping for pre-compiled binaries
 %global debug_package %{nil}
@@ -33,9 +32,38 @@ Helium Browser is a fast, privacy-focused Chromium fork based on ungoogled-chrom
 mkdir -p %{buildroot}%{_libexecdir}/helium
 cp -rp * %{buildroot}%{_libexecdir}/helium/
 
-### Create symlink for main executable
+### Create symlink for main executable (wrapper existed)
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
+
+# ### Create wrapper script for main executable (if needed)
+# cat > helium-wrapper<< 'EOF'
+# #!/bin/bash
+# # Force the browser to initialize software GL and emulate WebGL via the CPU
+# FLAGS="--use-gl=angle --use-angle=swiftshader"
+# exec /usr/libexec/helium/helium $FLAGS "$@"
+# EOF
+# install -Dpm755 helium-wrapper %{buildroot}%{_libexecdir}/helium/helium
+
+### Create desktop file (replace the existing one in the tarball)
+cat > helium.desktop <<'EOF'
+[Desktop Entry]
+Name=Helium Web Browser
+Exec=helium --use-gl=angle --use-angle=swiftshader %U
+StartupWMClass=helium
+Terminal=false
+Icon=helium
+Type=Application
+Categories=Network;WebBrowser;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=helium
+
+[Desktop Action new-private-window]
+Name=New Incognito Window
+Exec=helium --incognito
+EOF
 
 ### Create desktop file (available in the tarball)
 install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
