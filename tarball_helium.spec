@@ -34,7 +34,8 @@ cp -rp * %{buildroot}%{_libexecdir}/helium/
 
 ### Create symlink for main executable (wrapper existed)
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
+# ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
+ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 # ### Create wrapper script for main executable (if needed)
 # cat > helium-wrapper<< 'EOF'
