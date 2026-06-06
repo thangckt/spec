@@ -42,12 +42,13 @@ cat > helium_wrapper<< 'EOF'
 #!/bin/bash
 # Force the browser to initialize software GL and emulate WebGL via the CPU
 FLAGS="--use-gl=angle --use-angle=swiftshader"
-exec /usr/libexec/helium/helium $FLAGS "$@"
+exec %{_libexecdir}/helium/helium $FLAGS "$@"
 EOF
 install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
 
 ### Create desktop file (replace the existing one in the tarball)
-cat > custom_helium.desktop <<'EOF'
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
 Exec=helium %U
@@ -65,7 +66,7 @@ Exec=helium
 Name=New Incognito Window
 Exec=helium --incognito
 EOF
-install -Dpm644 custom_helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/helium.desktop
 
 ### Install icon
 install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
