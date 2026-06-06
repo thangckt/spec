@@ -58,7 +58,7 @@ Terminal=false
 Icon=helium
 Type=Application
 Categories=Network;WebBrowser;
-# This line to register your desktop actions:
+MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
 Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
