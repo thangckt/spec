@@ -1,4 +1,5 @@
-### DO NOT replace bundled git with system git. It will break the app. The bundled git is not pure git, it has customize with extra features.
+### ### The Electron bundled git is a customized git with extra features.
+### DO NOT replace bundled git with system git. It will break the app.
 ### Use 'AutoReqProv: no' to disable automatic dependency generation.
 
 Name:           github-desktop-plus
