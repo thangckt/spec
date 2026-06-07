@@ -12,6 +12,8 @@ Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{versio
 
 Requires:       git
 
+AutoReqProv: no
+
 %description
 GitHub Desktop Plus is a graphical Git client for managing GitHub repositories easily.
 This spec simply repackages the RPM for distribution via Copr.
