@@ -1,5 +1,5 @@
 ### The Electron bundled git is a customized git with extra features.
-### This spec try to make it work with the system git
+### This spec try to make githubDesktop work with the system git
 
 Name:           github-desktop-plus
 Version:        3.5.12.0
@@ -10,10 +10,7 @@ License:        MIT
 URL:            https://github.com/pol-rivero/github-desktop-plus
 Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{version}-linux-x86_64.rpm
 
-BuildRequires:  chrpath, patchelf
-Requires:       libcurl
-
-AutoReqProv: no
+Requires:       git
 
 %description
 GitHub Desktop Plus is a graphical Git client for managing GitHub repositories easily.
