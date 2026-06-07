@@ -35,9 +35,8 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*; do
     if file "$bin" | grep -q ELF; then
         chrpath -d "$bin" || true
-        ## Fix libcurl
+        ## Fix libcurl and libjpeg
         patchelf --replace-needed libcurl-gnutls.so.4 libcurl.so.4 "$bin" || true
-        ## Fix libjpeg
         patchelf --replace-needed libjpeg.so.8 libjpeg.so.62 "$bin" || true
     fi
 done
