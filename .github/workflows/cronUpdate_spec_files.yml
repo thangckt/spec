@@ -46,22 +46,27 @@ jobs:
 
             echo "==> Updating branch: $branch based on $spec"
 
-            ## Create a temporary isolated, no-history (orphan) environment and add only the single .spec file
-            ## 4b825dc642cb6eb9a030e54d74e2e1aa7429177f is the magic SHA for an empty git tree (a repository with absolutely zero files and no history).
-            ## with `--detach`, you are telling Git: "Drop me into a temporary state where the working directory is completely blank and not tied to any branch."
-            git checkout --detach 4b825dc642cb6eb9a030e54d74e2e1aa7429177f
+            ## 1. Create a temporary isolated, no-history (orphan) environment and add only the single .spec file
+            temp_orphan="temp_orphan_${pkg}"
+            git checkout --orphan "$temp_orphan"
+            git rm -rf . --quiet
 
-            ## Bring the latest .spec file from the `dev` branch into this branch
+            ## 2. Bring the latest .spec file from the `dev` branch into this branch
             git checkout dev -- "$spec"
             git add "$spec"
 
-            ## Commit and force-push directly to the target branch (create if not exists)
+            ## 3. Commit and force-push directly to the target branch (create if not exists)
             if ! git diff --cached --quiet; then
               git commit -m "Auto update ${pkg}.spec from dev"
               git push origin HEAD:"refs/heads/$branch" --force
             else
               echo "No changes for $spec"
             fi
+
+            ## 4. Clean up the temporary local branch before moving to the next iteration
+            git checkout dev --force
+            git branch -D "$temp_orphan"
+
           done < _new_versions.txt
 
           ### Ensure we leave the runner working directory back on the dev branch
