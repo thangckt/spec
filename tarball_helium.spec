@@ -40,9 +40,9 @@ cp -rp * %{buildroot}%{_libexecdir}/helium/
 # ### Create wrapper script for main executable (to easy set execution flags)
 cat > helium_wrapper << 'EOF'
 #!/bin/bash
-# Force the browser to initialize software GL and emulate WebGL via the CPU
-FLAGS="--use-gl=angle --use-angle=swiftshader"
-exec %{_libexecdir}/helium/helium $FLAGS "$@"
+# FLAGS="--use-gl=angle --use-angle=swiftshader"
+# exec %{_libexecdir}/helium/helium $FLAGS "$@"
+exec %{_libexecdir}/helium/helium "$@"
 EOF
 install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
 
