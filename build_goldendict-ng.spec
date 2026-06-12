@@ -36,11 +36,11 @@ Wikipedia, and various offline/online resources.
 %install
 %cmake_install
 
-### Install desktop file
-install -Dpm644 %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
+### Install desktop file (exited)
+mv %{buildroot}%{_datadir}/applications/io.github.xiaoyifang.goldendict_ng.desktop %{buildroot}%{_datadir}/applications/goldendict_ng.desktop
 
 ### Install Icon (48x48 or 64x64 is standard for PNG pixmaps)
-install -Dpm644 %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
+mv %{buildroot}%{_datadir}/pixmaps/goldendict.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/goldendict.png
 
 ### Delete metainfo
 rm %{buildroot}%{_datadir}/metainfo/io.github.xiaoyifang.goldendict_ng.metainfo.xml
