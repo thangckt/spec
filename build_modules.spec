@@ -22,21 +22,19 @@ Modules can be loaded, unloaded, or switched dynamically.
 %autosetup -n %{name}-%{version}
 
 %build
-./configure \
-  --prefix=%{_prefix} \
-  --sysconfdir=%{_sysconfdir}
+./configure --prefix=%{_prefix} --sysconfdir=%{_sysconfdir}
 %make_build
 
 %install
 %make_install
 
-# Symlink shell init scripts into /etc/profile.d (relative, not absolute)
+### Symlink shell init scripts into /etc/profile.d (relative, not absolute)
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
 ln -s ../../..%{_prefix}/init/profile.sh %{buildroot}%{_sysconfdir}/profile.d/modules.sh
 ln -s ../../..%{_prefix}/init/profile.csh %{buildroot}%{_sysconfdir}/profile.d/modules.csh
 
-# check all files are installed
-find %{buildroot} -type f -o -type l
+### check all files are installed
+# find %{buildroot} -type f -o -type l
 
 %files
 %{_bindir}/modulecmd
