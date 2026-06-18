@@ -3,7 +3,7 @@
 ### Revise by Gemini
 
 Name:           gitbutler
-Version:        0.20.0
+Version:        0.20.1
 Release:        1%{?dist}
 Summary:        Modern Git-based version control interface
 
