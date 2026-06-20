@@ -39,7 +39,8 @@ Standalone article extraction helper for RSS Guard.
 %autosetup -n rssguard-%{version}
 
 %build
-%cmake -DBUILD_WITH_QT6=ON \
+%cmake \
+    -DBUILD_WITH_QT6=ON \
     -DENABLE_COMPRESSED_SITEMAP=ON \
     -DENABLE_MEDIAPLAYER_LIBMPV=ON \
     -DENABLE_MEDIAPLAYER_QTMULTIMEDIA=OFF \

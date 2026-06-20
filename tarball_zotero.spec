@@ -30,7 +30,7 @@ Zotero is a free, easy-to-use tool to help you collect, organize, cite, and shar
 %install
 ### Install whole zotero package under /usr/libexec/zotero
 mkdir -p %{buildroot}%{_libexecdir}/zotero
-cp -a * %{buildroot}%{_libexecdir}/zotero/
+cp -rp * %{buildroot}%{_libexecdir}/zotero/
 
 ### Wrapper script for main executable in /usr/bin/zotero
 mkdir -p %{buildroot}%{_bindir}
