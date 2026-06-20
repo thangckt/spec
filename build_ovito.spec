@@ -2,7 +2,7 @@
 ### OVITO need to run under x11 session
 
 Name:           ovito
-Version:        3.15.4
+Version:        3.15.5
 Release:        1%{?dist}
 Summary:        OVITO - Open Visualization Tool (GUI)
 
