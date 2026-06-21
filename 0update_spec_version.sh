@@ -166,6 +166,12 @@ spec_files="build_remmina.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR freerdp
+repo_url="https://gitlab.com/FreeRDP/FreeRDP"
+spec_files="build_freerdp.spec"
+new_version=$(fetch_gitlab_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####ANCHOR Zotero
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
