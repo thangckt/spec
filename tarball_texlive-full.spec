@@ -67,13 +67,14 @@ mkdir -p %{buildroot}%{install_dir}
 cp -a "$tmp_install_dir"/* %{buildroot}%{install_dir}/
 
 ###ANCHOR Fix some issues
-## Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
-mkdir -p %{buildroot}%{_bindir}
-cat > %{buildroot}%{_bindir}/tlmgr <<EOF
+### Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
+### Note: We install the wrapper in /usr/local/bin to avoid conflicts with any existing system tlmgr in /usr/sbin, and to ensure it takes precedence in the PATH when using sudo.
+mkdir -p %{buildroot}/usr/local/bin
+cat > %{buildroot}/usr/local/bin/tlmgr <<EOF
 #!/bin/sh
 exec %{install_dir}/bin/x86_64-linux/tlmgr "\$@"
 EOF
-chmod +x %{buildroot}%{_bindir}/tlmgr
+chmod +x %{buildroot}/usr/local/bin/tlmgr
 
 ###ANCHOR Set Texlive PATH
 ## export environment variables (PATH, MANPATH, etc.)
@@ -94,7 +95,7 @@ EOF
 
 %files
 %{install_dir}
-%{_bindir}/tlmgr
+/usr/local/bin/tlmgr
 /etc/profile.d/texlive.sh
 /etc/bashrc.d/texlive.sh
 
