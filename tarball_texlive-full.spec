@@ -1,4 +1,5 @@
 ### REF: https://tug.org/texlive/
+### https://www.tug.org/historic/
 ### This new spec streamlines the installation of TeXLive by moving the actual installation process to the post-installation stage. This results in a much smaller .rpm package.
 
 Name:           texlive-full
@@ -8,8 +9,10 @@ Summary:        TeX Live distribution
 
 License:        GPLv2+
 URL:            https://tug.org/texlive/
-#Source0:        http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-Source0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
+#ource0:        http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+#ource0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
+Source0:        https://texlive.info/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
+
 
 BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny wget curl
