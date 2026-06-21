@@ -80,11 +80,6 @@ if [ -c /dev/tty ]; then
     exec 1>/dev/tty  # Redirect stdout to the terminal directly
 fi
 
-echo ""
-echo "======================================================="
-echo "Start installing TeX Live's packages. This may take time, please be patient..."
-echo "======================================================="
-
 ### Create the profile template to be used by the installer in %post
 cat > /tmp/texlive.profile <<EOF
 selected_scheme scheme-full
@@ -97,12 +92,26 @@ option_doc 0
 option_src 0
 EOF
 
-### Run the installer out of the packaged data directory directly to the system destination
+### Check if a working binary already exists (meaning a previous installation was cut short or we are updating)
 # We use 'stdbuf -oL' to force line-buffering on the install-tl Perl engine
-stdbuf -oL -eL %{_datadir}/%{name}/install-tl \
-    -profile /tmp/texlive.profile \
-    -no-interaction \
-    -gui text
+if [ -f %{install_dir}/bin/x86_64-linux/tlmgr ]; then
+    echo ""
+    echo "======================================================="
+    echo " Found existing TeX Live installation. Resuming download..."
+    echo "======================================================="
+    PATH=%{install_dir}/bin/x86_64-linux:$PATH
+    stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install \
+        --profile /tmp/texlive.profile
+
+else
+    ### Run the installer in non-interactive mode with the profile we created
+    echo ""
+    echo "======================================================="
+    echo " Starting fresh TeX Live installation streaming..."
+    echo "======================================================="
+    stdbuf -oL -eL %{_datadir}/%{name}/install-tl \
+        -profile /tmp/texlive.profile -no-interaction -gui text
+fi
 
 ### Clean up the temporary profile immediately
 rm -f /tmp/texlive.profile
