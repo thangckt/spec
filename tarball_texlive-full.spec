@@ -1,4 +1,5 @@
 ### REF: https://tug.org/texlive/
+### This new spec streamlines the installation of TeXLive by moving the actual installation process to the post-installation stage. This results in a much smaller .rpm package.
 
 Name:           texlive-full
 Version:        2026
@@ -11,62 +12,25 @@ URL:            https://tug.org/texlive/
 Source0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
 
 BuildRequires:  tar perl-devel
-Requires:       perl perl-YAML-Tiny
+Requires:       perl perl-YAML-Tiny wget curl
 Obsoletes:      texlive-basic <= 2025
 
 %global         install_dir  %{_libexecdir}/texlive/%{version}
 
 %description
-TeX Live provides a comprehensive TeX system for GNU/Linux. This RPM installs a TeX Live tree in /opt/texlive.
+This package automates the installation of a comprehensive TeX system from upstream mirrors directly during system installation.
 
 %prep
-mkdir extracted
-cd extracted
-tar -xf %{SOURCE0}
-texlive_dir=$(ls -d install-tl-* | head -n1)
-mv "$texlive_dir" ../texlive_dir
-cd ..
-rm -rf extracted
+%setup -q -c -n texlive_installer
 
 %build
 # Nothing to build
 
 %install
-###ANCHOR Install texlive to a temporary directory to avoid embedding %{buildroot} in the file-paths
-mkdir -p tmp_texlive
-tmp_install_dir=$(realpath tmp_texlive)
+### Create a directory to store the installer files on the system temporarily
+mkdir -p %{buildroot}%{_datadir}/%{name}
+cp -a install-tl-*/* %{buildroot}%{_datadir}/%{name}/
 
-## Create a custom install profile with absolute paths
-cat > texlive.profile <<EOF
-selected_scheme scheme-full
-TEXDIR          ${tmp_install_dir}
-TEXMFLOCAL      ${tmp_install_dir}/texmf-local
-TEXMFSYSVAR     ${tmp_install_dir}/texmf-var
-TEXMFSYSCONFIG  ${tmp_install_dir}/texmf-config
-binary_x86_64-linux 1
-option_doc 0
-option_src 0
-EOF
-
-./texlive_dir/install-tl -profile texlive.profile -no-interaction -gui text
-
-## Fix ambiguous and legacy python2 shebangs
-find ${tmp_install_dir} -type f -exec sed -i \
-  -e '1s|^#! */usr/bin/python2$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/env python2$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/python -O$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/python$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/env python$|#!/usr/bin/python3|' \
-  {} +
-
-## Remove unnecessary build files
-find ${tmp_install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
-
-## Copy staged install into %{buildroot}
-mkdir -p %{buildroot}%{install_dir}
-cp -a "$tmp_install_dir"/* %{buildroot}%{install_dir}/
-
-###ANCHOR Fix some issues
 ### Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
 ### Note: We install the wrapper in /usr/local/bin to avoid conflicts with any existing system tlmgr in /usr/sbin, and to ensure it takes precedence in the PATH when using sudo.
 mkdir -p %{buildroot}/usr/local/bin
@@ -76,8 +40,7 @@ exec %{install_dir}/bin/x86_64-linux/tlmgr "\$@"
 EOF
 chmod +x %{buildroot}/usr/local/bin/tlmgr
 
-###ANCHOR Set Texlive PATH
-## export environment variables (PATH, MANPATH, etc.)
+### Set Texlive PATH, export environment variables (PATH, MANPATH, etc.)
 mkdir -p %{buildroot}/etc/profile.d
 cat > %{buildroot}/etc/profile.d/texlive.sh <<EOF
 export PATH=%{install_dir}/bin/x86_64-linux:\$PATH
@@ -85,7 +48,7 @@ export MANPATH=%{install_dir}/texmf-dist/doc/man:\$MANPATH
 export INFOPATH=%{install_dir}/texmf-dist/doc/info:\$INFOPATH
 EOF
 
-## To ensure non-login shells also get the PATH
+### To ensure non-login shells also get the PATH
 mkdir -p %{buildroot}/etc/bashrc.d
 cat > %{buildroot}/etc/bashrc.d/texlive.sh <<EOF
 if [ -f /etc/profile.d/texlive.sh ]; then
@@ -94,22 +57,64 @@ fi
 EOF
 
 %files
-%{install_dir}
+# We only track the wrapper, profiles, and the minimal installer scripts
+%{_datadir}/%{name}
 /usr/local/bin/tlmgr
 /etc/profile.d/texlive.sh
 /etc/bashrc.d/texlive.sh
 
 %post
-## Fix broken biber (update its versions)
+echo "======================================================="
+echo "Starting upstream TeX Live installation streaming..."
+echo "This downloads several gigabytes of data and will take time."
+echo "======================================================="
+
+### Create the profile template to be used by the installer in %post
+cat > /tmp/texlive.profile <<EOF
+selected_scheme scheme-full
+TEXDIR          %{install_dir}
+TEXMFLOCAL      %{install_dir}/texmf-local
+TEXMFSYSVAR     %{install_dir}/texmf-var
+TEXMFSYSCONFIG  %{install_dir}/texmf-config
+binary_x86_64-linux 1
+option_doc 0
+option_src 0
+EOF
+
+### Run the installer out of the packaged data directory directly to the system destination
+%{_datadir}/%{name}/install-tl \
+    -profile /tmp/texlive.profile \
+    -no-interaction \
+    -gui text
+
+### Clean up the temporary profile immediately
+rm -f /tmp/texlive.profile
+
+### Fix ambiguous and legacy python2 shebangs on the freshly streamed files
+find %{install_dir} -type f -exec sed -i \
+  -e '1s|^#! */usr/bin/python2$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/env python2$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/python -O$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/python$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/env python$|#!/usr/bin/python3|' \
+  {} +
+
+### Clean up internal installation logs
+find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
+### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
     %{install_dir}/bin/x86_64-linux/tlmgr install --reinstall biber
 
-## Info
 echo "======================================================="
-echo "TeX Live has been installed to %{install_dir}."
-echo "To use, open a new terminal session, or source this script manually:"
-echo "  source /etc/profile.d/texlive.sh"
+echo "TeX Live installation complete!"
 echo "======================================================="
+
+%preun
+### Since RPM didn't install the streamed files, we must manually purge them on uninstall
+if [ $1 -eq 0 ]; then
+    echo "Removing untracked TeX Live streamed files..."
+    rm -rf %{install_dir}
+fi
 
 %changelog
 %autochangelog
