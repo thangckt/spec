@@ -73,6 +73,13 @@ EOF
 /etc/bashrc.d/texlive.sh
 
 %post
+### Explicitly redirecting directly to the controlling terminal /dev/tty
+# ensures it bypasses the DNF block buffer entirely and prints *instantly*.
+if [ -c /dev/tty ]; then
+    exec 3>&1        # Save original stdout to fd 3
+    exec 1>/dev/tty  # Redirect stdout to the terminal directly
+fi
+
 echo "======================================================="
 echo "Starting upstream TeX Live installation streaming..."
 echo "This downloads several gigabytes of data and will take time."
@@ -91,7 +98,8 @@ option_src 0
 EOF
 
 ### Run the installer out of the packaged data directory directly to the system destination
-%{_datadir}/%{name}/install-tl \
+# We use 'stdbuf -oL' to force line-buffering on the install-tl Perl engine
+stdbuf -oL -eL %{_datadir}/%{name}/install-tl \
     -profile /tmp/texlive.profile \
     -no-interaction \
     -gui text
@@ -118,6 +126,11 @@ PATH=%{install_dir}/bin/x86_64-linux:$PATH \
 echo "======================================================="
 echo "TeX Live installation complete!"
 echo "======================================================="
+
+### Restore original stdout if we hijacked it for /dev/tty
+if [ -c /dev/tty ]; then
+    exec 1>&3 3>&-
+fi
 
 %preun
 ### Since RPM didn't install the streamed files, we must manually purge them on uninstall
