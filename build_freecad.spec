@@ -1,5 +1,5 @@
 ### https://copr-dist-git.fedorainfracloud.org/packages/linuxguy123/freecad/freecad.git/tree/FreeCAD.spec
-### https://github.com/FreeCAD/FreeCAD/package/fedora/freecad.spec
+### https://github.com/FreeCAD/FreeCAD/blob/main/package/fedora/freecad.spec
 
 
 # Some configuration options for other environments
@@ -21,7 +21,7 @@
 Name:           freecad
 Epoch:          1
 #ersion:        1.0.2
-Version:        2026.06.03
+Version:        2026.06.20
 Release:        1%{?dist}
 
 Summary:        A general purpose 3D CAD modeler
@@ -155,14 +155,12 @@ Development file for OndselSolver
         -DCMAKE_INSTALL_INCLUDEDIR=%{_includedir} \
         -DRESOURCEDIR=%{_datadir}/%{name} \
         -DFREECAD_USE_EXTERNAL_PIVY=TRUE \
-        -DFREECAD_USE_EXTERNAL_FMT=TRUE \
         -DFREECAD_USE_PCL:BOOL=OFF \
         -DFREECAD_QT_VERSION:STRING=6 \
         -DOpenGL_GL_PREFERENCE=GLVND \
         -DUSE_OCC=TRUE \
     %if %{without bundled_pycxx}
-        -DPYCXX_INCLUDE_DIR=$(pkg-config --variable=includedir PyCXX) \
-        -DPYCXX_SOURCE_DIR=$(pkg-config --variable=srcdir PyCXX) \
+        -DFREECAD_USE_EXTERNAL_PYCXX=TRUE \
     %endif
     %if %{without bundled_smesh}
         -DFREECAD_USE_EXTERNAL_SMESH=TRUE \
@@ -172,12 +170,6 @@ Development file for OndselSolver
     %endif
     %if %{with tests}
         -DENABLE_DEVELOPER_TESTS=TRUE \
-    %if %{without bundled_gtest}
-        -DFREECAD_USE_EXTERNAL_GTEST=TRUE \
-    %else
-        -DINSTALL_GTEST=OFF \
-        -DINSTALL_GMOCK=OFF \
-    %endif
     %else
         -DENABLE_DEVELOPER_TESTS=FALSE \
     %endif
