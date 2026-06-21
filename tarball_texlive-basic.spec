@@ -99,6 +99,7 @@ find %{install_dir} -type f -exec sed -i \
 
 ### Clean up internal installation logs
 find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
+
 ### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
     %{install_dir}/bin/x86_64-linux/tlmgr install --reinstall biber
@@ -110,7 +111,6 @@ echo "======================================================="
 %preun
 ### Since RPM didn't install the streamed files, we must manually purge them on uninstall
 if [ $1 -eq 0 ]; then
-    echo "Removing untracked TeX Live streamed files..."
     rm -rf %{install_dir}
 fi
 
