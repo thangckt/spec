@@ -114,7 +114,7 @@ echo " Starting TeX Live full installation streaming"
 echo " This may take time, please be patient..."
 echo "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
-    stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install --only-missing scheme-basic
+    stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-basic
 
 ### Restore original stdout if we hijacked it for /dev/tty
 if [ -c /dev/tty ]; then
