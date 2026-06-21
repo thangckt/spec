@@ -129,6 +129,13 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 %description libondselsolver-devel
 Development file for OndselSolver
 
+%package clipper2-devel
+Summary:        Development file for Clipper2Z
+BuildArch:      noarch
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description clipper2-devel
+Development file for Clipper2Z
 
 #path that contain main FreeCAD sources for cmake
 %global tests_resultdir %{_datadir}/%{name}/tests_result/%{_arch}
@@ -313,6 +320,9 @@ Development file for OndselSolver
 %files libondselsolver-devel
     %{_datadir}/pkgconfig/OndselSolver.pc
     %{_includedir}/OndselSolver/*
+
+%files clipper2-devel
+    %{_includedir}/clipper2/*
 
 %changelog
     %autochangelog
