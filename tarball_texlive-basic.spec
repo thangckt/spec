@@ -13,7 +13,7 @@ Source0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{ver
 BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny
 
-%global install_dir /opt/texlive/%{version}
+%global         install_dir  %{_libexecdir}/texlive/%{version}
 
 %description
 TeX Live provides a comprehensive TeX system for GNU/Linux. This RPM installs a TeX Live tree in /opt/texlive.
@@ -25,6 +25,7 @@ tar -xf %{SOURCE0}
 texlive_dir=$(ls -d install-tl-* | head -n1)
 mv "$texlive_dir" ../texlive_dir
 cd ..
+rm -rf extracted
 
 %build
 # Nothing to build
@@ -66,12 +67,12 @@ cp -a "$tmp_install_dir"/* %{buildroot}%{install_dir}/
 
 ###ANCHOR Fix some issues
 ## Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
-mkdir -p %{buildroot}/usr/local/bin
-cat > %{buildroot}/usr/local/bin/tlmgr <<EOF
+mkdir -p %{buildroot}%{_bindir}
+cat > %{buildroot}%{_bindir}/tlmgr <<EOF
 #!/bin/sh
 exec %{install_dir}/bin/x86_64-linux/tlmgr "\$@"
 EOF
-chmod +x %{buildroot}/usr/local/bin/tlmgr
+chmod +x %{buildroot}%{_bindir}/tlmgr
 
 ###ANCHOR Set Texlive PATH
 ## export environment variables (PATH, MANPATH, etc.)
@@ -90,6 +91,12 @@ if [ -f /etc/profile.d/texlive.sh ]; then
 fi
 EOF
 
+%files
+%{install_dir}
+%{_bindir}/tlmgr
+/etc/profile.d/texlive.sh
+/etc/bashrc.d/texlive.sh
+
 %post
 ## Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
@@ -101,12 +108,6 @@ echo "TeX Live has been installed to %{install_dir}."
 echo "To use, open a new terminal session, or source this script manually:"
 echo "  source /etc/profile.d/texlive.sh"
 echo "======================================================="
-
-%files
-%{install_dir}
-/usr/local/bin/tlmgr
-/etc/profile.d/texlive.sh
-/etc/bashrc.d/texlive.sh
 
 %changelog
 %autochangelog
