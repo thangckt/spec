@@ -53,7 +53,7 @@ option_src 0
 EOF
 
 ### Run the installer. the scheme-infraonly is incredibly light (~15MB of internal files).
-./install-tl -profile minimal_infra.profile -no-interaction -gui text
+./install-tl-*/install-tl -profile minimal_infra.profile -no-interaction -gui text
 
 ### Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
 ### Note: We install the wrapper in /usr/local/bin to avoid conflicts with any existing system tlmgr in /usr/sbin, and to ensure it takes precedence in the PATH when using sudo.
@@ -98,8 +98,8 @@ log_message "======================================================="
 log_message " Starting TeX Live full installation streaming"
 log_message " This may take time, please be patient..."
 log_message "======================================================="
-PATH=%{install_dir}/bin/x86_64-linux:$PATH
-stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
+    PATH=%{install_dir}/bin/x86_64-linux:$PATH
+    stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
 
 ### Fix ambiguous and legacy python2 shebangs on the freshly streamed files
 find %{install_dir} -type f -exec sed -i \
@@ -116,10 +116,6 @@ find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'minimal_infra.pr
 ### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
     %{install_dir}/bin/x86_64-linux/tlmgr install --reinstall biber
-
-log_message "======================================================="
-log_message "TeX Live installation complete!"
-log_message "======================================================="
 
 %preun
 ### Since RPM didn't install the streamed files, we must manually purge them on uninstall
