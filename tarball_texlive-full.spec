@@ -107,21 +107,29 @@ EOF
 
 %post
 ### Explicitly redirecting directly to the controlling terminal /dev/tty
-log_message() {
-    if [ -c /dev/tty ]; then echo "$1" >/dev/tty; else echo "$1"; fi
-}
+# ensures it bypasses the DNF block buffer entirely and prints *instantly*.
+if [ -c /dev/tty ]; then
+    exec 3>&1        # Save original stdout to fd 3
+    exec 1>/dev/tty  # Redirect stdout to the terminal directly
+fi
 
 #####ANCHOR STAGE 2: Use the pre-installed `tlmgr` to stream the full TeX Live installation directly from upstream mirrors.
-log_message "======================================================="
-log_message " Starting TeX Live full installation streaming"
-log_message " This may take time, please be patient..."
-log_message "======================================================="
+echo ""
+echo "======================================================="
+echo " Starting TeX Live full installation streaming"
+echo " This may take time, please be patient..."
+echo "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
 
 ### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
     %{install_dir}/bin/x86_64-linux/tlmgr install --reinstall biber
+
+### Restore original stdout if we hijacked it for /dev/tty
+if [ -c /dev/tty ]; then
+    exec 1>&3 3>&-
+fi
 
 %preun
 ### Since RPM didn't install the streamed files, we must manually purge them on uninstall
