@@ -31,6 +31,9 @@ This package automates the installation of a comprehensive TeX system from upstr
 # Nothing to build
 
 %install
+### Disable the RPATH QA check (avoid using: chrpath, patchelf)
+export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
+
 ### Create a directory to store the installer files on the system temporarily
 mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -a install-tl-*/* %{buildroot}%{_datadir}/%{name}/
