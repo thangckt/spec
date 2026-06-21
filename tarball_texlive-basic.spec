@@ -16,6 +16,7 @@ BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny wget curl
 
 %global         install_dir  %{_libexecdir}/texlive/%{version}
+%global         debug_package %{nil}
 
 %description
 This package automates the installation of a comprehensive TeX system from upstream mirrors directly during system installation.
