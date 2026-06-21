@@ -1,5 +1,6 @@
 ### REF: https://www.ovito.org/docs/current/development/build_linux.html
 ### OVITO need to run under x11 session
+### `ssh_askpass` is not needed for OVITO. It is an artifact generated automatically by libssh (or CMake's configuration of it) rather than a direct feature of OVITO.
 
 Name:           ovito
 Version:        3.15.5
@@ -35,12 +36,11 @@ tar -xzf %{SOURCE2} --strip-components=1 -C src/3rdparty/zstd
 ## add '--target documentation' to build the documentation (may error and heavy size)
 %cmake_build
 
-### Clean up
-rm -f %{buildroot}%{_bindir}/ssh_askpass
-
 %install
 %cmake_install
-strip %{buildroot}%{_bindir}/ovito
+
+### Clean up
+rm -f %{buildroot}%{_bindir}/ssh_askpass
 
 ### Create desktop file
 cat > ovito.desktop << 'EOF'
