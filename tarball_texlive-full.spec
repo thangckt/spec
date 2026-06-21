@@ -36,17 +36,18 @@ This package automates the installation of a comprehensive TeX system from upstr
 # Nothing to build
 
 %install
-### Disable the RPATH QA check (avoid using: chrpath, patchelf)
-export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
+#####ANCHOR STAGE 1: Install just the core infrastructure inside %{buildroot}
+### Install texlive to a temporary directory to avoid embedding %{buildroot} in the file-paths
+mkdir -p tmp_texlive
+tmp_install_dir=$(realpath tmp_texlive)
 
-### STAGE 1: Install just the core infrastructure inside %{buildroot}
 ### Create the profile template to install a minimal infrastructure-only environment
 cat > minimal_infra.profile <<EOF
 selected_scheme scheme-infraonly
-TEXDIR          %{buildroot}%{install_dir}
-TEXMFLOCAL      %{buildroot}%{install_dir}/texmf-local
-TEXMFSYSVAR     %{buildroot}%{install_dir}/texmf-var
-TEXMFSYSCONFIG  %{buildroot}%{install_dir}/texmf-config
+TEXDIR          ${tmp_install_dir}
+TEXMFLOCAL      ${tmp_install_dir}/texmf-local
+TEXMFSYSVAR     ${tmp_install_dir}/texmf-var
+TEXMFSYSCONFIG  ${tmp_install_dir}/texmf-config
 binary_x86_64-linux 1
 option_doc 0
 option_src 0
@@ -55,19 +56,8 @@ EOF
 ### Run the installer. the scheme-infraonly is incredibly light (~15MB of internal files).
 ./install-tl-*/install-tl -profile minimal_infra.profile -no-interaction -gui text
 
-### Clean up the temporary local profile file
-rm -f minimal_infra.profile
-
-### --- FIX: SANITIZE BUILDROOT PATH LEAKAGE ---
-### Strip out the temporary %{buildroot} prefix from all internal config, text, and database files
-find %{buildroot}%{install_dir} -type f -exec sed -i "s|%{buildroot}||g" {} +
-
-### Also ensure there are no lingering backup files created by sed (if any)
-find %{buildroot}%{install_dir} -type f -name "*~" -delete || :
-### -------------------------------------------
-
-### Fix ambiguous and legacy python2 shebangs on the freshly streamed files
-find %{install_dir} -type f -exec sed -i \
+## Fix ambiguous and legacy python2 shebangs
+find ${tmp_install_dir} -type f -exec sed -i \
   -e '1s|^#! */usr/bin/python2$|#!/usr/bin/python3|' \
   -e '1s|^#! */usr/bin/env python2$|#!/usr/bin/python3|' \
   -e '1s|^#! */usr/bin/python -O$|#!/usr/bin/python3|' \
@@ -75,11 +65,15 @@ find %{install_dir} -type f -exec sed -i \
   -e '1s|^#! */usr/bin/env python$|#!/usr/bin/python3|' \
   {} +
 
-### Clean up internal installation logs
-find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
+## Remove unnecessary build files
+find ${tmp_install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
+
+## Copy staged install into %{buildroot}
+mkdir -p %{buildroot}%{install_dir}
+cp -a "$tmp_install_dir"/* %{buildroot}%{install_dir}/
 
 
-### Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
+#####ANCHOR Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
 ### Note: We install the wrapper in /usr/local/bin to avoid conflicts with any existing system tlmgr in /usr/sbin, and to ensure it takes precedence in the PATH when using sudo.
 mkdir -p %{buildroot}/usr/local/bin
 cat > %{buildroot}/usr/local/bin/tlmgr <<EOF
@@ -117,15 +111,13 @@ log_message() {
     if [ -c /dev/tty ]; then echo "$1" >/dev/tty; else echo "$1"; fi
 }
 
-### STAGE 2: Use the pre-installed `tlmgr` to stream the full TeX Live installation directly from upstream mirrors.
+#####ANCHOR STAGE 2: Use the pre-installed `tlmgr` to stream the full TeX Live installation directly from upstream mirrors.
 log_message "======================================================="
 log_message " Starting TeX Live full installation streaming"
 log_message " This may take time, please be patient..."
 log_message "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
-
-
 
 ### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
