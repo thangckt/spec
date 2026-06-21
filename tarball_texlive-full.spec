@@ -55,6 +55,30 @@ EOF
 ### Run the installer. the scheme-infraonly is incredibly light (~15MB of internal files).
 ./install-tl-*/install-tl -profile minimal_infra.profile -no-interaction -gui text
 
+### Clean up the temporary local profile file
+rm -f minimal_infra.profile
+
+### --- FIX: SANITIZE BUILDROOT PATH LEAKAGE ---
+### Strip out the temporary %{buildroot} prefix from all internal config, text, and database files
+find %{buildroot}%{install_dir} -type f -exec sed -i "s|%{buildroot}||g" {} +
+
+### Also ensure there are no lingering backup files created by sed (if any)
+find %{buildroot}%{install_dir} -type f -name "*~" -delete || :
+### -------------------------------------------
+
+### Fix ambiguous and legacy python2 shebangs on the freshly streamed files
+find %{install_dir} -type f -exec sed -i \
+  -e '1s|^#! */usr/bin/python2$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/env python2$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/python -O$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/python$|#!/usr/bin/python3|' \
+  -e '1s|^#! */usr/bin/env python$|#!/usr/bin/python3|' \
+  {} +
+
+### Clean up internal installation logs
+find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
+
+
 ### Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
 ### Note: We install the wrapper in /usr/local/bin to avoid conflicts with any existing system tlmgr in /usr/sbin, and to ensure it takes precedence in the PATH when using sudo.
 mkdir -p %{buildroot}/usr/local/bin
@@ -101,17 +125,7 @@ log_message "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
 
-### Fix ambiguous and legacy python2 shebangs on the freshly streamed files
-find %{install_dir} -type f -exec sed -i \
-  -e '1s|^#! */usr/bin/python2$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/env python2$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/python -O$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/python$|#!/usr/bin/python3|' \
-  -e '1s|^#! */usr/bin/env python$|#!/usr/bin/python3|' \
-  {} +
 
-### Clean up internal installation logs
-find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'minimal_infra.profile' \) -delete || :
 
 ### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
