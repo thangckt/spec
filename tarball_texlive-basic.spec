@@ -15,6 +15,8 @@ Source0:        https://texlive.info/historic/systems/texlive/%{version}/install
 BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny wget curl
 
+AutoReqProv:    no
+
 %global         install_dir  %{_libexecdir}/texlive/%{version}
 %global         debug_package %{nil}
 

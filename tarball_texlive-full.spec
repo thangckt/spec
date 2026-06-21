@@ -18,6 +18,8 @@ BuildRequires:  tar perl-devel
 Requires:       perl perl-YAML-Tiny wget curl
 Obsoletes:      texlive-basic <= 2025
 
+AutoReqProv:    no
+
 %global         install_dir  %{_libexecdir}/texlive/%{version}
 %global         debug_package %{nil}
 
