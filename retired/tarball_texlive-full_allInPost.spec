@@ -1,9 +1,6 @@
 ### REF: https://tug.org/texlive/
 ### https://www.tug.org/historic/
-### This spec version apply hybrid approach
-## Step 1: Install only `tlmgr` and the installer scripts in the RPM, which are very small (a few MB).
-## Step 2: In the %post section. use `tlmgr` to stream the full TeX Live installation. This way, we get the latest packages and avoid bloating the RPM with a large tarball.
-
+### This new spec streamlines the installation of TeXLive by moving the actual installation process to the post-installation stage. This results in a much smaller .rpm package.
 
 Name:           texlive-full
 Version:        2026
@@ -39,21 +36,9 @@ This package automates the installation of a comprehensive TeX system from upstr
 ### Disable the RPATH QA check (avoid using: chrpath, patchelf)
 export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
 
-### STAGE 1: Install just the core infrastructure inside %{buildroot}
-### Create the profile template to install a minimal infrastructure-only environment
-cat > minimal_infra.profile <<EOF
-selected_scheme scheme-infraonly
-TEXDIR          %{buildroot}%{install_dir}
-TEXMFLOCAL      %{buildroot}%{install_dir}/texmf-local
-TEXMFSYSVAR     %{buildroot}%{install_dir}/texmf-var
-TEXMFSYSCONFIG  %{buildroot}%{install_dir}/texmf-config
-binary_x86_64-linux 1
-option_doc 0
-option_src 0
-EOF
-
-### Run the installer. the scheme-infraonly is incredibly light (~15MB of internal files).
-./install-tl -profile minimal_infra.profile -no-interaction -gui text
+### Create a directory to store the installer files on the system temporarily
+mkdir -p %{buildroot}%{_datadir}/%{name}
+cp -a install-tl-*/* %{buildroot}%{_datadir}/%{name}/
 
 ### Create wrapper for tlmgr to override system /usr/sbin/tlmgr when use sudo
 ### Note: We install the wrapper in /usr/local/bin to avoid conflicts with any existing system tlmgr in /usr/sbin, and to ensure it takes precedence in the PATH when using sudo.
@@ -82,24 +67,54 @@ EOF
 
 %files
 # We only track the wrapper, profiles, and the minimal installer scripts
-%{install_dir}
+%{_datadir}/%{name}
 /usr/local/bin/tlmgr
 /etc/profile.d/texlive.sh
 /etc/bashrc.d/texlive.sh
 
 %post
 ### Explicitly redirecting directly to the controlling terminal /dev/tty
-log_message() {
-    if [ -c /dev/tty ]; then echo "$1" >/dev/tty; else echo "$1"; fi
-}
+# ensures it bypasses the DNF block buffer entirely and prints *instantly*.
+if [ -c /dev/tty ]; then
+    exec 3>&1        # Save original stdout to fd 3
+    exec 1>/dev/tty  # Redirect stdout to the terminal directly
+fi
 
-### STAGE 2: Use the pre-installed `tlmgr` to stream the full TeX Live installation directly from upstream mirrors.
-log_message "======================================================="
-log_message " Starting TeX Live full installation streaming"
-log_message " This may take time, please be patient..."
-log_message "======================================================="
-PATH=%{install_dir}/bin/x86_64-linux:$PATH
-stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
+### Create the profile template to be used by the installer in %post
+cat > /tmp/texlive.profile <<EOF
+selected_scheme scheme-full
+TEXDIR          %{install_dir}
+TEXMFLOCAL      %{install_dir}/texmf-local
+TEXMFSYSVAR     %{install_dir}/texmf-var
+TEXMFSYSCONFIG  %{install_dir}/texmf-config
+binary_x86_64-linux 1
+option_doc 0
+option_src 0
+EOF
+
+### Check if a working binary already exists (meaning a previous installation was cut short or we are updating)
+# We use 'stdbuf -oL' to force line-buffering on the install-tl Perl engine
+if [ -f %{install_dir}/bin/x86_64-linux/tlmgr ]; then
+    echo ""
+    echo "======================================================="
+    echo " Found existing TeX Live installation. Resuming download..."
+    echo "======================================================="
+    PATH=%{install_dir}/bin/x86_64-linux:$PATH
+    stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install \
+        --profile /tmp/texlive.profile
+
+else
+    ### Run the installer in non-interactive mode with the profile we created
+    echo ""
+    echo "======================================================="
+    echo " Starting fresh TeX Live installation streaming..."
+    echo "======================================================="
+    stdbuf -oL -eL %{_datadir}/%{name}/install-tl \
+        -profile /tmp/texlive.profile -no-interaction -gui text
+fi
+
+### Clean up the temporary profile immediately
+rm -f /tmp/texlive.profile
 
 ### Fix ambiguous and legacy python2 shebangs on the freshly streamed files
 find %{install_dir} -type f -exec sed -i \
@@ -111,20 +126,24 @@ find %{install_dir} -type f -exec sed -i \
   {} +
 
 ### Clean up internal installation logs
-find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'minimal_infra.profile' \) -delete || :
+find %{install_dir} -type f \( -name 'install-tl.log' -o -name 'texlive.profile' \) -delete || :
 
 ### Fix broken biber (update its versions)
 PATH=%{install_dir}/bin/x86_64-linux:$PATH \
     %{install_dir}/bin/x86_64-linux/tlmgr install --reinstall biber
 
-log_message "======================================================="
-log_message "TeX Live installation complete!"
-log_message "======================================================="
+echo "======================================================="
+echo "TeX Live installation complete!"
+echo "======================================================="
+
+### Restore original stdout if we hijacked it for /dev/tty
+if [ -c /dev/tty ]; then
+    exec 1>&3 3>&-
+fi
 
 %preun
 ### Since RPM didn't install the streamed files, we must manually purge them on uninstall
 if [ $1 -eq 0 ]; then
-    echo "Purging TeX Live application directory..."
     rm -rf %{install_dir}
 fi
 
