@@ -1,5 +1,6 @@
-
-### https://download.copr.fedorainfracloud.org/results/marcoaurelio/freerdp-server-el9/epel-9-x86_64/09075538-remmina/remmina.spe
+### REF
+## https://download.copr.fedorainfracloud.org/results/marcoaurelio/freerdp-server-el9/epel-9-x86_64/09075538-remmina/remmina.spec
+## https://src.fedoraproject.org/rpms/remmina/blob/rawhide/f/remmina.spec
 ### To get spec in copr, just click on build -> click on arch (firtst column in build list)
 
 Name:       remmina
