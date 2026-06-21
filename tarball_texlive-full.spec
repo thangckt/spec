@@ -80,9 +80,9 @@ if [ -c /dev/tty ]; then
     exec 1>/dev/tty  # Redirect stdout to the terminal directly
 fi
 
+echo ""
 echo "======================================================="
-echo "Starting upstream TeX Live installation streaming..."
-echo "This downloads several gigabytes of data and will take time."
+echo "Start installing TeX Live's packages. This may take time, please be patient..."
 echo "======================================================="
 
 ### Create the profile template to be used by the installer in %post
