@@ -1,5 +1,6 @@
 ### REF: https://tug.org/texlive/
 ### https://www.tug.org/historic/
+### Mirror list: https://ctan.org/mirrors/mirmon
 ### This spec version apply hybrid approach
 ## Step 1: Install only `tlmgr` and the installer scripts in the RPM, which are very small (a few MB).
 ## Step 2: In the %post section. use `tlmgr` to stream the full TeX Live installation. This way, we get the latest packages and avoid bloating the RPM with a large tarball.
