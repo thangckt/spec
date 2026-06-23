@@ -10,10 +10,7 @@ Release:    1%{?dist}
 Summary:    Remote Desktop Client
 License:    GPL-2.0-or-later and MIT
 URL:        https://gitlab.com/Remmina/Remmina
-
 Source0:    %{url}/-/archive/v%{version}/Remmina-v%{version}.tar.gz
-
-#ource1: https://raw.githubusercontent.com/muflone/remmina-plugin-builder/refs/heads/master/CMakeLists.txt
 
 BuildRequires: cmake >= 3.2
 BuildRequires: cups-devel
@@ -271,7 +268,6 @@ that shows up under the display manager session menu.
 mkdir -p %{buildroot}/%{_libdir}/cmake/%{name}/
 cp -pr cmake/*.cmake %{buildroot}/%{_libdir}/cmake/%{name}/
 cp -pr config.h.in %{buildroot}/%{_includedir}/%{name}/
-# cp -p %{SOURCE1} %{buildroot}/%{_includedir}/%{name}/
 
 %find_lang %{name}
 
