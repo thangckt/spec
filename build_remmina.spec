@@ -2,6 +2,7 @@
 ## https://download.copr.fedorainfracloud.org/results/marcoaurelio/freerdp-server-el9/epel-9-x86_64/09075538-remmina/remmina.spec
 ## https://src.fedoraproject.org/rpms/remmina/blob/rawhide/f/remmina.spec
 ### To get spec in copr, just click on build -> click on arch (firtst column in build list)
+### New Remmina may already include plugins, so we may not need to build them separately.
 
 Name:       remmina
 Version:        1.4.43
@@ -12,13 +13,10 @@ URL:        https://gitlab.com/Remmina/Remmina
 
 Source0:    %{url}/-/archive/v%{version}/Remmina-v%{version}.tar.gz
 
-# Cmake helper file to easy build plugins outside remmina source tree
-# See http://www.muflone.com/remmina-plugin-rdesktop/english/install.html which
-# use http://www.muflone.com/remmina-plugin-builder/ with remmina bundled source.
-# So we can't use it directly only as instructions.
-#ource1: pluginBuild-CMakeLists.txt
+#ource1: https://raw.githubusercontent.com/muflone/remmina-plugin-builder/refs/heads/master/CMakeLists.txt
 
-Source1: https://raw.githubusercontent.com/muflone/remmina-plugin-builder/refs/heads/master/CMakeLists.txt
+### Patch kf6-wallet
+Patch0: https://gitweb.gentoo.org/repo/gentoo.git/tree/net-misc/remmina/files/remmina-1.4.40-kf6wallet.patch
 
 BuildRequires: cmake >= 3.2
 BuildRequires: cups-devel
@@ -233,7 +231,7 @@ This package contains Remmina kiosk mode, including a Gnome Shell session
 that shows up under the display manager session menu.
 
 %prep
-%autosetup -n Remmina-v%{version}
+%autosetup -n -p1 Remmina-v%{version}
 
 %build
 %cmake \
@@ -276,7 +274,7 @@ that shows up under the display manager session menu.
 mkdir -p %{buildroot}/%{_libdir}/cmake/%{name}/
 cp -pr cmake/*.cmake %{buildroot}/%{_libdir}/cmake/%{name}/
 cp -pr config.h.in %{buildroot}/%{_includedir}/%{name}/
-cp -p %{SOURCE1} %{buildroot}/%{_includedir}/%{name}/
+# cp -p %{SOURCE1} %{buildroot}/%{_includedir}/%{name}/
 
 %find_lang %{name}
 
