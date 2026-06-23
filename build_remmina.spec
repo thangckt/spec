@@ -15,9 +15,6 @@ Source0:    %{url}/-/archive/v%{version}/Remmina-v%{version}.tar.gz
 
 #ource1: https://raw.githubusercontent.com/muflone/remmina-plugin-builder/refs/heads/master/CMakeLists.txt
 
-### Patch kf6-wallet
-Patch0: https://gitweb.gentoo.org/repo/gentoo.git/tree/net-misc/remmina/files/remmina-1.4.40-kf6wallet.patch
-
 BuildRequires: cmake >= 3.2
 BuildRequires: cups-devel
 BuildRequires: desktop-file-utils
@@ -231,7 +228,7 @@ This package contains Remmina kiosk mode, including a Gnome Shell session
 that shows up under the display manager session menu.
 
 %prep
-%autosetup -n -p1 Remmina-v%{version}
+%autosetup -n Remmina-v%{version}
 
 %build
 %cmake \
