@@ -1,2 +1,2 @@
 
-build_rssguard.spec
+tarball_electerm.spec
