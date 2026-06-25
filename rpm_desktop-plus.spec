@@ -2,14 +2,14 @@
 ### DO NOT replace bundled git with system git. It will break the app.
 ### Use 'AutoReqProv: no' to disable automatic dependency generation.
 
-Name:           github-desktop-plus
+Name:           desktop-plus
 Version:        3.5.13.2
 Release:        1%{?dist}
 Summary:        GitHub Desktop Plus
 
 License:        MIT
-URL:            https://github.com/pol-rivero/github-desktop-plus
-Source0:        %{url}/releases/download/v%{version}/GitHubDesktopPlus-v%{version}-linux-x86_64.rpm
+URL:            https://github.com/DesktopPlus/desktop-plus
+Source0:        %{url}/releases/download/v%{version}/DesktopPlus-v%{version}-linux-x86_64.rpm
 
 BuildRequires:  chrpath, patchelf
 Requires:       libcurl

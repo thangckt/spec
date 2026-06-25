@@ -112,9 +112,16 @@ spec_files="build_tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR github-desktop-plus
-repo_url="https://github.com/pol-rivero/github-desktop-plus"
-spec_files="rpm_github-desktop-plus.spec"
+#####ANCHOR freerdp
+repo_url="https://github.com/freerdp/freerdp"
+spec_files="build_freerdp.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR desktop-plus
+### old name: github-desktop-plus
+repo_url="https://github.com/DesktopPlus/desktop-plus"
+spec_files="rpm_desktop-plus.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
@@ -163,12 +170,6 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 #####ANCHOR Remmina
 repo_url="https://gitlab.com/Remmina/Remmina"
 spec_files="build_remmina.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
-#####ANCHOR freerdp
-repo_url="https://gitlab.com/FreeRDP/FreeRDP"
-spec_files="build_freerdp.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
