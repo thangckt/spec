@@ -2,6 +2,7 @@
 ## https://download.copr.fedorainfracloud.org/results/marcoaurelio/freerdp-server-el9/epel-9-x86_64/09075538-remmina/remmina.spec
 ## https://src.fedoraproject.org/rpms/remmina/blob/rawhide/f/remmina.spec
 ### To get spec in copr, just click on build -> click on arch (firtst column in build list)
+### New Remmina may already include plugins, so we may not need to build them separately.
 
 Name:       remmina
 Version:        1.4.43
@@ -9,16 +10,7 @@ Release:    1%{?dist}
 Summary:    Remote Desktop Client
 License:    GPL-2.0-or-later and MIT
 URL:        https://gitlab.com/Remmina/Remmina
-
 Source0:    %{url}/-/archive/v%{version}/Remmina-v%{version}.tar.gz
-
-# Cmake helper file to easy build plugins outside remmina source tree
-# See http://www.muflone.com/remmina-plugin-rdesktop/english/install.html which
-# use http://www.muflone.com/remmina-plugin-builder/ with remmina bundled source.
-# So we can't use it directly only as instructions.
-#ource1: pluginBuild-CMakeLists.txt
-
-Source1: https://raw.githubusercontent.com/muflone/remmina-plugin-builder/refs/heads/master/CMakeLists.txt
 
 BuildRequires: cmake >= 3.2
 BuildRequires: cups-devel
@@ -276,7 +268,6 @@ that shows up under the display manager session menu.
 mkdir -p %{buildroot}/%{_libdir}/cmake/%{name}/
 cp -pr cmake/*.cmake %{buildroot}/%{_libdir}/cmake/%{name}/
 cp -pr config.h.in %{buildroot}/%{_includedir}/%{name}/
-cp -p %{SOURCE1} %{buildroot}/%{_includedir}/%{name}/
 
 %find_lang %{name}
 
