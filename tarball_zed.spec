@@ -2,7 +2,7 @@
 ### Use tarball to avoid building time.
 
 Name:           zed
-Version:        1.4.4
+Version:        1.8.2
 Release:        1%{?dist}
 Summary:        High-performance, multiplayer code editor
 
@@ -37,7 +37,7 @@ cat > zed.desktop <<'EOF'
 [Desktop Entry]
 Name=Zed
 GenericName=Text Editor
-Exec=zed %U
+Exec=env LOCAL_NOTEBOOK_DEV=1 zed %U
 Icon=zed
 Type=Application
 StartupNotify=true
@@ -49,7 +49,7 @@ StartupWMClass=dev.zed.Zed
 
 [Desktop Action NewWorkspace]
 Name=Open a new workspace
-Exec=zed --new %U
+Exec=env LOCAL_NOTEBOOK_DEV=1 zed --new %U
 EOF
 install -Dpm644 zed.desktop %{buildroot}%{_datadir}/applications/zed.desktop
 
@@ -66,7 +66,7 @@ X-KDE-StartupNotify=false
 [Desktop Action openInZed]
 Name=Open in Zed
 Icon=zed
-Exec=zed %u
+Exec=env LOCAL_NOTEBOOK_DEV=1 zed %u
 EOF
 install -Dpm644 open_in_zed.desktop %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop
 
