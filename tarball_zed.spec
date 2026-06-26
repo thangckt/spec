@@ -71,7 +71,7 @@ EOF
 install -Dpm644 open_in_zed.desktop %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop
 
 ### Install icons (already in correct structure)
-install -Dpm644 share/icons/hicolor/128x128/apps/zed.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/zed.png
+install -Dpm644 share/icons/hicolor/512x512/apps/zed.png %{buildroot}%{_datadir}/icons/hicolor/512x512/apps/zed.png
 
 %files
 %license %{_libexecdir}/zed/licenses.md
@@ -79,7 +79,7 @@ install -Dpm644 share/icons/hicolor/128x128/apps/zed.png %{buildroot}%{_datadir}
 %{_libexecdir}/zed/
 %{_datadir}/applications/zed.desktop
 %{_datadir}/kio/servicemenus/open_in_zed.desktop
-%{_datadir}/icons/hicolor/*/apps/zed.png
+%{_datadir}/icons/hicolor/512x512/apps/zed.png
 
 %changelog
 %autochangelog
