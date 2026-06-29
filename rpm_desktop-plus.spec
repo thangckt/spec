@@ -31,7 +31,7 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-## Strip invalid RPATHs and fix to link against system libcurl
+### Strip invalid RPATHs and fix to link against system libcurl
 for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*; do
     if file "$bin" | grep -q ELF; then
         chrpath -d "$bin" || true
@@ -40,6 +40,18 @@ for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*
         patchelf --replace-needed libjpeg.so.8 libjpeg.so.62 "$bin" || true
     fi
 done
+
+### Fix ClassName in desktop-plus.desktop
+if [ -f "%{buildroot}%{_datadir}/applications/%{name}.desktop" ]; then
+    if grep -q '^StartupWMClass=' "%{buildroot}%{_datadir}/applications/%{name}.desktop"; then
+        # Replace the existing key
+        sed -i 's/^StartupWMClass=.*/StartupWMClass=desktop-plus/' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+    else
+        # Fix potential missing trailing newline and append the key safely
+        sed -i '$a\' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+        echo "StartupWMClass=desktop-plus" >> "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+    fi
+fi
 
 %files
 %{_bindir}/%{name}
