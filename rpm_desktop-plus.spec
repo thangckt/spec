@@ -43,11 +43,18 @@ for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*
 done
 
 ### Fix ClassName in desktop-plus.desktop
-desktop-file-edit --set-key=StartupWMClass --set-value=desktop-plus \
-    %{buildroot}%{_datadir}/applications/%{name}.desktop
+if [ -f "%{buildroot}%{_datadir}/applications/%{name}.desktop" ]; then
+    if grep -q '^StartupWMClass=' "%{buildroot}%{_datadir}/applications/%{name}.desktop"; then
+        sed -i 's/^StartupWMClass=.*/StartupWMClass=desktop-plus/' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+    else
+        sed -i '$a\' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+        echo "StartupWMClass=desktop-plus" >> "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+    fi
 
-desktop-file-edit --set-key=Categories --set-value="Development;" \
-    %{buildroot}%{_datadir}/applications/desktop-plus.desktop
+    sed -i 's/GitHub;//g' %{buildroot}%{_datadir}/applications/desktop-plus.desktop
+fi
+
+
 
 %files
 %{_bindir}/%{name}
