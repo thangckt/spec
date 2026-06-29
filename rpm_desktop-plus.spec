@@ -12,7 +12,7 @@ URL:            https://github.com/DesktopPlus/desktop-plus
 Source0:        %{url}/releases/download/v%{version}/DesktopPlus-v%{version}-linux-x86_64.rpm
 
 BuildRequires:  chrpath, patchelf
-BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-file-utils libglibutil-devel
 Requires:       libcurl
 
 AutoReqProv: no
