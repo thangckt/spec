@@ -12,6 +12,7 @@ URL:            https://github.com/DesktopPlus/desktop-plus
 Source0:        %{url}/releases/download/v%{version}/DesktopPlus-v%{version}-linux-x86_64.rpm
 
 BuildRequires:  chrpath, patchelf
+BuildRequires:  desktop-file-utils
 Requires:       libcurl
 
 AutoReqProv: no
@@ -42,16 +43,8 @@ for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*
 done
 
 ### Fix ClassName in desktop-plus.desktop
-if [ -f "%{buildroot}%{_datadir}/applications/%{name}.desktop" ]; then
-    if grep -q '^StartupWMClass=' "%{buildroot}%{_datadir}/applications/%{name}.desktop"; then
-        # Replace the existing key
-        sed -i 's/^StartupWMClass=.*/StartupWMClass=desktop-plus/' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
-    else
-        # Fix potential missing trailing newline and append the key safely
-        sed -i '$a\' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
-        echo "StartupWMClass=desktop-plus" >> "%{buildroot}%{_datadir}/applications/%{name}.desktop"
-    fi
-fi
+desktop-file-edit --set-key=StartupWMClass --set-value=desktop-plus \
+    %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files
 %{_bindir}/%{name}
