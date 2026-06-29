@@ -46,8 +46,8 @@ done
 desktop-file-edit --set-key=StartupWMClass --set-value=desktop-plus \
     %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-desktop-file-edit --set-key=Categories --set-value=Development \
-    %{buildroot}%{_datadir}/applications/%{name}.desktop
+desktop-file-edit --set-key=Categories --set-value="Development;" \
+    %{buildroot}%{_datadir}/applications/desktop-plus.desktop
 
 %files
 %{_bindir}/%{name}
