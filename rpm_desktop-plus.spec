@@ -54,7 +54,7 @@ done
 # fi
 
 ### Remove unnecessary files to reduce package size
-find %{buildroot}/usr/lib/%{name} -name "*.bak" -delete
+find %{buildroot} -name "*.bak" -delete
 
 %files
 %{_bindir}/%{name}
