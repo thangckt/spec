@@ -3,7 +3,7 @@
 ### Use 'AutoReqProv: no' to disable automatic dependency generation.
 
 Name:           desktop-plus
-Version:        3.6.1.1
+Version:        3.6.2.0
 Release:        1%{?dist}
 Summary:        GitHub Desktop Plus
 
