@@ -60,21 +60,15 @@ EOF
 install -Dpm755 RealTimeSync %{buildroot}%{_bindir}/RealTimeSync
 
 ### Desktop entries
-sed \
-    -e 's|Exec="FFS_INSTALL_PATH/FreeFileSync" %F|Exec=FreeFileSync %F|' \
+sed -e 's|Exec="FFS_INSTALL_PATH/FreeFileSync" %F|Exec=FreeFileSync %F|' \
     -e 's|Icon=FFS_INSTALL_PATH/Resources/FreeFileSync.png|Icon=FreeFileSync|' \
-    "${installer_dir}/FreeFileSync.template.desktop" \
-    > FreeFileSync.desktop
-install -Dpm644 FreeFileSync.desktop \
-    %{buildroot}%{_datadir}/applications/FreeFileSync.desktop
+    "${installer_dir}/FreeFileSync.template.desktop" > FreeFileSync.desktop
+install -Dpm644 FreeFileSync.desktop %{buildroot}%{_datadir}/applications/FreeFileSync.desktop
 
-sed \
-    -e 's|Exec="FFS_INSTALL_PATH/RealTimeSync" %F|Exec=RealTimeSync %F|' \
+sed -e 's|Exec="FFS_INSTALL_PATH/RealTimeSync" %F|Exec=RealTimeSync %F|' \
     -e 's|Icon=FFS_INSTALL_PATH/Resources/RealTimeSync.png|Icon=RealTimeSync|' \
-    "${installer_dir}/RealTimeSync.template.desktop" \
-    > RealTimeSync.desktop
-install -Dpm644 RealTimeSync.desktop \
-    %{buildroot}%{_datadir}/applications/RealTimeSync.desktop
+    "${installer_dir}/RealTimeSync.template.desktop" > RealTimeSync.desktop
+install -Dpm644 RealTimeSync.desktop %{buildroot}%{_datadir}/applications/RealTimeSync.desktop
 
 ### Icons
 for res in 16 24 32 48 64 128 256; do
@@ -84,11 +78,8 @@ for res in 16 24 32 48 64 128 256; do
         %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/RealTimeSync.png
 done
 
-install -Dpm644 ffs-extracted/LICENSE \
-    %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
-install -Dpm644 ffs-extracted/CHANGELOG \
-    %{buildroot}%{_docdir}/%{name}/CHANGELOG
-
+install -Dpm644 ffs-extracted/LICENSE %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
+install -Dpm644 ffs-extracted/CHANGELOG %{buildroot}%{_docdir}/%{name}/CHANGELOG
 
 %files
 %license %{_datadir}/licenses/%{name}/LICENSE
