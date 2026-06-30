@@ -10,7 +10,6 @@ URL:            https://github.com/electerm/electerm
 Source0:        %{url}/releases/download/v%{version}/electerm-%{version}-linux-x64.tar.gz
 Source1:        https://github.com/electerm/electerm-resource/blob/master/res/imgs/electerm-round-128x128.png?raw=true
 
-### Disable debug package
 %global debug_package %{nil}
 
 AutoReqProv: no
@@ -42,7 +41,7 @@ Terminal=false
 Type=Application
 Icon=electerm
 StartupWMClass=electerm
-Comment=Terminal/ssh/telnet/serialport/sftp client(linux, mac, win)
+Comment=Terminal/ssh/telnet/serialport/sftp client
 MimeType=x-scheme-handler/ssh;x-scheme-handler/telnet;x-scheme-handler/rdp;x-scheme-handler/vnc;x-scheme-handler/serial;x-scheme-handler/spice;x-scheme-handler/electerm;
 Categories=Development;System;TerminalEmulator;
 EOF
