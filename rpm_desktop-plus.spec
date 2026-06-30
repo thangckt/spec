@@ -12,7 +12,6 @@ URL:            https://github.com/DesktopPlus/desktop-plus
 Source0:        %{url}/releases/download/v%{version}/DesktopPlus-v%{version}-linux-x86_64.rpm
 
 BuildRequires:  chrpath, patchelf
-BuildRequires:  desktop-file-utils libglibutil-devel
 Requires:       libcurl
 
 AutoReqProv: no
@@ -43,18 +42,19 @@ for bin in %{buildroot}/usr/lib/%{name}/resources/app/git/libexec/git-core/git-*
 done
 
 ### Fix ClassName in desktop-plus.desktop
-if [ -f "%{buildroot}%{_datadir}/applications/%{name}.desktop" ]; then
-    if grep -q '^StartupWMClass=' "%{buildroot}%{_datadir}/applications/%{name}.desktop"; then
-        sed -i 's/^StartupWMClass=.*/StartupWMClass=desktop-plus/' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
-    else
-        sed -i '$a\' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
-        echo "StartupWMClass=desktop-plus" >> "%{buildroot}%{_datadir}/applications/%{name}.desktop"
-    fi
+# if [ -f "%{buildroot}%{_datadir}/applications/%{name}.desktop" ]; then
+#     if grep -q '^StartupWMClass=' "%{buildroot}%{_datadir}/applications/%{name}.desktop"; then
+#         sed -i 's/^StartupWMClass=.*/StartupWMClass=desktop-plus/' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+#     else
+#         sed -i '$a\' "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+#         echo "StartupWMClass=desktop-plus" >> "%{buildroot}%{_datadir}/applications/%{name}.desktop"
+#     fi
 
-    sed -i 's/GitHub;//g' %{buildroot}%{_datadir}/applications/desktop-plus.desktop
-fi
+#     sed -i 's/GitHub;//g' %{buildroot}%{_datadir}/applications/desktop-plus.desktop
+# fi
 
-
+### Remove unnecessary files to reduce package size
+find %{buildroot}/usr/lib/%{name} -name "*.bak" -delete
 
 %files
 %{_bindir}/%{name}
