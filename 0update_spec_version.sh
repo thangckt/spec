@@ -112,12 +112,6 @@ spec_files="build_tailscale.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR freerdp
-repo_url="https://github.com/freerdp/freerdp"
-spec_files="build_freerdp.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR desktop-plus
 ### old name: github-desktop-plus
 repo_url="https://github.com/DesktopPlus/desktop-plus"
@@ -167,12 +161,6 @@ spec_files="build_ovito.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Remmina
-repo_url="https://gitlab.com/Remmina/Remmina"
-spec_files="build_remmina.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Zotero
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
@@ -183,6 +171,18 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 echo -e "------------ Update Done !------------"
 
 #####SECTION: Retired
+
+#####ANCHOR freerdp
+# repo_url="https://github.com/freerdp/freerdp"
+# spec_files="build_freerdp.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
+
+#####ANCHOR Remmina
+# repo_url="https://gitlab.com/Remmina/Remmina"
+# spec_files="build_remmina.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR zed
 # repo_url="https://github.com/zed-industries/zed"
