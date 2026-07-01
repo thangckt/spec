@@ -6,7 +6,7 @@
 #RL:            https://github.com/flathub/org.freefilesync.FreeFileSync
 
 Name:           freefilesync
-Version:        14.9
+Version:        14.10
 Release:        1%{?dist}
 Summary:        A file synchronization utility
 
