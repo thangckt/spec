@@ -61,7 +61,7 @@ find %{buildroot} -name "*.bak" -delete
 /usr/lib/%{name}/
 %{_datadir}/doc/%{name}/copyright
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/gh-desktop-plus.png
 
 %changelog
 %autochangelog
