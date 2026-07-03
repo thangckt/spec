@@ -68,7 +68,6 @@ STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkg
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
 %cmake \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DWITH_LIBDB=OFF -DENABLE_GTK_DOC=OFF \
     -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_OAUTH2_WEBKITGTK4=ON \
     -DENABLE_GTK=ON
@@ -82,7 +81,6 @@ cd evolution-%{version}
 ### Inject buildroot into the path so it detects the newly built libraries/headers
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
@@ -97,7 +95,6 @@ cd ..
 cd evolution-ews-%{version}
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
