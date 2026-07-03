@@ -84,8 +84,11 @@ cd ..
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
+###  Wrap the %cmake call with an inline 'env' block and force CMake to trust its prefix path for pkgconfig
+env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_PREFIX_PATH="$STAGING_DIR/usr" \
+    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
@@ -102,8 +105,11 @@ cd ..
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
+### Wrap the %cmake call with an inline 'env' block and force CMake to trust its prefix path for pkgconfig
+env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_PREFIX_PATH="$STAGING_DIR/usr" \
+    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
