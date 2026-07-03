@@ -151,6 +151,7 @@ find %{buildroot} -type f | while read -r file; do
 done
 
 ### 4. Disable the RPATH QA check
+export QA_SKIP_BUILD_ROOT=1
 export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
 
 
