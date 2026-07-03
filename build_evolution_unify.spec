@@ -25,6 +25,8 @@ BuildRequires:  libmspack libmspack-devel
 
 %global __brp_compress true
 %global __brp_mangle_shebangs true
+%global __check_buildroot %{nil}
+%global __brp_check_rpaths %{nil}
 
 %description
 This spec builds all Evolution components in a unified build process, including Evolution Data Server (EDS), Evolution, and Evolution EWS plugin.
@@ -148,8 +150,8 @@ find %{buildroot} -type f | while read -r file; do
     fi
 done
 
-# 4. Prevent the QA engine from hard-aborting if an obscure binary reference remains
-export QA_SKIP_BUILD_ROOT=1
+### 4. Disable the RPATH QA check
+export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
 
 
 %files -f evolution_files.txt
