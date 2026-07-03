@@ -97,7 +97,8 @@ cd ..
 cd evolution-ews-%{version}
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
+    -DCMAKE_PREFIX_PATH="%{buildroot}" \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
