@@ -61,7 +61,7 @@ export CXXFLAGS="$CFLAGS"
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-### Natively export the staging path so it safely flows into all multi-line RPM macros below
+# Base system path setup
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 
 ################ANCHOR 1. Build Evolution Data Server
@@ -79,6 +79,16 @@ cd ..
 
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
+
+### FIX: Fool pkg-config for downstream builds without dirtying the final package
+mkdir -p %{_builddir}/staged_pkgconfig
+cp -r %{buildroot}%{_libdir}/pkgconfig/*.pc %{_builddir}/staged_pkgconfig/ 2>/dev/null || :
+cp -r %{buildroot}%{_datadir}/pkgconfig/*.pc %{_builddir}/staged_pkgconfig/ 2>/dev/null || :
+# Force internal paths to resolve inside our buildroot temporary staging area
+sed -i "s|^prefix=%{_prefix}|prefix=%{buildroot}%{_prefix}|" %{_builddir}/staged_pkgconfig/*.pc
+
+### Prioritize our rewritten staging definitions for the next phases
+export PKG_CONFIG_PATH="%{_builddir}/staged_pkgconfig:$PKG_CONFIG_PATH"
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
