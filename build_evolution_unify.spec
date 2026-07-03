@@ -60,12 +60,10 @@ tar -xf %{SOURCE2}
 export CFLAGS="$RPM_OPT_FLAGS -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
 export CPPFLAGS="-I%{_includedir}/et -flto"
 
-### Create a staging area so packages can see each other's build artifacts
-STAGING_DIR="%{_builddir}/_staging"
-mkdir -p "$STAGING_DIR"
+mkdir -p %{buildroot}
 
-### Build up our staging search paths explicitly
-STAGING_PKG_CONFIG="$STAGING_DIR%{_libdir}/pkgconfig:$STAGING_DIR%{_datadir}/pkgconfig"
+### Explicitly map our pkg-config and cmake environments to the standard buildroot target
+STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -80,16 +78,16 @@ cd evolution-data-server-%{version}
     -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_OAUTH2_WEBKITGTK4=ON \
     -DENABLE_GTK=ON
 %cmake_build
-### Install to staging so evolution can find its headers/libs
-DESTDIR="$STAGING_DIR" %cmake_install
+### Install immediately into the buildroot
+DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
-###  Wrap the %cmake call with an inline 'env' block and force CMake to trust its prefix path for pkgconfig
+### Inject buildroot into the path so it detects the newly built libraries/headers
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DCMAKE_PREFIX_PATH="$STAGING_DIR/usr" \
+    -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
@@ -101,16 +99,15 @@ env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
     -DENABLE_GTK_DOC=OFF \
     -DENABLE_MARKDOWN=OFF
 %cmake_build
-### Install to staging so evolution-ews can find its headers/libs
-DESTDIR="$STAGING_DIR" %cmake_install
+### Install immediately into the buildroot
+DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
-### Wrap the %cmake call with an inline 'env' block and force CMake to trust its prefix path for pkgconfig
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DCMAKE_PREFIX_PATH="$STAGING_DIR/usr" \
+    -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
@@ -118,7 +115,7 @@ env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
     -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
     -DLIB_SUFFIX=64
 %cmake_build
-DESTDIR="$STAGING_DIR" %cmake_install
+DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 
