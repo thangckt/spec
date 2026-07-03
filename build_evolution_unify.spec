@@ -61,7 +61,7 @@ export CXXFLAGS="$CFLAGS"
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-# Base system path setup
+### Ensure that pkg-config can find the .pc files for EDS and Evolution during the build of Evolution and Evolution EWS
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 
 ################ANCHOR 1. Build Evolution Data Server
@@ -80,15 +80,8 @@ cd ..
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
-### FIX: Fool pkg-config for downstream builds without dirtying the final package
-mkdir -p %{_builddir}/staged_pkgconfig
-cp -r %{buildroot}%{_libdir}/pkgconfig/*.pc %{_builddir}/staged_pkgconfig/ 2>/dev/null || :
-cp -r %{buildroot}%{_datadir}/pkgconfig/*.pc %{_builddir}/staged_pkgconfig/ 2>/dev/null || :
-# Force internal paths to resolve inside our buildroot temporary staging area
-sed -i "s|^prefix=%{_prefix}|prefix=%{buildroot}%{_prefix}|" %{_builddir}/staged_pkgconfig/*.pc
-
-### Prioritize our rewritten staging definitions for the next phases
-export PKG_CONFIG_PATH="%{_builddir}/staged_pkgconfig:$PKG_CONFIG_PATH"
+### FIX: Temporarily redirect both Pkg-Config AND CMake configurations to look inside our buildroot
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
@@ -119,6 +112,9 @@ cd ..
 ### Files added since the Evolution snapshot = EWS's own files
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_ews.txt
 comm -13 after_evolution.txt after_ews.txt > ews_files.txt
+
+### CLEANUP: Revert all paths back to the pristine /usr system targets so the final RPM packages correctly
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
 
 
 %install
