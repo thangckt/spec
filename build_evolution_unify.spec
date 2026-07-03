@@ -63,8 +63,7 @@ export CPPFLAGS="-I%{_includedir}/et -flto"
 ### Create a staging area so packages can see each other's build artifacts
 STAGING_DIR="%{_builddir}/_staging"
 mkdir -p "$STAGING_DIR"
-export CMAKE_PREFIX_PATH="$STAGING_DIR"
-export PKG_CONFIG_PATH="$STAGING_DIR%{_libdir}/pkgconfig:$STAGING_DIR%{_datadir}/pkgconfig"
+export PKG_CONFIG_PATH="$STAGING_DIR%{_libdir}/pkgconfig:$STAGING_DIR%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -86,6 +85,7 @@ cd ..
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
 %cmake \
+    -DCMAKE_PREFIX_PATH="$STAGING_DIR/usr" \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
@@ -103,6 +103,7 @@ cd ..
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
 %cmake \
+    -DCMAKE_PREFIX_PATH="$STAGING_DIR/usr" \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
