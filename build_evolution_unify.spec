@@ -67,7 +67,8 @@ STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkg
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
-%cmake -B eds-build \
+# Pass the unique build directory name as the first argument to the macro
+%cmake eds-build \
     -DWITH_SYSTEMDUSERUNITDIR=%{_userunitdir} \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
@@ -77,17 +78,17 @@ cd evolution-data-server-%{version}
     -DWITH_LIBDB=OFF -DENABLE_GTK_DOC=OFF \
     -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_OAUTH2_WEBKITGTK4=ON \
     -DENABLE_GTK=ON
-# Tell cmake_build which unique directory to build
-%cmake_build -B eds-build
-### Install immediately into the buildroot
-DESTDIR="%{buildroot}" %cmake_install -B eds-build
+
+# Manually invoke standard cmake build/install to ensure directory precision
+cmake --build eds-build %{?_smp_mflags}
+DESTDIR="%{buildroot}" cmake --install eds-build
 cd ..
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
 ### Inject buildroot into the path so it detects the newly built libraries/headers
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
-%cmake -B evo-build \
+%cmake evo-build \
     -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -104,15 +105,15 @@ env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
     -DENABLE_MARKDOWN=OFF
-%cmake_build -B evo-build
-### Install immediately into the buildroot
-DESTDIR="%{buildroot}" %cmake_install -B evo-build
+
+cmake --build evo-build %{?_smp_mflags}
+DESTDIR="%{buildroot}" cmake --install evo-build
 cd ..
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
-%cmake -B ews-build \
+%cmake ews-build \
     -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -125,8 +126,9 @@ env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
     -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
     -DLIB_SUFFIX=64
-%cmake_build -B ews-build
-DESTDIR="%{buildroot}" %cmake_install -B ews-build
+
+cmake --build ews-build %{?_smp_mflags}
+DESTDIR="%{buildroot}" cmake --install ews-build
 cd ..
 
 
