@@ -54,12 +54,14 @@ tar -xf %{SOURCE0}
 tar -xf %{SOURCE1}
 tar -xf %{SOURCE2}
 
+
 %build
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-export CFLAGS="%{optflags} -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
-export CXXFLAGS="$CFLAGS"
+### Keep compiler environment safe and standard
+export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -77,20 +79,18 @@ cd ..
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
-################ANCHOR 2. Build Evolution
-### FIX 1: Your original sed trick safely keeps host libraries untouched
+### Relocate prefix inside .pc and .cmake files so downstream components can resolve paths natively
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
 
-### FIX 2: Ensure that pkg-config can find the .pc files for EDS and Evolution during the build of Evolution and Evolution EWS
-export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 
-### FIX 3: Directly satisfies the "libedbus-private.so not found" error for the linker and internal CMake test runs
-export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
-
+################ANCHOR 2. Build Evolution
+# FIX: Explicitly direct the build-time linker to the root and private EDS library folders
 cd evolution-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
@@ -103,11 +103,15 @@ cd ..
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_evolution.txt
 comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
 
+
 ################ANCHOR 3. Build Evolution EWS
+# FIX: Mirror the build-time linker redirection path maps here
 cd evolution-ews-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
-    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
+    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server"
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
@@ -116,7 +120,7 @@ cd ..
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_ews.txt
 comm -13 after_evolution.txt after_ews.txt > ews_files.txt
 
-### CLEANUP: Revert all paths back to the pristine /usr system targets so the final RPM packages correctly
+### CLEANUP: Revert buildroot tracking strings back to clean system targets for clean packaging
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
 
 
