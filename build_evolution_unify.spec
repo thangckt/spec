@@ -68,7 +68,11 @@ STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkg
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
 %cmake \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DWITH_SYSTEMDUSERUNITDIR=%{_userunitdir} \
+    -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
+    -DLIB_INSTALL_DIR:PATH=%{_libdir} \
+    -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
+    -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
     -DWITH_LIBDB=OFF -DENABLE_GTK_DOC=OFF \
     -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_OAUTH2_WEBKITGTK4=ON \
     -DENABLE_GTK=ON
@@ -79,11 +83,20 @@ cd ..
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
+
+# CRITICAL FIX: Erase any global macro cache inherited from the prior run
+rm -rf "%{_vpath_builddir}"
+
 ### Inject buildroot into the path so it detects the newly built libraries/headers
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DCMAKE_PREFIX_PATH="%{buildroot}" \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
+    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
+    -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
+    -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
+    -DLIB_INSTALL_DIR:PATH=%{_libdir} \
+    -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
+    -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
@@ -95,10 +108,19 @@ cd ..
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
+
+# CRITICAL FIX: Erase any global macro cache inherited from the prior run
+rm -rf "%{_vpath_builddir}"
+
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DCMAKE_PREFIX_PATH="%{buildroot}" \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix}
+    -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
+    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
+    -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
+    -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
+    -DLIB_INSTALL_DIR:PATH=%{_libdir} \
+    -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
+    -DSHARE_INSTALL_PREFIX:PATH=%{_datadir}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
