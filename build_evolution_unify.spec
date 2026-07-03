@@ -61,9 +61,6 @@ mkdir -p %{buildroot}
 export CFLAGS="%{optflags} -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
 export CXXFLAGS="$CFLAGS"
 
-### Ensure that pkg-config can find the .pc files for EDS and Evolution during the build of Evolution and Evolution EWS
-export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
-
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
 %cmake \
@@ -80,13 +77,18 @@ cd ..
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
+
+
+################ANCHOR 2. Build Evolution
 ### FIX 1: Your original sed trick safely keeps host libraries untouched
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
 
-### FIX 2: Directly satisfies the "libedbus-private.so not found" error for the linker and internal CMake test runs
+### FIX 2: Ensure that pkg-config can find the .pc files for EDS and Evolution during the build of Evolution and Evolution EWS
+export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+
+### FIX 3: Directly satisfies the "libedbus-private.so not found" error for the linker and internal CMake test runs
 export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
 
-################ANCHOR 2. Build Evolution
 cd evolution-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
