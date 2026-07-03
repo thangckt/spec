@@ -63,7 +63,9 @@ export CPPFLAGS="-I%{_includedir}/et -flto"
 ### Create a staging area so packages can see each other's build artifacts
 STAGING_DIR="%{_builddir}/_staging"
 mkdir -p "$STAGING_DIR"
-export PKG_CONFIG_PATH="$STAGING_DIR%{_libdir}/pkgconfig:$STAGING_DIR%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+
+### Build up our staging search paths explicitly
+STAGING_PKG_CONFIG="$STAGING_DIR%{_libdir}/pkgconfig:$STAGING_DIR%{_datadir}/pkgconfig"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
