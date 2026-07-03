@@ -61,6 +61,10 @@ tar -xf %{SOURCE2}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
+### Define exactly where RPM expects the %files -f manifests to live
+MANIFEST_DIR="%{_builddir}/evolution-%{version}"
+mkdir -p "$MANIFEST_DIR"
+
 ### Keep compiler environment safe and standard
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
@@ -78,8 +82,8 @@ cd evolution-data-server-%{version}
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Snapshot of what EDS installed
-find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > %{_builddir}/eds_files.txt
+### Snapshot of what EDS installed (saved where RPM can find it)
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > "$MANIFEST_DIR/eds_files.txt"
 
 ### Relocate prefix inside EDS .pc and .cmake files so Evolution can resolve them
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
@@ -101,15 +105,15 @@ DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ### Files added since the EDS snapshot = Evolution's own files
-find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > %{_builddir}/after_evolution.txt
-comm -13 %{_builddir}/eds_files.txt %{_builddir}/after_evolution.txt > %{_builddir}/evolution_files.txt
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > "$MANIFEST_DIR/after_evolution.txt"
+comm -13 "$MANIFEST_DIR/eds_files.txt" "$MANIFEST_DIR/after_evolution.txt" > "$MANIFEST_DIR/evolution_files.txt"
 
 ### Redirect paths inside Evolution's newly generated development files
 while read -r file; do
     if [[ "$file" == *.pc || "$file" == *.cmake ]]; then
         sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "%{buildroot}$file"
     fi
-done < %{_builddir}/evolution_files.txt
+done < "$MANIFEST_DIR/evolution_files.txt"
 
 
 ################ANCHOR 3. Build Evolution EWS
@@ -124,8 +128,8 @@ DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ### Files added since the Evolution snapshot = EWS's own files
-find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > %{_builddir}/after_ews.txt
-comm -13 %{_builddir}/after_evolution.txt %{_builddir}/after_ews.txt > %{_builddir}/ews_files.txt
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > "$MANIFEST_DIR/after_ews.txt"
+comm -13 "$MANIFEST_DIR/after_evolution.txt" "$MANIFEST_DIR/after_ews.txt" > "$MANIFEST_DIR/ews_files.txt"
 
 ### CLEANUP: Revert all buildroot tracking strings back to clean system targets for clean packaging
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
