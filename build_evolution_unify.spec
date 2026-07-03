@@ -55,20 +55,10 @@ tar -xf %{SOURCE1}
 tar -xf %{SOURCE2}
 
 %build
-# 1. Store pristine baseline options for the system compiler
-ORIG_CFLAGS="%{optflags} -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
-ORIG_CXXFLAGS="$ORIG_CFLAGS"
-ORIG_LDFLAGS="%{?__global_ldflags}"
-
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
 ################ANCHOR 1. Build Evolution Data Server
-# Force this stage to build cleanly using normal system targets
-export CFLAGS="$ORIG_CFLAGS"
-export CXXFLAGS="$ORIG_CXXFLAGS"
-export LDFLAGS="$ORIG_LDFLAGS"
-
 cd evolution-data-server-%{version}
 %cmake \
     -DWITH_SYSTEMDUSERUNITDIR=%{_userunitdir} \
@@ -84,21 +74,17 @@ cd ..
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
-
 ################ANCHOR 2. Build Evolution
-# Scope environmental tracking ONLY to the downstream builds
+### Use standard runtime environment tracks to find headers and libraries
+export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
+export CPATH="%{buildroot}%{_includedir}/evolution-data-server:%{buildroot}%{_includedir}"
+export PKG_CONFIG_SYSROOT_DIR="%{buildroot}"
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
-
-# Inject the buildroot staging matrices directly into the compiler include arrays
-export CFLAGS="$ORIG_CFLAGS -I%{buildroot}%{_includedir}/evolution-data-server -I%{buildroot}%{_includedir}/libedataserver-1.2 -I%{buildroot}%{_includedir}/libebook-1.2 -I%{buildroot}%{_includedir}/libecal-1.2 -I%{buildroot}%{_includedir}/camel"
-export CXXFLAGS="$CFLAGS"
-
-# Fix the transitive library tracking loop safely at link-time without baking RPATHs
-export LDFLAGS="$ORIG_LDFLAGS -L%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}"
 
 cd evolution-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
+    -DCMAKE_FIND_ROOT_PATH="%{buildroot}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
@@ -108,25 +94,24 @@ cd evolution-%{version}
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Files added since the EDS snapshot = Evolution's own files
+### Files added since the EDS snapshot
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_evolution.txt
 comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
 
-
 ################ANCHOR 3. Build Evolution EWS
-# Append Evolution's fresh staging headers to the compiler search space
-export CFLAGS="$CFLAGS -I%{buildroot}%{_includedir}/evolution"
-export CXXFLAGS="$CFLAGS"
+### Add the newly generated Evolution headers into the include path
+export CPATH="%{buildroot}%{_includedir}/evolution:$CPATH"
 
 cd evolution-ews-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
+    -DCMAKE_FIND_ROOT_PATH="%{buildroot}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Files added since the Evolution snapshot = EWS's own files
+### Files added since the Evolution snapshot
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_ews.txt
 comm -13 after_evolution.txt after_ews.txt > ews_files.txt
 
