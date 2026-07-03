@@ -57,17 +57,20 @@ tar -xf %{SOURCE1}
 tar -xf %{SOURCE2}
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
-export CPPFLAGS="-I%{_includedir}/et -flto"
+export CFLAGS="%{optflags} -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
+export CXXFLAGS="$CFLAGS"
 
+rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
 ### Explicitly map our pkg-config and cmake environments to the standard buildroot target
-STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig"
+STAGING_PKGCONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
 %cmake \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
     -DWITH_SYSTEMDUSERUNITDIR=%{_userunitdir} \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
@@ -77,20 +80,19 @@ cd evolution-data-server-%{version}
     -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_OAUTH2_WEBKITGTK4=ON \
     -DENABLE_GTK=ON
 %cmake_build
-### Install immediately into the buildroot
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
+### Snapshot of what EDS installed - baseline for diffing later stages
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
+
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
-
-# CRITICAL FIX: Erase any global macro cache inherited from the prior run
-rm -rf "%{_vpath_builddir}"
-
 ### Inject buildroot into the path so it detects the newly built libraries/headers
-env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
+env PKG_CONFIG_LIBDIR="$STAGING_PKGCONFIG" PKG_CONFIG_PATH= \
 %cmake \
-    -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
@@ -102,19 +104,19 @@ env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
     -DENABLE_GTK_DOC=OFF \
     -DENABLE_MARKDOWN=OFF
 %cmake_build
-### Install immediately into the buildroot
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
+### Files added since the EDS snapshot = Evolution's own files
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_evolution.txt
+comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
+
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
-
-# CRITICAL FIX: Erase any global macro cache inherited from the prior run
-rm -rf "%{_vpath_builddir}"
-
-env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
+env PKG_CONFIG_LIBDIR="$STAGING_PKGCONFIG" PKG_CONFIG_PATH= \
 %cmake \
-    -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
@@ -125,32 +127,22 @@ env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
+### Files added since the Evolution snapshot = EWS's own files
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_ews.txt
+comm -13 after_evolution.txt after_ews.txt > ews_files.txt
+
 
 %install
-### Clear buildroot and copy everything from our unified staging directory
-rm -rf %{buildroot}
-mkdir -p %{buildroot}
-cp -a %{_builddir}/_staging/* %{buildroot}/
-
-### Generate separate file lists dynamically based on directory mappings
-### Evolution Data Server files
-find %{buildroot} -type f | grep -E "evolution-data-server|lib.*\.so|/usr/lib/systemd/" > eds_files.txt
-sed -i "s|^%{buildroot}||" eds_files.txt
-
-### Evolution EWS files
-find %{buildroot} -type f | grep -E "evolution-ews|ews" > ews_files.txt
-sed -i "s|^%{buildroot}||" ews_files.txt
-
-### Main Evolution files (everything else)
-find %{buildroot} -type f > all_files.txt
-sed -i "s|^%{buildroot}||" all_files.txt
-grep -Fvx -f eds_files.txt all_files.txt | grep -Fvx -f ews_files.txt > evolution_files.txt
+### Everything was already installed straight into %{buildroot} during %build via DESTDIR=%{buildroot} %cmake_install for each component.
+### There is nothing left to install here, and critically: do NOT rm -rf %{buildroot} in this section
+###
+### eds_files.txt / evolution_files.txt / ews_files.txt were generated in %build by diffing buildroot snapshots taken after each
+### component's install step, so they're derived from what was actually installed rather than guessed via path-pattern grep.
 
 
 %files -f evolution_files.txt
 
 %files -n evolution-data-server -f eds_files.txt
-%{_libdir}/lib*
 
 %files -n evolution-ews -f ews_files.txt
 
