@@ -61,8 +61,8 @@ export CXXFLAGS="$CFLAGS"
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-### Explicitly map our pkg-config and cmake environments to the standard buildroot target
-STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig"
+### Natively export the staging path so it safely flows into all multi-line RPM macros below
+export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -82,8 +82,6 @@ find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
-### Inject buildroot into the path so it detects the newly built libraries/headers
-env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
@@ -101,7 +99,6 @@ comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
-env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
