@@ -56,14 +56,12 @@ tar -xf %{SOURCE2}
 
 
 %build
-# Define a safe staging root that RPM won't automatically delete
-STAGING_ROOT="%{_builddir}/stage_root"
-rm -rf "$STAGING_ROOT"
-mkdir -p "$STAGING_ROOT"
+rm -rf %{buildroot}
+mkdir -p %{buildroot}
 
 ### Keep compiler environment safe and standard
-export PKG_CONFIG_PATH="$STAGING_ROOT%{_libdir}/pkgconfig:$STAGING_ROOT%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
-export LD_LIBRARY_PATH="$STAGING_ROOT%{_libdir}:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -75,39 +73,39 @@ cd evolution-data-server-%{version}
     -DENABLE_OAUTH2_WEBKITGTK4=ON \
     -DENABLE_GTK=ON
 %cmake_build
-DESTDIR="$STAGING_ROOT" %cmake_install
+DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Snapshot of what EDS installed (Paths stored relative to system root)
-find "$STAGING_ROOT" -type f | sed "s|^$STAGING_ROOT||" | sort > %{_builddir}/eds_files.txt
+### Snapshot of what EDS installed
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > %{_builddir}/eds_files.txt
 
-### Relocate prefix inside EDS files so Evolution can resolve them locally
-find "$STAGING_ROOT" -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|$STAGING_ROOT%{_prefix}|g" {} +
+### Relocate prefix inside EDS .pc and .cmake files so Evolution can resolve them
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
 
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
 %cmake \
-    -DCMAKE_PREFIX_PATH="$STAGING_ROOT%{_prefix}" \
+    -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
-    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,$STAGING_ROOT%{_libdir} -Wl,-rpath-link,$STAGING_ROOT%{_libdir}/evolution-data-server" \
-    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,$STAGING_ROOT%{_libdir} -Wl,-rpath-link,$STAGING_ROOT%{_libdir}/evolution-data-server" \
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
     -DENABLE_MARKDOWN=OFF
 %cmake_build
-DESTDIR="$STAGING_ROOT" %cmake_install
+DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ### Files added since the EDS snapshot = Evolution's own files
-find "$STAGING_ROOT" -type f | sed "s|^$STAGING_ROOT||" | sort > %{_builddir}/after_evolution.txt
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > %{_builddir}/after_evolution.txt
 comm -13 %{_builddir}/eds_files.txt %{_builddir}/after_evolution.txt > %{_builddir}/evolution_files.txt
 
-### Redirect paths inside Evolution's development targets without double-prepending EDS files
+### Redirect paths inside Evolution's newly generated development files
 while read -r file; do
     if [[ "$file" == *.pc || "$file" == *.cmake ]]; then
-        sed -i "s|%{_prefix}|$STAGING_ROOT%{_prefix}|g" "$STAGING_ROOT$file"
+        sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "%{buildroot}$file"
     fi
 done < %{_builddir}/evolution_files.txt
 
@@ -115,29 +113,34 @@ done < %{_builddir}/evolution_files.txt
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
 %cmake \
-    -DCMAKE_PREFIX_PATH="$STAGING_ROOT%{_prefix}" \
+    -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
-    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,$STAGING_ROOT%{_libdir} -Wl,-rpath-link,$STAGING_ROOT%{_libdir}/evolution-data-server" \
-    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,$STAGING_ROOT%{_libdir} -Wl,-rpath-link,$STAGING_ROOT%{_libdir}/evolution-data-server"
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server"
 %cmake_build
-DESTDIR="$STAGING_ROOT" %cmake_install
+DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ### Files added since the Evolution snapshot = EWS's own files
-find "$STAGING_ROOT" -type f | sed "s|^$STAGING_ROOT||" | sort > %{_builddir}/after_ews.txt
+find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > %{_builddir}/after_ews.txt
 comm -13 %{_builddir}/after_evolution.txt %{_builddir}/after_ews.txt > %{_builddir}/ews_files.txt
 
-### CLEANUP: Revert staging paths back to clean production targets (/usr) before moving to packaging
-find "$STAGING_ROOT" -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|$STAGING_ROOT%{_prefix}|%{_prefix}|g" {} +
+### CLEANUP: Revert all buildroot tracking strings back to clean system targets for clean packaging
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
+
+### SAFEGUARD: Move everything out of the buildroot into a backup directory before %install purges it
+rm -rf %{_builddir}/buildroot_backup
+mkdir -p %{_builddir}/buildroot_backup
+cp -a %{buildroot}/. %{_builddir}/buildroot_backup/
 
 
 %install
-# 1. RPM just ran 'rm -rf %{buildroot}' right before this block.
-# 2. Recreate the buildroot base safely:
+# 1. RPM automatically ran 'rm -rf %{buildroot}' right before entering this block.
+# 2. Recreate the fresh buildroot folder structure safely:
 mkdir -p %{buildroot}
 
-# 3. Cleanly clone our entire post-processed staging tree over into the official package root
-cp -a %{_builddir}/stage_root/* %{buildroot}/
+# 3. Restore our complete, post-processed triple-build back into the official package root
+cp -a %{_builddir}/buildroot_backup/. %{buildroot}/
 
 
 %files -f evolution_files.txt
