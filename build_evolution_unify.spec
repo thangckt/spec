@@ -81,7 +81,6 @@ cd evolution-%{version}
 ### Inject buildroot into the path so it detects the newly built libraries/headers
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
-    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
