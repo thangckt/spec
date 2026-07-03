@@ -61,10 +61,6 @@ tar -xf %{SOURCE2}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-# Define exactly where RPM expects the %files -f manifests to live
-MANIFEST_DIR="%{_builddir}/evolution-%{version}"
-mkdir -p "$MANIFEST_DIR"
-
 ### Keep compiler environment safe and standard
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
@@ -81,9 +77,6 @@ cd evolution-data-server-%{version}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
-
-### Snapshot of what EDS installed (Captures both files and symlinks)
-find %{buildroot} \( -type f -o -type l \) | sed "s|^%{buildroot}||" | sort > "$MANIFEST_DIR/eds_files.txt"
 
 ### Relocate prefix inside EDS .pc and .cmake files so Evolution can resolve them
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
@@ -104,17 +97,6 @@ cd evolution-%{version}
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Files added since the EDS snapshot = Evolution's own files
-find %{buildroot} \( -type f -o -type l \) | sed "s|^%{buildroot}||" | sort > "$MANIFEST_DIR/after_evolution.txt"
-comm -13 "$MANIFEST_DIR/eds_files.txt" "$MANIFEST_DIR/after_evolution.txt" > "$MANIFEST_DIR/evolution_files.txt"
-
-### Redirect paths inside Evolution's newly generated development files
-while read -r file; do
-    if [[ "$file" == *.pc || "$file" == *.cmake ]]; then
-        sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "%{buildroot}$file"
-    fi
-done < "$MANIFEST_DIR/evolution_files.txt"
-
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
@@ -126,10 +108,6 @@ cd evolution-ews-%{version}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
-
-### Files added since the Evolution snapshot = EWS's own files
-find %{buildroot} \( -type f -o -type l \) | sed "s|^%{buildroot}||" | sort > "$MANIFEST_DIR/after_ews.txt"
-comm -13 "$MANIFEST_DIR/after_evolution.txt" "$MANIFEST_DIR/after_ews.txt" > "$MANIFEST_DIR/ews_files.txt"
 
 ### CLEANUP: Revert all buildroot tracking strings back to clean system targets for clean packaging
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
@@ -154,16 +132,43 @@ find %{buildroot} -type f | while read -r file; do
     fi
 done
 
-### 4. Disable the RPATH QA check
-export QA_SKIP_BUILD_ROOT=1
-export QA_RPATHS=$((0x0001|0x0002|0x0004|0x0008|0x0010|0x0020))
 
+%files
+%{_bindir}/evolution
+%{_libdir}/evolution/
+%{_datadir}/evolution/
+%{_datadir}/applications/org.gnome.Evolution.desktop
+%{_datadir}/icons/hicolor/*/apps/org.gnome.Evolution*
+%{_datadir}/glib-2.0/schemas/org.gnome.evolution*
+%{_mandir}/man1/evolution.1*
 
-%files -f evolution_files.txt
+%files -n evolution-data-server
+%{_bindir}/evolution-addressbook-factory
+%{_bindir}/evolution-calendar-factory
+%{_bindir}/evolution-source-registry
+%{_libdir}/libcamel-1.2.so.*
+%{_libdir}/libebackend-1.2.so.*
+%{_libdir}/libebook-1.2.so.*
+%{_libdir}/libebook-contacts-1.2.so.*
+%{_libdir}/libecal-2.0.so.*
+%{_libdir}/libedata-book-1.2.so.*
+%{_libdir}/libedata-cal-2.0.so.*
+%{_libdir}/libedataserver-1.2.so.*
+%{_libdir}/libedataserverui-1.2.so.*
+%{_libdir}/libedataserverui4-1.0.so.*
+%{_libdir}/evolution-data-server/
+%{_libexecdir}/evolution-data-server/
+%{_datadir}/evolution-data-server/
+%{_userunitdir}/evolution-data-server.service
 
-%files -n evolution-data-server -f eds_files.txt
-
-%files -n evolution-ews -f ews_files.txt
+%files -n evolution-ews
+%{_libdir}/evolution-data-server/addressbook-backends/libebookbackendews.so
+%{_libdir}/evolution-data-server/calendar-backends/libecalbackendews.so
+%{_libdir}/evolution-data-server/registry-modules/module-ews-backend.so
+%{_libdir}/evolution-data-server/registry-modules/module-microsoft365-backend.so
+%{_libdir}/evolution/modules/module-ews-configuration.so
+%{_libdir}/evolution/modules/module-microsoft365-configuration.so
+%{_datadir}/evolution-ews/
 
 %changelog
 %autochangelog
