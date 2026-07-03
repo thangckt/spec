@@ -58,6 +58,12 @@ tar -xf %{SOURCE2}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
+export CFLAGS="%{optflags} -fPIC -Wno-sign-compare -Wno-deprecated-declarations -flto"
+export CXXFLAGS="$CFLAGS"
+
+### Ensure that pkg-config can find the .pc files for EDS and Evolution during the build of Evolution and Evolution EWS
+export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
 %cmake \
@@ -74,17 +80,16 @@ cd ..
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
-################ANCHOR 2. Build Evolution
-### Use standard runtime environment tracks to find headers and libraries
-export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
-export CPATH="%{buildroot}%{_includedir}/evolution-data-server:%{buildroot}%{_includedir}"
-export PKG_CONFIG_SYSROOT_DIR="%{buildroot}"
-export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+### FIX 1: Your original sed trick safely keeps host libraries untouched
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
 
+### FIX 2: Directly satisfies the "libedbus-private.so not found" error for the linker and internal CMake test runs
+export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
+
+################ANCHOR 2. Build Evolution
 cd evolution-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
-    -DCMAKE_FIND_ROOT_PATH="%{buildroot}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
@@ -94,26 +99,25 @@ cd evolution-%{version}
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Files added since the EDS snapshot
+### Files added since the EDS snapshot = Evolution's own files
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_evolution.txt
 comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
 
 ################ANCHOR 3. Build Evolution EWS
-### Add the newly generated Evolution headers into the include path
-export CPATH="%{buildroot}%{_includedir}/evolution:$CPATH"
-
 cd evolution-ews-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
-    -DCMAKE_FIND_ROOT_PATH="%{buildroot}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Files added since the Evolution snapshot
+### Files added since the Evolution snapshot = EWS's own files
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_ews.txt
 comm -13 after_evolution.txt after_ews.txt > ews_files.txt
+
+### CLEANUP: Revert all paths back to the pristine /usr system targets so the final RPM packages correctly
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
 
 
 %install
