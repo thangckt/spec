@@ -84,6 +84,10 @@ cd ..
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
+
+# CRITICAL FIX: Erase any global macro cache inherited from the prior run
+rm -rf "%{_vpath_builddir}"
+
 ### Inject buildroot into the path so it detects the newly built libraries/headers
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
@@ -106,6 +110,10 @@ cd ..
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
+
+# CRITICAL FIX: Erase any global macro cache inherited from the prior run
+rm -rf "%{_vpath_builddir}"
+
 env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}/usr" \
