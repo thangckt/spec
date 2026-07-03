@@ -77,8 +77,6 @@ cd ..
 ### Snapshot of what EDS installed - baseline for diffing later stages
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 
-
-
 ################ANCHOR 2. Build Evolution
 ### FIX 1: Your original sed trick safely keeps host libraries untouched
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
