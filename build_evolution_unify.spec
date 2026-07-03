@@ -62,7 +62,7 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
 ### Explicitly map our pkg-config and cmake environments to the standard buildroot target
-STAGING_PKGCONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig"
+STAGING_PKG_CONFIG="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -87,7 +87,7 @@ find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > eds_files.txt
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
 ### Inject buildroot into the path so it detects the newly built libraries/headers
-env PKG_CONFIG_LIBDIR="$STAGING_PKGCONFIG" PKG_CONFIG_PATH= \
+env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
@@ -97,6 +97,10 @@ env PKG_CONFIG_LIBDIR="$STAGING_PKGCONFIG" PKG_CONFIG_PATH= \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
     -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
+    -DCAMEL_PROVIDERDIR=%{_libdir}/evolution-data-server/camel-providers \
+    -DEVOLUTION_MODULEDIR=%{_libdir}/evolution/modules \
+    -DEVOLUTION_PLUGINDIR=%{_libdir}/evolution/plugins \
+    -DEVOLUTION_ALARM_NOTIFY_MODULEDIR=%{_libdir}/evolution/modules \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
@@ -111,7 +115,7 @@ comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
-env PKG_CONFIG_LIBDIR="$STAGING_PKGCONFIG" PKG_CONFIG_PATH= \
+env PKG_CONFIG_PATH="$STAGING_PKG_CONFIG:$PKG_CONFIG_PATH" \
 %cmake \
     -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
@@ -120,7 +124,8 @@ env PKG_CONFIG_LIBDIR="$STAGING_PKGCONFIG" PKG_CONFIG_PATH= \
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
     -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
-    -DSHARE_INSTALL_PREFIX:PATH=%{_datadir}
+    -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
+    -DCAMEL_PROVIDERDIR=%{_libdir}/evolution-data-server/camel-providers
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
