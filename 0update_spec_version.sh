@@ -155,6 +155,12 @@ spec_files="runfile_freefilesync.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR Evolution
+repo_url="https://gitlab.gnome.org/GNOME/evolution"
+spec_files="build_evolution_unify.spec"
+new_version=$(fetch_gitlab_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####ANCHOR Ovito
 repo_url="https://gitlab.com/stuko/ovito"
 spec_files="build_ovito.spec"
@@ -227,7 +233,7 @@ echo -e "------------ Update Done !------------"
 # new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Evolution
+#####ANCHOR Evolution components
 # repo_url="https://gitlab.gnome.org/GNOME/evolution-data-server"
 # spec_files="build_evolution1-data-server.spec"
 # new_version=$(fetch_gitlab_version "$repo_url")
