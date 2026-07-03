@@ -37,7 +37,7 @@ cp -rp * %{buildroot}%{_libexecdir}/helium/
 # ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
 # ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
-# ### Create wrapper script for main executable (to easy set execution flags)
+### Create wrapper script for main executable (to easy set execution flags)
 cat > helium_wrapper << 'EOF'
 #!/bin/bash
 # FLAGS="--use-gl=angle --use-angle=swiftshader"
