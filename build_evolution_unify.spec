@@ -103,6 +103,13 @@ cd ..
 find %{buildroot} -type f | sed "s|^%{buildroot}||" | sort > after_evolution.txt
 comm -13 eds_files.txt after_evolution.txt > evolution_files.txt
 
+### FIX: Surgically redirect paths inside Evolution's newly generated development files
+### without double-prepending or touching the EDS files.
+while read -r file; do
+    if [[ "$file" == *.pc || "$file" == *.cmake ]]; then
+        sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "%{buildroot}$file"
+    fi
+done < evolution_files.txt
 
 ################ANCHOR 3. Build Evolution EWS
 # FIX: Mirror the build-time linker redirection path maps here
