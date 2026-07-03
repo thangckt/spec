@@ -11,12 +11,10 @@ Summary:        GNOME Evolution Suite
 License:        GPL-2.0-or-later
 URL:            https://gitlab.gnome.org/GNOME/evolution
 
-### Multi-source definition
 Source0:        https://gitlab.gnome.org/GNOME/evolution/-/archive/%{version}/evolution-%{version}.tar.gz
 Source1:        https://gitlab.gnome.org/GNOME/evolution-data-server/-/archive/%{version}/evolution-data-server-%{version}.tar.gz
 Source2:        https://gitlab.gnome.org/GNOME/evolution-ews/-/archive/%{version}/evolution-ews-%{version}.tar.gz
 
-### Consolidated BuildRequires from all three specs
 BuildRequires:  cmake gcc gcc-c++ pkgconfig gettext gperf vala intltool itstool
 BuildRequires:  gtk4-devel webkitgtk6.0-devel webkit2gtk4.1-devel
 BuildRequires:  gnome-online-accounts-devel gnome-autoar-devel gnome-desktop3-devel gsettings-desktop-schemas-devel
