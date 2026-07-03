@@ -170,5 +170,12 @@ done
 %{_libdir}/evolution/modules/module-microsoft365-configuration.so
 %{_datadir}/evolution-ews/
 
+%files devel
+%{_includedir}/evolution-data-server/
+%{_includedir}/evolution/
+%{_libdir}/pkgconfig/*.pc
+%{_libdir}/*.so
+%{_datadir}/gobject-introspection-1.0/girs/
+
 %changelog
 %autochangelog
