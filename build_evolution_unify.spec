@@ -139,7 +139,7 @@ find %{buildroot} -type f | while read -r file; do
     fi
 done
 
-### 4. Force the Fedora/RPM QA script to skip the hard-abort on binary assets (.gresource, compiled schemas) that contain the build path.
+### 4. Force the Fedora/RPM QA script to skip the hard-abort on binary assets that contain the build path.
 export QA_SKIP_BUILD_ROOT=1
 
 
@@ -153,9 +153,13 @@ export QA_SKIP_BUILD_ROOT=1
 %{_mandir}/man1/evolution.1*
 
 %files -n evolution-data-server
-%{_bindir}/evolution-addressbook-factory
-%{_bindir}/evolution-calendar-factory
-%{_bindir}/evolution-source-registry
+# Background daemon factories
+%{_libexecdir}/evolution-addressbook-factory*
+%{_libexecdir}/evolution-calendar-factory*
+%{_libexecdir}/evolution-source-registry*
+%{_libexecdir}/evolution-user-prompter*
+
+# Core dynamic link libraries
 %{_libdir}/libcamel-1.2.so.*
 %{_libdir}/libebackend-1.2.so.*
 %{_libdir}/libebook-1.2.so.*
@@ -166,10 +170,17 @@ export QA_SKIP_BUILD_ROOT=1
 %{_libdir}/libedataserver-1.2.so.*
 %{_libdir}/libedataserverui-1.2.so.*
 %{_libdir}/libedataserverui4-1.0.so.*
+
+# Module and architecture-specific directories
 %{_libdir}/evolution-data-server/
 %{_libexecdir}/evolution-data-server/
+
+# Shared data configurations and service definitions
 %{_datadir}/evolution-data-server/
-%{_userunitdir}/evolution-data-server.service
+%{_userunitdir}/evolution-*.service
+%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.*
+%{_datadir}/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
+%{_sysconfdir}/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop
 
 %files -n evolution-ews
 %{_libdir}/evolution-data-server/addressbook-backends/libebookbackendews.so
