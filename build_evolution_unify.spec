@@ -173,11 +173,6 @@ export QA_SKIP_BUILD_ROOT=1
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution*
 %{_mandir}/man1/evolution.1*
 
-# Catch global app assets, translations, and interactive documentation files
-%{_datadir}/metainfo/org.gnome.Evolution.appdata.xml
-%{_datadir}/help/*/evolution/
-%{_datadir}/locale/*/LC_MESSAGES/evolution*.mo
-
 %files -n evolution-data-server
 # Background daemon factories
 %{_libexecdir}/evolution-addressbook-factory*
