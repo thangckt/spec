@@ -98,6 +98,7 @@ DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 ### Relocate prefix inside Evolution's newly created .pc and .cmake files so EWS can resolve them
+### (Safely skips EDS files that are already patched)
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) | while read -r file; do
     if ! grep -q "%{buildroot}" "$file"; then
         sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "$file"
@@ -115,6 +116,16 @@ cd evolution-ews-%{version}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
+
+### FIX NESTED BUILDROOTS: EWS queries our patched .pc files for installation paths,
+### causing it to install into a nested %{buildroot}/%{buildroot}/usr directory tree.
+if [ -d "%{buildroot}/builddir" ]; then
+    find %{buildroot}/builddir -type d -name "usr" | while read -r nested_usr; do
+        mkdir -p %{buildroot}/usr
+        cp -a "$nested_usr"/. %{buildroot}/usr/
+    done
+    rm -rf %{buildroot}/builddir
+fi
 
 ### CLEANUP: Revert all buildroot tracking strings back to clean system targets for clean packaging
 find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
