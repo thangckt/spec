@@ -200,7 +200,6 @@ export QA_SKIP_BUILD_ROOT=1
 %{_libdir}/evolution-data-server/registry-modules/module-microsoft365-backend.so
 %{_libdir}/evolution/modules/module-ews-configuration.so
 %{_libdir}/evolution/modules/module-microsoft365-configuration.so
-%{_datadir}/evolution-ews/
 
 %changelog
 %autochangelog
