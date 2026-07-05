@@ -97,6 +97,13 @@ cd evolution-%{version}
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
+### Relocate prefix inside Evolution's newly created .pc and .cmake files so EWS can resolve them
+find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) | while read -r file; do
+    if ! grep -q "%{buildroot}" "$file"; then
+        sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "$file"
+    fi
+done
+
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
