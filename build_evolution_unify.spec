@@ -163,6 +163,8 @@ done
 ### 4. Force the Fedora/RPM QA script to skip the hard-abort on binary assets that contain the build path.
 export QA_SKIP_BUILD_ROOT=1
 
+### Remove all help documentation languages except English (C)
+find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec rm -rf {} +
 
 %files
 %{_bindir}/evolution
@@ -173,6 +175,8 @@ export QA_SKIP_BUILD_ROOT=1
 %{_datadir}/icons/hicolor/*/apps/org.gnome.Evolution*
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution*
 %{_mandir}/man1/evolution.1*
+%{_datadir}/GConf/
+%{_datadir}/help/C/evolution/
 
 %files -n evolution-data-server
 # Background daemon factories
@@ -218,6 +222,7 @@ export QA_SKIP_BUILD_ROOT=1
 
 %files devel
 %{_includedir}/evolution-data-server/
+%{_includedir}/evolution/
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/*.so
 
