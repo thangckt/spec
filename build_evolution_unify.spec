@@ -29,7 +29,7 @@ BuildRequires:  libmspack libmspack-devel
 %global __brp_check_rpaths %{nil}
 
 %description
-This spec builds all Evolution components in a unified build process, including Evolution Data Server (EDS), Evolution, and Evolution EWS plugin.
+This spec builds all Evolution components, including Evolution Data Server (EDS), Evolution, and Evolution EWS plugin.
 
 ### Subpackage: evolution-data-server
 %package -n evolution-data-server
