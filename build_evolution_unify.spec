@@ -173,10 +173,15 @@ find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec 
 %{_datadir}/evolution/
 %{_datadir}/applications/org.gnome.Evolution*.desktop
 %{_datadir}/icons/hicolor/*/apps/org.gnome.Evolution*
+%{_datadir}/icons/hicolor/*/apps/evolution*
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution*
 %{_mandir}/man1/evolution.1*
 %{_datadir}/GConf/
 %{_datadir}/help/C/evolution/
+%{_datadir}/icons
+%{_datadir}/locale/*/LC_MESSAGES/
+%{_datadir}/metainfo/org.gnome.Evolution*
+
 
 %files -n evolution-data-server
 # Background daemon factories
@@ -210,6 +215,7 @@ find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec 
 %{_sysconfdir}/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop
 %{_datadir}/applications/org.gnome.evolution-data-server.*
 %{_datadir}/GConf/gsettings/evolution-data-server.convert
+%{_datadir}/pixmaps/evolution-data-server/
 
 %files -n evolution-ews
 %{_libdir}/evolution-ews/
