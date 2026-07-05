@@ -167,8 +167,9 @@ export QA_SKIP_BUILD_ROOT=1
 %files
 %{_bindir}/evolution
 %{_libdir}/evolution/
+%{_libexecdir}/evolution/
 %{_datadir}/evolution/
-%{_datadir}/applications/org.gnome.Evolution.desktop
+%{_datadir}/applications/org.gnome.Evolution*.desktop
 %{_datadir}/icons/hicolor/*/apps/org.gnome.Evolution*
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution*
 %{_mandir}/man1/evolution.1*
@@ -179,6 +180,7 @@ export QA_SKIP_BUILD_ROOT=1
 %{_libexecdir}/evolution-calendar-factory*
 %{_libexecdir}/evolution-source-registry*
 %{_libexecdir}/evolution-user-prompter*
+%{_libexecdir}/camel-*
 
 # Core dynamic link libraries
 %{_libdir}/libcamel-1.2.so.*
@@ -202,8 +204,11 @@ export QA_SKIP_BUILD_ROOT=1
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.*
 %{_datadir}/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
 %{_sysconfdir}/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop
+%{_datadir}/applications/org.gnome.evolution-data-server.*
+%{_datadir}/GConf/gsettings/evolution-data-server.convert
 
 %files -n evolution-ews
+%{_libdir}/evolution-ews/
 %{_libdir}/evolution-data-server/addressbook-backends/libebookbackendews.so
 %{_libdir}/evolution-data-server/calendar-backends/libecalbackendews.so
 %{_libdir}/evolution-data-server/registry-modules/module-ews-backend.so
@@ -213,7 +218,6 @@ export QA_SKIP_BUILD_ROOT=1
 
 %files devel
 %{_includedir}/evolution-data-server/
-%{_includedir}/evolution/
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/*.so
 
