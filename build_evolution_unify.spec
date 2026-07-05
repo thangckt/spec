@@ -48,6 +48,16 @@ Requires:       evolution >= %{version}
 %description -n evolution-ews
 This spec builds Evolution EWS plugin.
 
+### Subpackage: evolution-devel
+%package devel
+Summary:        Development files for GNOME Evolution Suite
+License:        GPL-2.0-or-later
+Requires:       evolution = %{version}-%{release}
+Requires:       evolution-data-server = %{version}-%{release}
+
+%description devel
+Development files and headers for building extensions against Evolution and Evolution Data Server.
+
 
 %prep
 ### Create a top-level directory and extract all sources manually to keep it clean
@@ -163,6 +173,11 @@ export QA_SKIP_BUILD_ROOT=1
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution*
 %{_mandir}/man1/evolution.1*
 
+# Catch global app assets, translations, and interactive documentation files
+%{_datadir}/metainfo/org.gnome.Evolution.appdata.xml
+%{_datadir}/help/*/evolution/
+%{_datadir}/locale/*/LC_MESSAGES/evolution*.mo
+
 %files -n evolution-data-server
 # Background daemon factories
 %{_libexecdir}/evolution-addressbook-factory*
@@ -200,6 +215,13 @@ export QA_SKIP_BUILD_ROOT=1
 %{_libdir}/evolution-data-server/registry-modules/module-microsoft365-backend.so
 %{_libdir}/evolution/modules/module-ews-configuration.so
 %{_libdir}/evolution/modules/module-microsoft365-configuration.so
+
+%files devel
+%{_includedir}/evolution-data-server/
+%{_includedir}/evolution/
+%{_libdir}/pkgconfig/*.pc
+%{_libdir}/*.so
+%{_datadir}/gobject-introspection-1.0/girs/
 
 %changelog
 %autochangelog
