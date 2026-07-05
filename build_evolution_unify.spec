@@ -216,7 +216,6 @@ export QA_SKIP_BUILD_ROOT=1
 %{_includedir}/evolution/
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/*.so
-%{_datadir}/gobject-introspection-1.0/girs/
 
 %changelog
 %autochangelog
