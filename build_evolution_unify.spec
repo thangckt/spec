@@ -71,14 +71,13 @@ tar -xf %{SOURCE2}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-### Set up the search paths to look into our buildroot first
+### Instruct pkg-config to dynamically prepend the buildroot to all paths it returns
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_SYSROOT_DIR="%{buildroot}"
 export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
 
-### Standardize compiler and linker flags to find libraries in the buildroot
-export CFLAGS="%{optflags} -I%{buildroot}%{_includedir}"
-export CXXFLAGS="%{optflags} -I%{buildroot}%{_includedir}"
-export LDFLAGS="%{__global_ldflags} -L%{buildroot}%{_libdir}"
+### Define a macro to force CMake to look inside the buildroot for headers, libraries, and packages
+%global cmake_sysroot_flags -DCMAKE_FIND_ROOT_PATH="%{buildroot}" -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -95,11 +94,7 @@ cd ..
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
-%cmake \
-    -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
-    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
-    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
-    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
+%cmake %{cmake_sysroot_flags} \
     -DENABLE_PLUGINS=all \
     -DENABLE_MAINTAINER_MODE=OFF \
     -DENABLE_GTK_DOC=OFF \
@@ -110,18 +105,14 @@ cd ..
 
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
-%cmake \
-    -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
-    -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
-    -DEVO_PLUGIN_DIR="%{buildroot}%{_libdir}/evolution/modules" \
-    -DEDS_MODULE_DIR="%{buildroot}%{_libdir}/evolution-data-server"
+%cmake %{cmake_sysroot_flags}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
 
 %install
-### Note: Do NOT recreate %{buildroot} or wipe it here, since we installed everything into it during %build
+### Do NOT recreate %{buildroot} here. The components are cleanly installed via DESTDIR above.
 
 ### Remove all help documentation languages except English (C)
 find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec rm -rf {} +
