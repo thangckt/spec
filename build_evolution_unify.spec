@@ -71,9 +71,14 @@ tar -xf %{SOURCE2}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
 
-### Keep compiler environment safe and standard
+### Set up the search paths to look into our buildroot first
 export PKG_CONFIG_PATH="%{buildroot}%{_libdir}/pkgconfig:%{buildroot}%{_datadir}/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="%{buildroot}%{_libdir}:$LD_LIBRARY_PATH"
+
+### Standardize compiler and linker flags to find libraries in the buildroot
+export CFLAGS="%{optflags} -I%{buildroot}%{_includedir}"
+export CXXFLAGS="%{optflags} -I%{buildroot}%{_includedir}"
+export LDFLAGS="%{__global_ldflags} -L%{buildroot}%{_libdir}"
 
 ################ANCHOR 1. Build Evolution Data Server
 cd evolution-data-server-%{version}
@@ -87,10 +92,6 @@ cd evolution-data-server-%{version}
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
-
-### Relocate prefix inside EDS .pc and .cmake files so Evolution can resolve them
-find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" {} +
-
 
 ################ANCHOR 2. Build Evolution
 cd evolution-%{version}
@@ -107,61 +108,20 @@ cd evolution-%{version}
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### Relocate prefix inside Evolution's newly created .pc and .cmake files so EWS can resolve them
-### (Safely skips EDS files that are already patched)
-find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) | while read -r file; do
-    if ! grep -q "%{buildroot}" "$file"; then
-        sed -i "s|%{_prefix}|%{buildroot}%{_prefix}|g" "$file"
-    fi
-done
-
-
 ################ANCHOR 3. Build Evolution EWS
 cd evolution-ews-%{version}
 %cmake \
     -DCMAKE_PREFIX_PATH="%{buildroot}%{_prefix}" \
     -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON \
-    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server" \
-    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath-link,%{buildroot}%{_libdir} -Wl,-rpath-link,%{buildroot}%{_libdir}/evolution-data-server"
+    -DEVO_PLUGIN_DIR="%{buildroot}%{_libdir}/evolution/modules" \
+    -DEDS_MODULE_DIR="%{buildroot}%{_libdir}/evolution-data-server"
 %cmake_build
 DESTDIR="%{buildroot}" %cmake_install
 cd ..
 
-### FIX NESTED BUILDROOTS: EWS queries our patched .pc files for installation paths,
-### causing it to install into a nested %{buildroot}/%{buildroot}/usr directory tree.
-if [ -d "%{buildroot}/builddir" ]; then
-    find %{buildroot}/builddir -type d -name "usr" | while read -r nested_usr; do
-        mkdir -p %{buildroot}/usr
-        cp -a "$nested_usr"/. %{buildroot}/usr/
-    done
-    rm -rf %{buildroot}/builddir
-fi
-
-### CLEANUP: Revert all buildroot tracking strings back to clean system targets for clean packaging
-find %{buildroot} -type f \( -name "*.pc" -o -name "*.cmake" \) -exec sed -i "s|%{buildroot}%{_prefix}|%{_prefix}|g" {} +
-
-### SAFEGUARD: Move everything out of the buildroot into a backup directory before %install purges it
-rm -rf %{_builddir}/buildroot_backup
-mkdir -p %{_builddir}/buildroot_backup
-cp -a %{buildroot}/. %{_builddir}/buildroot_backup/
-
 
 %install
-### 1. Recreate the fresh buildroot folder structure safely
-mkdir -p %{buildroot}
-
-### 2. Restore our complete, post-processed triple-build back into the official package root
-cp -a %{_builddir}/buildroot_backup/. %{buildroot}/
-
-### 3. GLOBAL SANITIZER: Scan ALL text files and wipe out any remaining buildroot paths
-find %{buildroot} -type f | while read -r file; do
-    if file "$file" | grep -q "text"; then
-        sed -i "s|%{buildroot}||g" "$file"
-    fi
-done
-
-### 4. Force the Fedora/RPM QA script to skip the hard-abort on binary assets that contain the build path.
-export QA_SKIP_BUILD_ROOT=1
+### Note: Do NOT recreate %{buildroot} or wipe it here, since we installed everything into it during %build
 
 ### Remove all help documentation languages except English (C)
 find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec rm -rf {} +
@@ -178,7 +138,6 @@ find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec 
 %{_mandir}/man1/evolution.1*
 %{_datadir}/GConf/
 %{_datadir}/help/C/evolution/
-%{_datadir}/icons
 %{_datadir}/locale/*/LC_MESSAGES/
 %{_datadir}/metainfo/org.gnome.Evolution*
 
