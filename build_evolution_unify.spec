@@ -178,10 +178,8 @@ find %{buildroot}%{_datadir}/help/ -mindepth 1 -maxdepth 1 -not -name "C" -exec 
 %{_mandir}/man1/evolution.1*
 %{_datadir}/GConf/
 %{_datadir}/help/C/evolution/
-%{_datadir}/icons
 %{_datadir}/locale/*/LC_MESSAGES/
 %{_datadir}/metainfo/org.gnome.Evolution*
-
 
 %files -n evolution-data-server
 # Background daemon factories
