@@ -1,2 +1,2 @@
 
-tarball_electerm.spec
+tarball_zotero.spec
