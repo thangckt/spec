@@ -122,7 +122,7 @@ echo " Starting TeX Live full installation streaming"
 echo " This may take time, please be patient..."
 echo "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
-    %{install_dir}/bin/x86_64-linux/tlmgr option repository https://ctan.math.illinois.edu/systems/texlive/tlnet/
+    # %{install_dir}/bin/x86_64-linux/tlmgr option repository https://ctan.math.illinois.edu/systems/texlive/tlnet/
 
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr update --self
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full

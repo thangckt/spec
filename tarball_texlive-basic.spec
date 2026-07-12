@@ -8,9 +8,9 @@ Summary:        TeX Live distribution
 License:        GPLv2+
 URL:            https://tug.org/texlive/
 
-#ource0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2026/install-tl-unx.tar.gz
+Source0:        https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
 #ource0:        https://texlive.info/historic/systems/texlive/%{version}/install-tl-unx.tar.gz
-Source0:        http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+#ource0:        http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 
 
 BuildRequires:  tar perl-devel
@@ -115,7 +115,7 @@ echo " Starting TeX Live full installation streaming"
 echo " This may take time, please be patient..."
 echo "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
-    %{install_dir}/bin/x86_64-linux/tlmgr option repository https://ctan.math.illinois.edu/systems/texlive/tlnet/
+    # %{install_dir}/bin/x86_64-linux/tlmgr option repository https://ctan.math.illinois.edu/systems/texlive/tlnet/
 
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr update --self
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-basic
