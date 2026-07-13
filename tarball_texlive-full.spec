@@ -127,6 +127,11 @@ echo "======================================================="
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr update --self
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-full
 
+    ### CRITICAL: Rebuild the filename search databases (ls-R files)
+    # This ensures your engines (pdflatex, lualatex, etc.) can discover the newly streamed files
+    echo "Rebuilding TeX Live filename databases..."
+    %{install_dir}/bin/x86_64-linux/texhash %{install_dir}
+
 ### Restore original stdout if we hijacked it for /dev/tty
 if [ -c /dev/tty ]; then
     exec 1>&3 3>&-
