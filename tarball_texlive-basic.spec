@@ -117,7 +117,7 @@ echo "======================================================="
     PATH=%{install_dir}/bin/x86_64-linux:$PATH
     # %{install_dir}/bin/x86_64-linux/tlmgr option repository https://ctan.math.illinois.edu/systems/texlive/tlnet/
 
-    stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr update --self
+    %{install_dir}/bin/x86_64-linux/tlmgr update --self
     stdbuf -oL -eL %{install_dir}/bin/x86_64-linux/tlmgr install scheme-basic
 
 ### Restore original stdout if we hijacked it for /dev/tty
