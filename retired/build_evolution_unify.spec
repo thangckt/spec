@@ -3,6 +3,8 @@
 ## - evolution: https://src.fedoraproject.org/rpms/evolution/blob/rawhide/f/evolution.spec
 ## - evolution-ews: https://src.fedoraproject.org/rpms/evolution-ews/blob/rawhide/f/evolution-ews.spec
 
+## NOTE: There may error in the date of ToDo list (Tasks)
+
 
 Name:           evolution
 Version:        3.61.1
