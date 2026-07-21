@@ -1,2 +1,3 @@
 
-tarball_helium.spec
+tarball_electerm.spec
+build_tailscale.spec
