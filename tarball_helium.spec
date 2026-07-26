@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.14.8.2
+Version:        0.14.9.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
