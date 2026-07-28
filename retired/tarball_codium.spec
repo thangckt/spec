@@ -5,7 +5,7 @@
 %global vscode_arch x64
 
 Name:           codium
-Version:        1.121.03429
+Version:        1.126.04524
 Release:        1%{?dist}
 Summary:        Free/Libre Open Source Software Binaries of VSCode
 
