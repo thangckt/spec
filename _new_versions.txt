@@ -1,1 +1,3 @@
 
+build_tailscale.spec
+rpm_desktop-plus.spec
