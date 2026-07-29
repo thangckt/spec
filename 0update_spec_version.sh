@@ -106,12 +106,6 @@ spec_files="tarball_electerm.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR tailscale
-repo_url="https://github.com/tailscale/tailscale"
-spec_files="build_tailscale.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR desktop-plus
 ### old name: github-desktop-plus
 repo_url="https://github.com/DesktopPlus/desktop-plus"
@@ -177,6 +171,12 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 echo -e "------------ Update Done !------------"
 
 #####SECTION: Retired
+
+#####ANCHOR tailscale
+# repo_url="https://github.com/tailscale/tailscale"
+# spec_files="build_tailscale.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR freerdp
 # repo_url="https://github.com/freerdp/freerdp"
