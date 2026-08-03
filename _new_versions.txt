@@ -1,2 +1,1 @@
 
-rpm_desktop-plus.spec
