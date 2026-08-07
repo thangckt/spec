@@ -1,2 +1,4 @@
 
-build_goldendict-ng.spec
+tarball_electerm.spec
+rpm_desktop-plus.spec
+tarball_helium.spec
