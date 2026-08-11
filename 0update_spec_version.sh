@@ -149,12 +149,6 @@ spec_files="runfile_freefilesync.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR vscodium
-repo_url="https://github.com/VSCodium/vscodium"
-spec_files="tarball_codium.spec"
-new_version=$(fetch_github_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Evolution
 repo_url="https://gitlab.gnome.org/GNOME/evolution"
 spec_files="build_evolution_unify.spec"
@@ -177,6 +171,12 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 echo -e "------------ Update Done !------------"
 
 #####SECTION: Retired
+
+#####ANCHOR vscodium
+# repo_url="https://github.com/VSCodium/vscodium"
+# spec_files="tarball_codium.spec"
+# new_version=$(fetch_github_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR tailscale
 # repo_url="https://github.com/tailscale/tailscale"
