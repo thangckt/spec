@@ -1,4 +1,1 @@
 
-tarball_electerm.spec
-runfile_freefilesync.spec
-build_ovito.spec
