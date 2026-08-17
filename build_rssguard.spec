@@ -6,7 +6,7 @@
 #Source0:       {url}/releases/download/devbuild5/rssguard-dev-{dev_version}-src.tar.gz
 
 Name:           rssguard
-Version:        5.2.3
+Version:        5.2.4
 Release:        %autorelease
 Summary:        Simple yet powerful feed reader
 
