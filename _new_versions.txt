@@ -1,3 +1,2 @@
 
-build_rssguard.spec
-tarball_helium.spec
+build_ovito.spec
