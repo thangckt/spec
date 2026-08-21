@@ -3,7 +3,7 @@
 ### `ssh_askpass` is not needed for OVITO. It is an artifact generated automatically by libssh (or CMake's configuration of it) rather than a direct feature of OVITO.
 
 Name:           ovito
-Version:        3.14.0
+Version:        3.16.0
 Release:        1%{?dist}
 Summary:        OVITO - Open Visualization Tool (GUI)
 
