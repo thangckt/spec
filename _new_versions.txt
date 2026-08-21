@@ -1,3 +1,3 @@
 
-tarball_electerm.spec
-tarball_zotero.spec
+build_rssguard.spec
+tarball_helium.spec
