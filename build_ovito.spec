@@ -3,7 +3,7 @@
 ### `ssh_askpass` is not needed for OVITO. It is an artifact generated automatically by libssh (or CMake's configuration of it) rather than a direct feature of OVITO.
 
 Name:           ovito
-Version:        3.16.0
+Version:        3.15.0
 Release:        1%{?dist}
 Summary:        OVITO - Open Visualization Tool (GUI)
 
@@ -16,7 +16,7 @@ Source2:        https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1
 
 BuildRequires:  cmake ninja-build gcc-c++ pkg-config
 BuildRequires:  qt6-qtbase-devel qt6-qtsvg-devel qt6-qtbase-private-devel qt6-qtshadertools-devel
-BuildRequires:  boost-devel netcdf-devel libssh-devel ffmpeg-free-devel libzstd-devel
+BuildRequires:  boost-devel netcdf-devel libssh-devel ffmpeg-free-devel libzstd-devel libsqlite3x-devel
 BuildRequires:  python3-sphinx python3-sphinx_rtd_theme python3-devel
 BuildRequires:  pkgconfig(libzstd)
 
