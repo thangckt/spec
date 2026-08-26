@@ -5,7 +5,7 @@
 # Zotero 8: https://download.zotero.org/client/release/8.0/Zotero-8.0_linux-x86_64.tar.xz
 
 Name:           zotero
-Version:        10.0
+Version:        10.0.1
 Release:        1%{?dist}
 Summary:        Zotero Reference Manager
 
