@@ -166,6 +166,12 @@ spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR zed
+repo_url="https://github.com/zed-industries/zed"
+spec_files="tarball_zed.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####!SECTION
 
 echo -e "------------ Update Done !------------"
@@ -194,12 +200,6 @@ echo -e "------------ Update Done !------------"
 # repo_url="https://gitlab.com/Remmina/Remmina"
 # spec_files="build_remmina.spec"
 # new_version=$(fetch_gitlab_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
-
-#####ANCHOR zed
-# repo_url="https://github.com/zed-industries/zed"
-# spec_files="tarball_zed.spec"
-# new_version=$(fetch_github_version "$repo_url")
 # update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR gitbutler
