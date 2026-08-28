@@ -1,0 +1,85 @@
+### ref: https://github.com/terrapkg/packages/blob/frawhide/anda/devs/zed/stable/zed.spec
+### Use tarball to avoid building time.
+
+Name:           zed
+Version:        1.17.2
+Release:        1%{?dist}
+Summary:        High-performance, multiplayer code editor
+
+License:        AGPL-3.0-only AND Apache-2.0 AND GPL-3.0-or-later
+URL:            https://github.com/zed-industries/zed
+Source0:        %{url}/releases/download/v%{version}/zed-linux-x86_64.tar.gz
+
+### Disable debug package
+%define debug_package %{nil}
+%define __strip /bin/true
+
+%description
+Code at the speed of thought — Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
+
+%prep
+%autosetup -n zed.app
+
+%build
+# Nothing to build (precompiled)
+
+%install
+### Install the whole bundle under /usr/libexec/zed
+mkdir -p %{buildroot}%{_libexecdir}/zed
+cp -rp bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
+
+### Create symlink for main executable
+mkdir -p %{buildroot}%{_bindir}
+ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
+
+### Create desktop file
+cat > zed.desktop <<'EOF'
+[Desktop Entry]
+Name=Zed
+GenericName=Text Editor
+Exec=env LOCAL_NOTEBOOK_DEV=1 zed %U
+Icon=zed
+Type=Application
+StartupNotify=true
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;
+Actions=NewWorkspace;
+Keywords=zed;
+StartupWMClass=dev.zed.Zed
+
+[Desktop Action NewWorkspace]
+Name=Open a new workspace
+Exec=env LOCAL_NOTEBOOK_DEV=1 zed --new %U
+EOF
+install -Dpm644 zed.desktop %{buildroot}%{_datadir}/applications/zed.desktop
+
+### Create "Open with" menu
+cat > open_in_zed.desktop <<'EOF'
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=inode/directory;
+X-KDE-Priority=TopLevel
+Actions=openInZed
+X-KDE-StartupNotify=false
+
+[Desktop Action openInZed]
+Name=Open in Zed
+Icon=zed
+Exec=env LOCAL_NOTEBOOK_DEV=1 zed %u
+EOF
+install -Dpm644 open_in_zed.desktop %{buildroot}%{_datadir}/kio/servicemenus/open_in_zed.desktop
+
+### Install icons (already in correct structure)
+install -Dpm644 share/icons/hicolor/512x512/apps/zed.png %{buildroot}%{_datadir}/icons/hicolor/512x512/apps/zed.png
+
+%files
+%license %{_libexecdir}/zed/licenses.md
+%{_bindir}/zed
+%{_libexecdir}/zed/
+%{_datadir}/applications/zed.desktop
+%{_datadir}/kio/servicemenus/open_in_zed.desktop
+%{_datadir}/icons/hicolor/512x512/apps/zed.png
+
+%changelog
+%autochangelog
