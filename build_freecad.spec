@@ -153,7 +153,7 @@ Development file for Clipper2Z
 
 %build
     # Deal with cmake projects that tend to link excessively.
-    LDFLAGS="-Wl,--as-needed -Wl,--no-undefined -L%{_libdir}/hdf5 $(python3-config --ldflags --embed)"; export LDFLAGS
+    LDFLAGS='-Wl,--as-needed'; export LDFLAGS
 
 #         -DCMAKE_INSTALL_DATADIR=%{_datadir}/%{name} \
 #         -DCMAKE_INSTALL_DATAROOTDIR=%{_datadir} \
