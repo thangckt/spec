@@ -49,6 +49,8 @@ Source0:        %{url}/releases/download/weekly-%{version}/freecad_source_weekly
 
 # Utilities
 BuildRequires:  cmake gcc-c++ gettext doxygen swig graphviz gcc-gfortran desktop-file-utils tbb-devel ninja-build strace
+BuildRequires:  hdf5-static
+
 %if %{with tests}
 BuildRequires:  xorg-x11-server-Xvfb python3-typing-extensions xwayland-run weston
 %if %{without bundled_gtest}
