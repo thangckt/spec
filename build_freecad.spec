@@ -21,7 +21,7 @@
 Name:           freecad
 Epoch:          1
 #ersion:        1.0.2
-Version:        2026.06.20
+Version:        2026.09.02
 Release:        1%{?dist}
 
 Summary:        A general purpose 3D CAD modeler
