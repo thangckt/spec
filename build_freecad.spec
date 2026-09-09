@@ -37,7 +37,7 @@ Source0:        %{url}/releases/download/weekly-%{version}/freecad_source_weekly
 # List plugins in %%{_libdir}/%%{name}/lib, less '.so' and 'Gui.so', here
 %global plugins AssemblyApp AssemblyGui CAMSimulator DraftUtils Fem FreeCAD Import Inspection MatGui Materials Measure Mesh MeshPart Part PartDesignGui Path PathApp PathSimulator Points QtUnitGui ReverseEngineering Robot Sketcher Spreadsheet Start Surface TechDraw Web _PartDesign area flatmesh libDriver libDriverDAT libDriverSTL libDriverUNV libE57Format libMEFISTO2 libSMDS libSMESH libSMESHDS libStdMeshers libarea-native tsp_solver surface_generator
 
-%define exported_libs    libOndselSolver libClipper2Z
+%define exported_libs    libOndselSolver libClipper2Z libCoin
 
 
 # See FreeCAD-main/src/3rdParty/salomesmesh/CMakeLists.txt to find this out.
@@ -253,7 +253,7 @@ Development file for Clipper2Z
     fi
     # Make sure there are no entries in the plugins macro that don't match plugins
     for p in %{plugins}; do
-        if [ -z "`ls %{buildroot}%{_libdir}/%{name}/%{_lib}/$p*.so`" ]; then
+        if [ -z "`ls %{buildroot}%{_libdir}/%{name}/%{_lib}/$p*.so* 2>/dev/null`" ]; then
             set +x
             echo -e "\n\n\n**** ERROR:\n" \
                 "\nExtra entry in %%{plugins} macro with no matching plugin:" \
@@ -262,9 +262,9 @@ Development file for Clipper2Z
             exit 1
         fi
     done
-    # Make sure there are no entries in the exported_libs_regexp macro that don't match plugins
+    # Make sure there are no entries in the exported_libs macro that don't match libraries
     for d in %{exported_libs}; do
-        if [ -z "`ls %{buildroot}%{_libdir}/%{name}/%{_lib}/$d*.so`" ]; then
+        if [ -z "`ls %{buildroot}%{_libdir}/%{name}/%{_lib}/$d*.so* 2>/dev/null`" ]; then
             set +x
             echo -e "\n\n\n**** ERROR:\n" \
                 "\nExtra entry in %%{exported_libs} macro with no matching lib:" \
