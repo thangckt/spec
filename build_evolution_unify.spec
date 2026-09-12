@@ -7,7 +7,7 @@
 
 
 Name:           evolution
-Version:        3.61.3
+Version:        3.62.0
 Release:        1%{?dist}
 Summary:        GNOME Evolution Suite
 License:        GPL-2.0-or-later
