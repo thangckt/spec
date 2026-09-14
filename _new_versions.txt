@@ -1,5 +1,3 @@
 
-tarball_electerm.spec
-rpm_desktop-plus.spec
-build_evolution_unify.spec
-tarball_zotero.spec
+tarball_helium.spec
+build_ovito.spec
