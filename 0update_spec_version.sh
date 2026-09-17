@@ -160,16 +160,17 @@ spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR helium
+repo_url="https://github.com/imputnet/helium-linux"
+spec_files="tarball_helium.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####!SECTION
 
 echo -e "------------ Update Done !------------"
 
 #####SECTION: Retired
-#####ANCHOR helium
-# repo_url="https://github.com/imputnet/helium-linux"
-# spec_files="tarball_helium.spec"
-# new_version=$(fetch_github_version "$repo_url")
-# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR zed
 # repo_url="https://github.com/zed-industries/zed"
