@@ -1,7 +1,7 @@
 ### REF: https://github.com/envmodules/modules/blob/main/share/rpm/environment-modules.spec.in
 
 Name:           modules
-Version:        5.6.2
+Version:        5.7.0
 Release:        1%{?dist}
 Summary:        Environment Modules
 
