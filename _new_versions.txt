@@ -1,3 +1,2 @@
 
-runfile_freefilesync.spec
-tarball_helium.spec
+tarball_electerm.spec
