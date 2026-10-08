@@ -2,7 +2,7 @@
 ### Use tarball to avoid building time.
 
 Name:           zed
-Version:        1.17.2
+Version:        1.23.2
 Release:        1%{?dist}
 Summary:        High-performance, multiplayer code editor
 
