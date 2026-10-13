@@ -26,7 +26,7 @@ jobs:
 
     ### Commit and Push to the current repository (selected branch)
       - name: Commit and Push Changes back to the repository
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "Update versions in multiple .spec files"
 
