@@ -12,10 +12,10 @@ on:  # Trigger manually or on a schedule (e.g., weekly)
 
 jobs:
   update-repo:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: dev    # Selected branch, default is `main`
 
