@@ -1,6 +1,6 @@
 
 Name:           turbo-reader
-Version:        0.31.0
+Version:        0.30.0
 Release:        1%{?dist}
 Summary:        A modern RSS reader
 
