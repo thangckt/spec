@@ -33,8 +33,8 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 /opt/onlyoffice/
 %{_datadir}/applications/onlyoffice-desktopeditors.desktop
 %{_datadir}/icons/hicolor/*/apps/onlyoffice-desktopeditors.png
-%doc %{_datadir}/doc/%{name}/
-%license %{_datadir}/licenses/%{name}/
+%doc %{_datadir}/doc
+%license %{_datadir}/licenses
 
 %exclude /usr/lib/.build-id
 
