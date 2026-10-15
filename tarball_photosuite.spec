@@ -1,4 +1,3 @@
-### Update 26May: use tarball instead of rpm release.
 
 Name:           photosuite
 Version:        0.9.21
