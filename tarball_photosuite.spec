@@ -8,7 +8,6 @@ Summary:        A desktop image editor faithfully replicating classic Adobe Phot
 License:        MIT
 URL:            https://github.com/eolix/photosuite
 Source0:        %{url}/releases/download/v%{version}/photosuite-%{version}-linux-x86_64.tar.gz
-Source1:        https://github.com/photosuite/photosuite-resource/blob/master/res/imgs/photosuite-round-128x128.png?raw=true
 
 
 %define debug_package %{nil}
