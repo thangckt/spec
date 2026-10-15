@@ -27,7 +27,7 @@ A desktop image editor faithfully replicating classic Adobe Photoshop with 1:1 n
 mkdir -p %{buildroot}%{_libexecdir}/photosuite
 cp -rp * %{buildroot}%{_libexecdir}/photosuite/
 
-### Create symlink for main executable
+### Install main executable
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/photosuite/bin/photosuite %{buildroot}%{_bindir}/photosuite
 
@@ -35,13 +35,16 @@ ln -sf %{_libexecdir}/photosuite/bin/photosuite %{buildroot}%{_bindir}/photosuit
 install -Dpm644 %{_libexecdir}/photosuite/shares/applications/io.github.eolix.PhotoSuite.desktop %{buildroot}%{_datadir}/applications/photosuite.desktop
 
 ### Install icon
-install -Dpm644 %{_libexecdir}/photosuite/shares/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png
+for res in 16 24 32 48 64 128 256; do
+    install -Dpm644 %{_libexecdir}/photosuite/shares/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png
+        %{buildroot}%{_datadir}/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png
+done
 
 %files
 %{_bindir}/photosuite
 %{_libexecdir}/photosuite/
 %{_datadir}/applications/photosuite.desktop
-%{_datadir}/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png
+%{_datadir}/icons/hicolor/*/apps/io.github.eolix.PhotoSuite.png
 
 %changelog
 %autochangelog
