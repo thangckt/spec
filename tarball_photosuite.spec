@@ -32,16 +32,16 @@ mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/photosuite/bin/photosuite %{buildroot}%{_bindir}/photosuite
 
 ### Install desktop file
-install -Dpm644 shares/applications/io.github.eolix.PhotoSuite.desktop %{buildroot}%{_datadir}/applications/photosuite.desktop
+install -Dpm644 %{_libexecdir}/photosuite/shares/applications/io.github.eolix.PhotoSuite.desktop %{buildroot}%{_datadir}/applications/photosuite.desktop
 
 ### Install icon
-install -Dpm644 shares/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/photosuite.png
+install -Dpm644 %{_libexecdir}/photosuite/shares/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png
 
 %files
 %{_bindir}/photosuite
 %{_libexecdir}/photosuite/
 %{_datadir}/applications/photosuite.desktop
-%{_datadir}/icons/hicolor/128x128/apps/photosuite.png
+%{_datadir}/icons/hicolor/128x128/apps/io.github.eolix.PhotoSuite.png
 
 %changelog
 %autochangelog
