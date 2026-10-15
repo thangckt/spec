@@ -28,9 +28,8 @@ rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
 %files
 %{_bindir}/turbo-reader
-%{_libexecdir}/turbo-reader/
-%{_datadir}/applications/dev.t21.turbo-reader.desktop
-%{_datadir}/icons/hicolor/*/apps/dev.t21.turbo-reader.png
+%{_datadir}/applications/Turbo Reader.desktop
+%{_datadir}/icons/hicolor/*/apps/turbo-reader.png
 
 %changelog
 %autochangelog
