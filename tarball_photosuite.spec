@@ -37,8 +37,8 @@ install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/applications/io.gith
 
 ### Install icon
 for res in 16 24 32 48 64 128 256; do
-    install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png \
-        %{buildroot}%{_datadir}/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png
+    install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/icons/hicolor/${res}x${res}/apps/io.github.eolix.PhotoSuite.png \
+        %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/io.github.eolix.PhotoSuite.png
 done
 
 %files
