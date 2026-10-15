@@ -1,12 +1,12 @@
 
 Name:           flectar-mail
-Version:        0.30.0
+Version:        0.1.0-alpha.7
 Release:        1%{?dist}
 Summary:        A modern RSS reader
 
-License:        MIT
-URL:            https://github.com/t21dev/flectar-mail
-Source0:        %{url}/releases/download/v%{version}/Turbo.Reader-%{version}-1.x86_64.rpm
+License:        GNU-v3
+URL:            https://github.com/flectar/mail
+Source0:        %{url}/releases/download/v%{version}/flectar-mail-%{version}-linux-x64.rpm
 
 
 %define debug_package %{nil}
