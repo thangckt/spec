@@ -1,1 +1,4 @@
 
+tarball_electerm.spec
+rpm_onlyoffice.spec
+tarball_helium.spec
