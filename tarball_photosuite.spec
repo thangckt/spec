@@ -27,16 +27,18 @@ A desktop image editor faithfully replicating classic Adobe Photoshop with 1:1 n
 mkdir -p %{buildroot}%{_libexecdir}/photosuite
 cp -rp * %{buildroot}%{_libexecdir}/photosuite/
 
-### Install main executable
+### Symlink to main executable
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/photosuite/bin/photosuite %{buildroot}%{_bindir}/photosuite
 
 ### Install desktop file
-install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/applications/io.github.eolix.PhotoSuite.desktop %{buildroot}%{_datadir}/applications/photosuite.desktop
+install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/applications/io.github.eolix.PhotoSuite.desktop \
+    %{buildroot}%{_datadir}/applications/photosuite.desktop
 
 ### Install icon
 for res in 16 24 32 48 64 128 256; do
-    install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png %{buildroot}%{_datadir}/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png
+    install -Dpm644 %{buildroot}%{_libexecdir}/photosuite/share/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png \
+        %{buildroot}%{_datadir}/icons/hicolor/${res}/apps/io.github.eolix.PhotoSuite.png
 done
 
 %files
