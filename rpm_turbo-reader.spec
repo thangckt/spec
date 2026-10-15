@@ -26,12 +26,9 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}
 rpm2cpio %{SOURCE0} | cpio -idmv -D %{buildroot}
 
-### rename
-mv %{buildroot}%{_datadir}/applications/Turbo Reader.desktop %{buildroot}%{_datadir}/applications/turbo-reader.desktop
-
 %files
 %{_bindir}/turbo-reader
-%{_datadir}/applications/turbo-reader.desktop
+%{buildroot}%{_datadir}/applications/"Turbo Reader.desktop"
 %{_datadir}/icons/hicolor/*/apps/turbo-reader.png
 
 %changelog
