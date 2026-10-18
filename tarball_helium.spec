@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.2.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -51,8 +51,8 @@ cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
 GenericName=Web Browser
-Exec=helium %U
-StartupWMClass=org.chromium.Chromium
+Exec=helium --class=helium %U
+StartupWMClass=helium
 Terminal=false
 Icon=helium
 Type=Application
@@ -62,14 +62,14 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=helium
+Exec=helium --class=helium
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
-Exec=helium --incognito
+Exec=helium --class=helium --incognito
 EOF
-
 desktop-file-validate helium.desktop
+
 install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
 
 ### Copy icon
