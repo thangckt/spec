@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/org.chromium.Chromium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.2.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -52,7 +52,7 @@ cat > org.chromium.Chromium.desktop <<'EOF'
 Name=Helium Web Browser
 GenericName=Web Browser
 Exec=helium %U
-StartupWMClass=org.chromium.Chromium
+StartupWMClass=helium
 Terminal=false
 Icon=helium
 Type=Application
