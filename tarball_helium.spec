@@ -33,43 +33,43 @@ mkdir -p %{buildroot}%{_libexecdir}/helium
 cp -rp * %{buildroot}%{_libexecdir}/helium/
 
 ### Create symlink for main executable (wrapper existed)
-# mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_bindir}
 # ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
-# ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
+ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create wrapper script for main executable (to easy set execution flags)
-cat > helium_wrapper << 'EOF'
-#!/bin/bash
-# FLAGS="--use-gl=angle --use-angle=swiftshader"
-# exec %{_libexecdir}/helium/helium $FLAGS "$@"
-exec %{_libexecdir}/helium/helium "$@"
-EOF
-install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
+# cat > helium_wrapper << 'EOF'
+# #!/bin/bash
+# # FLAGS="--use-gl=angle --use-angle=swiftshader"
+# # exec %{_libexecdir}/helium/helium $FLAGS "$@"
+# exec %{_libexecdir}/helium/helium "$@"
+# EOF
+# install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
 
 ### Create desktop file (replace the existing one in the tarball)
-cat > helium.desktop <<'EOF'
-[Desktop Entry]
-Name=Helium Web Browser
-GenericName=Web Browser
-Exec=helium %U
-StartupWMClass=helium
-Terminal=false
-Icon=helium
-Type=Application
-Categories=Network;WebBrowser;
-MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
-Actions=new-window;new-private-window;
+# cat > helium.desktop <<'EOF'
+# [Desktop Entry]
+# Name=Helium Web Browser
+# GenericName=Web Browser
+# Exec=helium %U
+# StartupWMClass=helium
+# Terminal=false
+# Icon=helium
+# Type=Application
+# Categories=Network;WebBrowser;
+# MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
+# Actions=new-window;new-private-window;
 
-[Desktop Action new-window]
-Name=New Window
-Exec=helium
+# [Desktop Action new-window]
+# Name=New Window
+# Exec=helium
 
-[Desktop Action new-private-window]
-Name=New Incognito Window
-Exec=helium --incognito
-EOF
+# [Desktop Action new-private-window]
+# Name=New Incognito Window
+# Exec=helium --incognito
+# EOF
+# desktop-file-validate helium.desktop
 
-desktop-file-validate helium.desktop
 install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
 
 ### Copy icon
