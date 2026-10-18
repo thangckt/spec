@@ -1,7 +1,7 @@
 ### This package use system Git, unlike github-desktop which bundles its own Git.
 
 Name:           servo
-Version:        0.1.0
+Version:        0.7.0
 Release:        1%{?dist}
 Summary:        Web browser engine written in the Rust language
 
