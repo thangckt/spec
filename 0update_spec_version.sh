@@ -172,6 +172,12 @@ spec_files="tarball_photosuite.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR servo
+repo_url="https://github.com/servo/servo"
+spec_files="tarball_servo.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####!SECTION
 
 echo -e "------------ Update Done !------------"
