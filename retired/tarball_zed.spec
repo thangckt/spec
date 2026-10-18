@@ -42,9 +42,9 @@ Icon=zed
 Type=Application
 StartupNotify=true
 Categories=Utility;TextEditor;Development;IDE;
+Keywords=zed;
 MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;
 Actions=NewWorkspace;
-Keywords=zed;
 StartupWMClass=dev.zed.Zed
 
 [Desktop Action NewWorkspace]
