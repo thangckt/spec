@@ -32,8 +32,8 @@ cp -rp bin lib libexec licenses.md share %{buildroot}%{_libexecdir}/zed/
 mkdir -p %{buildroot}%{_bindir}
 ln -sf %{_libexecdir}/zed/bin/zed %{buildroot}%{_bindir}/zed
 
-### Create desktop file
-cat > zed.desktop <<'EOF'
+### Create desktop file (file name must be the same as StartupWMClass)
+cat > dev.zed.Zed.desktop <<'EOF'
 [Desktop Entry]
 Name=Zed
 GenericName=Text Editor
@@ -51,7 +51,7 @@ StartupWMClass=dev.zed.Zed
 Name=Open a new workspace
 Exec=env LOCAL_NOTEBOOK_DEV=1 zed --new %U
 EOF
-install -Dpm644 zed.desktop %{buildroot}%{_datadir}/applications/zed.desktop
+install -Dpm644 dev.zed.Zed.desktop %{buildroot}%{_datadir}/applications/dev.zed.Zed.desktop
 
 ### Create "Open with" menu
 cat > open_in_zed.desktop <<'EOF'
@@ -77,7 +77,7 @@ install -Dpm644 share/icons/hicolor/512x512/apps/zed.png %{buildroot}%{_datadir}
 %license %{_libexecdir}/zed/licenses.md
 %{_bindir}/zed
 %{_libexecdir}/zed/
-%{_datadir}/applications/zed.desktop
+%{_datadir}/applications/dev.zed.Zed.desktop
 %{_datadir}/kio/servicemenus/open_in_zed.desktop
 %{_datadir}/icons/hicolor/512x512/apps/zed.png
 
