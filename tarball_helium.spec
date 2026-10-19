@@ -53,7 +53,7 @@ cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium
 GenericName=Web Browser
-Exec=helium --wayland-app-id=helium %U
+Exec=helium %U
 StartupWMClass=helium
 Terminal=false
 Icon=helium
@@ -64,11 +64,11 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=helium --wayland-app-id=helium %U
+Exec=helium %U
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
-Exec=helium --wayland-app-id=helium --incognito %U
+Exec=helium --incognito %U
 EOF
 
 desktop-file-validate helium.desktop
