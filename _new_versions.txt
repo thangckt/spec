@@ -1,2 +1,2 @@
 
-tarball_photosplice.spec
+tarball_helium.spec
