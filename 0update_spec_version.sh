@@ -166,9 +166,9 @@ spec_files="tarball_helium.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR photosuite
-repo_url="https://github.com/eolix/photosuite"
-spec_files="tarball_photosuite.spec"
+#####ANCHOR photosplice
+repo_url="https://github.com/eolix/PhotoSplice"
+spec_files="tarball_photosplice.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
