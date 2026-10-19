@@ -1,9 +1,9 @@
 ### https://copr-dist-git.fedorainfracloud.org/packages/v8v88v8v88/helium/helium.git/tree/helium.spec?h=f43
 ### https://github.com/itexpert120/helium-browser-copr/blob/main/helium.spec
-### https://github.com/imputnet/helium-linux/blob/main/package/org.chromium.Chromium.desktop
+### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.2.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -49,11 +49,11 @@ ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 ### Create desktop file (replace the existing one in the tarball)
 ### Must name 'org.chromium.Chromium.desktop' to avoid duplicate running apps
 rm -f *.desktop
-cat > org.chromium.Chromium.desktop <<'EOF'
+cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium
 GenericName=Web Browser
-Exec=helium %U
+Exec=helium --wayland-app-id=helium %U
 StartupWMClass=helium
 Terminal=false
 Icon=helium
@@ -61,19 +61,18 @@ Type=Application
 Categories=Network;WebBrowser;
 MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
 Actions=new-window;new-private-window;
-X-KDE-AliasFor=helium
 
 [Desktop Action new-window]
 Name=New Window
-Exec=helium %U
+Exec=helium --wayland-app-id=helium %U
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
-Exec=helium --incognito %U
+Exec=helium --wayland-app-id=helium --incognito %U
 EOF
 
-desktop-file-validate org.chromium.Chromium.desktop
-install -Dpm644 org.chromium.Chromium.desktop %{buildroot}%{_datadir}/applications/org.chromium.Chromium.desktop
+desktop-file-validate helium.desktop
+install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
 
 ### Copy icon
 install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
@@ -81,7 +80,7 @@ install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x2
 %files
 %{_bindir}/helium
 %{_libexecdir}/helium/
-%{_datadir}/applications/org.chromium.Chromium.desktop
+%{_datadir}/applications/helium.desktop
 %{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %post
