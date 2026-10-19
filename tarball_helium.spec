@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.3.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -70,7 +70,7 @@ Name=New Incognito Window
 Exec=helium --incognito %U
 EOF
 
-desktop-file-validate helium.desktop
+desktop-file-validate org.chromium.Chromium.desktop
 install -Dpm644 org.chromium.Chromium.desktop %{buildroot}%{_datadir}/applications/org.chromium.Chromium.desktop
 
 ### Copy icon
