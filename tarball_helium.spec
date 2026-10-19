@@ -53,8 +53,8 @@ cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
 GenericName=Web Browser
-# Pass --class=helium so the Wayland app_id matches the desktop filename
-Exec=helium --class=helium %U
+# --name=helium sets the Wayland app_id; --class=helium sets X11 WM_CLASS
+Exec=helium --name=helium --class=helium %U
 StartupWMClass=helium
 Terminal=false
 Icon=helium
@@ -65,11 +65,11 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=helium --class=helium %U
+Exec=helium --name=helium --class=helium %U
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
-Exec=helium --class=helium --incognito %U
+Exec=helium --name=helium --class=helium --incognito %U
 EOF
 
 desktop-file-validate helium.desktop

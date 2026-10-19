@@ -36,15 +36,15 @@ install -Dpm644 %{buildroot}%{_libexecdir}/photosplice/share/applications/io.git
 
 ### Install icon
 for res in 16 24 32 48 64 128 256; do
-    install -Dpm644 %{buildroot}%{_libexecdir}/photosplice/share/icons/hicolor/${res}x${res}/apps/io.github.eolix.photosplice.png \
-        %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/io.github.eolix.photosplice.png
+    install -Dpm644 %{buildroot}%{_libexecdir}/photosplice/share/icons/hicolor/${res}x${res}/apps/io.github.eolix.PhotoSplice.png \
+        %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/io.github.eolix.PhotoSplice.png
 done
 
 %files
 %{_bindir}/photosplice
 %{_libexecdir}/photosplice/
 %{_datadir}/applications/photosplice.desktop
-%{_datadir}/icons/hicolor/*/apps/io.github.eolix.photosplice.png
+%{_datadir}/icons/hicolor/*/apps/io.github.eolix.PhotoSplice.png
 
 %changelog
 %autochangelog
