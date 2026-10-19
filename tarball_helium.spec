@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.3.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -34,8 +34,8 @@ cp -rp * %{buildroot}%{_libexecdir}/helium/
 
 ### Create symlink for main executable (wrapper existed)
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
-# ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
+# ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
+ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create wrapper script for main executable (to easy set execution flags)
 # cat > helium_wrapper << 'EOF'
@@ -48,10 +48,12 @@ ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
 
 ### Create desktop file (replace the existing one in the tarball)
 ### Must name 'org.chromium.Chromium.desktop' to avoid duplicate running apps
+rm -f *.desktop
 cat > helium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
 GenericName=Web Browser
+Comment=A fast, privacy-focused Chromium fork
 Exec=helium %U
 StartupWMClass=helium
 Terminal=false
@@ -63,11 +65,11 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=helium
+Exec=helium %U
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
-Exec=helium --incognito
+Exec=helium --incognito %U
 EOF
 desktop-file-validate helium.desktop
 
