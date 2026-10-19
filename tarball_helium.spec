@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.3.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -35,16 +35,19 @@ cp -rp * %{buildroot}%{_libexecdir}/helium/
 ### Create symlink for main executable (wrapper existed)
 mkdir -p %{buildroot}%{_bindir}
 # ln -sf %{_libexecdir}/helium/helium-wrapper %{buildroot}%{_bindir}/helium
-ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
+# ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 
 ### Create wrapper script for main executable (to easy set execution flags)
-# cat > helium_wrapper << 'EOF'
-# #!/bin/bash
-# # FLAGS="--use-gl=angle --use-angle=swiftshader"
-# # exec %{_libexecdir}/helium/helium $FLAGS "$@"
-# exec %{_libexecdir}/helium/helium "$@"
-# EOF
-# install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
+cat > helium_wrapper << 'EOF'
+#!/bin/bash
+
+## Tell Chromium's internal engine its true desktop file name on Linux
+export CHROME_DESKTOP="helium.desktop"
+# FLAGS="--use-gl=angle --use-angle=swiftshader"
+# exec %{_libexecdir}/helium/helium $FLAGS "$@"
+exec %{_libexecdir}/helium/helium "$@"
+EOF
+install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
 
 ### Create desktop file (replace the existing one in the tarball)
 ### Must name 'org.chromium.Chromium.desktop' to avoid duplicate running apps
