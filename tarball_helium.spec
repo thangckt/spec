@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/org.chromium.Chromium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.2.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -61,6 +61,7 @@ Type=Application
 Categories=Network;WebBrowser;
 MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
 Actions=new-window;new-private-window;
+X-KDE-AliasFor=helium
 
 [Desktop Action new-window]
 Name=New Window
@@ -74,9 +75,6 @@ EOF
 desktop-file-validate org.chromium.Chromium.desktop
 install -Dpm644 org.chromium.Chromium.desktop %{buildroot}%{_datadir}/applications/org.chromium.Chromium.desktop
 
-### Create helium.desktop symlink for default browser setters expecting helium.desktop
-ln -s org.chromium.Chromium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
-
 ### Copy icon
 install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
 
@@ -84,7 +82,6 @@ install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x2
 %{_bindir}/helium
 %{_libexecdir}/helium/
 %{_datadir}/applications/org.chromium.Chromium.desktop
-%{_datadir}/applications/helium.desktop
 %{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %post
