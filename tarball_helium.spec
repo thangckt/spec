@@ -47,6 +47,7 @@ ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 # install -Dpm755 helium_wrapper %{buildroot}%{_bindir}/helium
 
 ### Create desktop file (replace the existing one in the tarball)
+### Must name 'org.chromium.Chromium.desktop' to avoid duplicate running apps
 cat > org.chromium.Chromium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium Web Browser
