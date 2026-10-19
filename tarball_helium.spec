@@ -3,7 +3,7 @@
 ### https://github.com/imputnet/helium-linux/blob/main/package/helium.desktop
 
 Name:           helium
-Version:        0.19.4.1
+Version:        0.19.2.1
 Release:        1%{?dist}
 Summary:        A fast, privacy-focused Chromium fork
 
@@ -48,12 +48,12 @@ ln -sf %{_libexecdir}/helium/helium %{buildroot}%{_bindir}/helium
 ### Create desktop file (replace the existing one in the tarball)
 ### Must name 'org.chromium.Chromium.desktop' to avoid duplicate running apps
 rm -f *.desktop
-cat > helium.desktop <<'EOF'
+cat > org.chromium.Chromium.desktop <<'EOF'
 [Desktop Entry]
 Name=Helium
 GenericName=Web Browser
-Exec=helium --app-id=helium %U
-StartupWMClass=helium
+Exec=helium %U
+StartupWMClass=org.chromium.Chromium
 Terminal=false
 Icon=helium
 Type=Application
@@ -63,15 +63,15 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=helium --app-id=helium %U
+Exec=helium %U
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
-Exec=helium --app-id=helium --incognito %U
+Exec=helium --incognito %U
 EOF
 
 desktop-file-validate helium.desktop
-install -Dpm644 helium.desktop %{buildroot}%{_datadir}/applications/helium.desktop
+install -Dpm644 org.chromium.Chromium.desktop %{buildroot}%{_datadir}/applications/org.chromium.Chromium.desktop
 
 ### Copy icon
 install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/helium.png
@@ -79,7 +79,7 @@ install -Dpm644 product_logo_256.png %{buildroot}%{_datadir}/icons/hicolor/256x2
 %files
 %{_bindir}/helium
 %{_libexecdir}/helium/
-%{_datadir}/applications/helium.desktop
+%{_datadir}/applications/org.chromium.Chromium.desktop
 %{_datadir}/icons/hicolor/256x256/apps/helium.png
 
 %post
