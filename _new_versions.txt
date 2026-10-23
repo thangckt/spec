@@ -1,4 +1,2 @@
 
-rpm_desktop-plus.spec
-tarball_helium.spec
-tarball_photosplice.spec
+build_goldendict-ng.spec
