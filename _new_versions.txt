@@ -1,2 +1,2 @@
 
-build_goldendict-ng.spec
+tarball_electerm.spec
