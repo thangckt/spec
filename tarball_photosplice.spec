@@ -1,6 +1,6 @@
 
 Name:           photosplice
-Version:        0.9.24
+Version:        0.9.25
 Release:        1%{?dist}
 Summary:        A desktop image editor faithfully replicating classic Adobe Photoshop
 

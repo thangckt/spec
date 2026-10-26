@@ -1,2 +1,3 @@
 
-rpm_desktop-plus.spec
+tarball_electerm.spec
+tarball_photosplice.spec
