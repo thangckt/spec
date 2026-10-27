@@ -47,7 +47,8 @@ cat > ovito.desktop << 'EOF'
 [Desktop Entry]
 Name=OVITO
 GenericName=Scientific Visualization Tool
-Exec=env QT_QPA_PLATFORM=xcb ovito
+# Exec=env QT_QPA_PLATFORM=xcb ovito
+Exec=env ovito
 Icon=ovito
 Type=Application
 Terminal=false
