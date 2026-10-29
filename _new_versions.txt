@@ -1,1 +1,4 @@
 
+runfile_freefilesync.spec
+tarball_zotero.spec
+tarball_helium.spec
