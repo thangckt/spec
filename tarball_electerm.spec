@@ -1,7 +1,7 @@
 ### Update 26May: use tarball instead of rpm release.
 
 Name:           electerm
-Version:        5.7.21
+Version:        5.8.0
 Release:        1%{?dist}
 Summary:        Terminal and remote connection client
 
