@@ -1,4 +1,3 @@
 
-tarball_electerm.spec
-tarball_helium.spec
-tarball_photosplice.spec
+rpm_desktop-plus.spec
+build_ovito.spec
