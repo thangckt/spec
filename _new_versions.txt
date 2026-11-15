@@ -1,5 +1,2 @@
 
-tarball_electerm.spec
-rpm_desktop-plus.spec
-build_rssguard.spec
-tarball_helium.spec
+tarball_photosplice.spec
