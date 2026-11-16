@@ -149,12 +149,6 @@ spec_files="build_evolution_unify.spec"
 new_version=$(fetch_gitlab_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
-#####ANCHOR Ovito
-repo_url="https://gitlab.com/stuko/ovito"
-spec_files="build_ovito.spec"
-new_version=$(fetch_gitlab_version "$repo_url")
-update_spec_version "$spec_files" "$new_version" "$store_file"
-
 #####ANCHOR Zotero
 spec_files="tarball_zotero.spec"
 new_version=$(fetch_zotero_version)
@@ -176,6 +170,11 @@ update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #################################################################
 #####SECTION: Retired
+#####ANCHOR Ovito
+# repo_url="https://gitlab.com/stuko/ovito"
+# spec_files="build_ovito.spec"
+# new_version=$(fetch_gitlab_version "$repo_url")
+# update_spec_version "$spec_files" "$new_version" "$store_file"
 
 #####ANCHOR zed
 # repo_url="https://github.com/zed-industries/zed"
