@@ -2,7 +2,7 @@
 Name:           solidcraft
 Version:        0.39.0
 Release:        1%{?dist}
-Summary:        A desktop image editor faithfully replicating classic Adobe Photoshop
+Summary:        An open-source parametric 3D CAD application built in pure Rust
 
 License:        MIT
 URL:            https://github.com/tangency-labs/solidcraft
@@ -13,7 +13,8 @@ Source0:        %{url}/releases/download/v%{version}/solidcraft-%{version}-linux
 %define __strip /bin/true
 
 %description
-A desktop image editor faithfully replicating classic Adobe Photoshop with 1:1 native PSD/PSB compatibility
+An open-source parametric 3D CAD application built in pure Rust.
+Sketch, constrain, and build solids with a parametric feature timeline. Change a dimension and watch your model rebuild. Run it on your desktop, in your browser, or let AI agents model through the built-in MCP server.
 
 %prep
 %autosetup -n solidcraft-%{version}-linux-x86_64
