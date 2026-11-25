@@ -1,2 +1,2 @@
 
-tarball_solidcraft.spec
+tarball_photosplice.spec
