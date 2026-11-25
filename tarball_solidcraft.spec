@@ -1,6 +1,6 @@
 
 Name:           solidcraft
-Version:        0.39.0
+Version:        0.49.0
 Release:        1%{?dist}
 Summary:        An open-source parametric 3D CAD application built in pure Rust
 
