@@ -166,6 +166,12 @@ spec_files="tarball_photosplice.spec"
 new_version=$(fetch_github_version "$repo_url")
 update_spec_version "$spec_files" "$new_version" "$store_file"
 
+#####ANCHOR solidscraft
+repo_url="https://github.com/tangency-labs/solidscraft"
+spec_files="tarball_solidscraft.spec"
+new_version=$(fetch_github_version "$repo_url")
+update_spec_version "$spec_files" "$new_version" "$store_file"
+
 #####!SECTION
 
 #################################################################
